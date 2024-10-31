@@ -33,7 +33,11 @@ class Recipes {
 	];
 
 	public function index( string $id = '' ) {
+		$recipe = new Recipe();
+
 		if ( $id === '' ) {
+			$recipe->create( [ 'userId' => 1 ] );
+
 			return $this->view(
 				'recipes/recipes',
 				[ 
@@ -47,6 +51,11 @@ class Recipes {
 			$this->view( '404' );
 			die;
 		}
+
+
+		echo "<pre>";
+		print_r( $recipe->findById( $id ) );
+		echo "</pre>";
 
 		$this->view(
 			'recipes/recipe-detail',
