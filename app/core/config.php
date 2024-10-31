@@ -3,7 +3,7 @@
 switch ( $_SERVER['SERVER_NAME'] ) {
 	case 'localhost':
 		/** database config **/
-		define( 'DBNAME', 'my_db' );
+		define( 'DBNAME', 'recipe-roots' );
 		define( 'DBHOST', 'localhost' );
 		define( 'DBUSER', 'root' );
 		define( 'DBPASS', '' );
@@ -14,13 +14,13 @@ switch ( $_SERVER['SERVER_NAME'] ) {
 
 	default:
 		/** database config **/
-		define( 'DBNAME', 'my_db' );
+		define( 'DBNAME', 'recipe-roots' );
 		define( 'DBHOST', 'localhost' );
 		define( 'DBUSER', 'root' );
 		define( 'DBPASS', '' );
 		define( 'DBDRIVER', '' );
 
-		define( 'ROOT', 'https://www.yourwebsite.com' );
+		define( 'ROOT', 'https://recipe-roots.spimy.dev' );
 		break;
 }
 
