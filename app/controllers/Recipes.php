@@ -54,7 +54,7 @@ class Recipes {
 
 
 		echo "<pre>";
-		print_r( $recipe->findById( $id ) );
+		print_r( $recipe->findById( $id, true ) );
 		echo "</pre>";
 
 		$this->view(
