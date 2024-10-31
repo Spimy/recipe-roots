@@ -131,7 +131,26 @@ abstract class Model {
 		}
 
 		$data = array_merge( $data, $data_not );
-		return $this->query( $query, $data );
+		$result = $this->query( $query, $data );
+
+		// O(n^3) HELP
+		// Can't figure out a better way to optimise the code
+		// Did not use INNER JOIN because the id and timestamps column names clash
+		if ( $join ) {
+			foreach ( $result as $index => $row ) {
+				foreach ( $this->columns as $columnName => $columnData ) {
+					if ( isset( $columnData['model'] ) ) {
+						foreach ( $row as $key => $value ) {
+							if ( $key == $columnName ) {
+								$result[ $index ][ $columnData['model']->table ] = $columnData['model']->findById( $value );
+							}
+						}
+					}
+				}
+			}
+		}
+
+		return $result;
 	}
 
 
@@ -141,8 +160,24 @@ abstract class Model {
 	 * @param int $id The ID of the record to find.
 	 * @return array|null The record data as an associative array, or null if not found.
 	 */
-	public function findById( int $id ) {
-		return $this->query( "SELECT * FROM $this->table WHERE id = ?", [ $id ] )[0] ?? null;
+	public function findById( int $id, bool $join = false ) {
+		$result = $this->query( "SELECT * FROM $this->table WHERE id = ?", [ $id ] )[0] ?? null;
+
+		// O(n^2)
+		// Similar to findAll() but with one less loop... can't think of a better way to optimise the code
+		// Did not use INNER JOIN because the id and timestamps column names clash
+		if ( $join && $result != null ) {
+			foreach ( $this->columns as $columnName => $columnData ) {
+				if ( isset( $columnData['model'] ) ) {
+					foreach ( $result as $key => $value ) {
+						if ( $key == $columnName ) {
+							$result[ $columnData['model']->table ] = $columnData['model']->findById( $value );
+						}
+					}
+				}
+			}
+		}
+		return $result;
 	}
 
 	/**
