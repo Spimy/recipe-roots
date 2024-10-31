@@ -36,7 +36,11 @@ class Recipes {
 		$recipe = new Recipe();
 
 		if ( $id === '' ) {
-			$recipe->create( [ 'userId' => 1 ] );
+			// $recipe->create( [ 'userId' => 1 ] );
+
+			echo "<pre>";
+			print_r( $recipe->findAll( join: true ) );
+			echo "</pre>";
 
 			return $this->view(
 				'recipes/recipes',
