@@ -58,6 +58,8 @@ abstract class Model {
 		$query = "CREATE TABLE IF NOT EXISTS $this->table("
 			. implode( ', ', $columns ) . ", "
 			. ( empty( $foreignKeys ) ? '' : implode( ', ', $foreignKeys ) . ", " )
+			. "createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
+			. "updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, "
 			. "PRIMARY KEY (id));";
 
 		$this->query( $query );
