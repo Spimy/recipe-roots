@@ -4,31 +4,28 @@ abstract class Model {
 	use Database;
 
 	public readonly string $table;
-	public readonly string $idColumn;
-	private $columns;
+	private $columns = [ 
+		'id' => [ 
+			'type' => 'INTEGER',
+			'autoincrement' => true,
+			'nullable' => false
+		],
+	];
 
 	/**
 	 * Create the table if it doesn't exist
 	 * @param string $table
 	 */
-	public function __construct( string $idColumn, string $table = '' ) {
+	public function __construct( string $table = '' ) {
 		// Use the class name as the table name if not set
 		$this->table = $table === '' || ! is_string( $table ) || is_numeric( $table )
 			? get_class( $this )
 			: $table;
-		$this->idColumn = $idColumn;
-
-		// Create id of the table
-		$this->columns[ $this->idColumn ] = [ 
-			'type' => 'INTEGER',
-			'autoincrement' => true,
-			'nullable' => false
-		];
 
 		// Set the class attributes into columns
 		$attributes = get_object_vars( $this );
 		foreach ( $attributes as $attribute => $data ) {
-			if ( $attribute === 'table' || $attribute === 'columns' || $attribute === 'idColumn' ) {
+			if ( $attribute === 'table' || $attribute === 'columns' ) {
 				continue;
 			}
 			$this->columns[ $attribute ] = $data;
@@ -52,7 +49,7 @@ abstract class Model {
 		$index = 0;
 		foreach ( $this->columns as $columnName => $data ) {
 			if ( isset( $data['model'] ) ) {
-				$foreignKeys[ $index ] = "FOREIGN KEY ($columnName) REFERENCES {$data['model']->table} ({$data['model']->idColumn})";
+				$foreignKeys[ $index ] = "FOREIGN KEY ($columnName) REFERENCES {$data['model']->table} (id)";
 			}
 			$index++;
 		}
@@ -63,7 +60,7 @@ abstract class Model {
 			. ( empty( $foreignKeys ) ? '' : implode( ', ', $foreignKeys ) . ", " )
 			. "createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
 			. "updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, "
-			. "PRIMARY KEY ({$this->idColumn}));";
+			. "PRIMARY KEY (id));";
 
 		$this->query( $query );
 	}
@@ -107,25 +104,13 @@ abstract class Model {
 
 	/**
 	 * Find all records from the table that match the specified conditions.
-	 * Specify the tableName.id if join is set to true.
 	 *
 	 * @param array $data An associative array of column-value pairs to include in the WHERE clause as equality conditions.
 	 * @param array $data_not An associative array of column-value pairs to include in the WHERE clause as inequality conditions.
-	 * @param array $join Specify if you want to join other tables.
 	 * @return array The records found as an array of an associative array.
 	 */
 	public function findAll( array $data = [], array $data_not = [], bool $join = false ) {
 		$query = "SELECT * FROM $this->table";
-
-		if ( $join ) {
-			foreach ( $this->columns as $columnName => $data ) {
-				if ( isset( $data['model'] ) ) {
-					$foreignTable = $data['model']->table;
-					$foreignIdColumn = $data['model']->idColumn;
-					$query .= " INNER JOIN {$foreignTable} ON {$this->table}.{$columnName} = {$foreignTable}.{$foreignIdColumn}";
-				}
-			}
-		}
 
 		$keys = array_keys( $data );
 		$keys_not = array_keys( $data_not );
@@ -154,24 +139,10 @@ abstract class Model {
 	 * Find a record from the table by its ID.
 	 *
 	 * @param int $id The ID of the record to find.
-	 * @param array $join Specify if you want to join other tables.
 	 * @return array|null The record data as an associative array, or null if not found.
 	 */
-	public function findById( int $id, bool $join = false ) {
-		$query = "SELECT * FROM $this->table";
-
-		if ( $join ) {
-			foreach ( $this->columns as $columnName => $data ) {
-				if ( isset( $data['model'] ) ) {
-					$foreignTable = $data['model']->table;
-					$foreignIdColumn = $data['model']->idColumn;
-					$query .= " INNER JOIN {$foreignTable} ON {$this->table}.{$columnName} = {$foreignTable}.{$foreignIdColumn}";
-				}
-			}
-		}
-
-		$query .= " WHERE {$this->table}.{$this->idColumn} = ?";
-		return $this->query( $query, [ $id ] )[0] ?? null;
+	public function findById( int $id ) {
+		return $this->query( "SELECT * FROM $this->table WHERE id = ?", [ $id ] )[0] ?? null;
 	}
 
 	/**
