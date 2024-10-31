@@ -39,7 +39,8 @@ abstract class Model {
 				. "{$data['type']}"
 				. ( isset( $data['nullable'] ) && ! $data['nullable'] ? ' NOT NULL' : '' )
 				. ( isset( $data['autoincrement'] ) && $data['autoincrement'] ? ' AUTO_INCREMENT' : '' )
-				. ( isset( $data['unique'] ) && $data['unique'] ? ' UNIQUE' : '' );
+				. ( isset( $data['unique'] ) && $data['unique'] ? ' UNIQUE' : '' )
+				. ( isset( $data['default'] ) ? " DEFAULT '{$data['default']}'" : '' );
 
 			$index++;
 		}
@@ -65,32 +66,36 @@ abstract class Model {
 		$this->query( $query );
 	}
 
-	protected function charField( int $maxLengh = 255, bool $nullable = false, bool $unique = false ) {
+	protected function charField( int $maxLengh = 255, bool $nullable = false, bool $unique = false, string $default = '' ) {
 		return [ 
 			'type' => "VARCHAR($maxLengh)",
 			'unique' => $unique,
-			'nullable' => $nullable
+			'nullable' => $nullable,
+			'default' => $default == '' && $nullable ? null : $default,
 		];
 	}
 
-	protected function integerField( bool $nullable = false, bool $unique = false ) {
+	protected function integerField( bool $nullable = false, bool $unique = false, int $default = 0 ) {
 		return [ 
 			'type' => "INTEGER",
 			'unique' => $unique,
-			'nullable' => $nullable
+			'nullable' => $nullable,
+			'default' => is_numeric( $default ) ? $default : 0,
 		];
 	}
 
-	protected function booleanField() {
+	protected function booleanField( bool $default = false ) {
 		return [ 
-			'type' => "BOOLEAN"
+			'type' => "BOOLEAN",
+			"default" => is_bool( $default ) ? $default : false,
 		];
 	}
 
-	protected function textField( bool $nullable = false ) {
+	protected function textField( bool $nullable = false, string $default = '' ) {
 		return [ 
 			'type' => "TEXT",
-			'nullable' => $nullable
+			'nullable' => $nullable,
+			'default' => $default == '' && $nullable ? null : $default,
 		];
 	}
 
