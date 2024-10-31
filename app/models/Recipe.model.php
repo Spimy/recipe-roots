@@ -5,6 +5,6 @@ class Recipe extends Model {
 
 	public function __construct() {
 		$this->userId = $this->foreignKey( new User, true );
-		parent::__construct();
+		parent::__construct( 'recipeId' );
 	}
 }

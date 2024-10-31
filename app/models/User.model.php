@@ -5,7 +5,7 @@ class User extends Model {
 
 	public function __construct() {
 		$this->username = $this->charField( 16, false, true );
-		parent::__construct();
+		parent::__construct( 'userId' );
 	}
 
 	static function test() {
