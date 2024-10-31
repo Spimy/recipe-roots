@@ -3,7 +3,7 @@
 switch ( $_SERVER['SERVER_NAME'] ) {
 	case 'localhost':
 		/** database config **/
-		define( 'DBNAME', 'recipe-roots' );
+		define( 'DBNAME', 'RecipeRoots' );
 		define( 'DBHOST', 'localhost' );
 		define( 'DBUSER', 'root' );
 		define( 'DBPASS', '' );
@@ -14,7 +14,7 @@ switch ( $_SERVER['SERVER_NAME'] ) {
 
 	default:
 		/** database config **/
-		define( 'DBNAME', 'recipe-roots' );
+		define( 'DBNAME', 'RecipeRoots' );
 		define( 'DBHOST', 'localhost' );
 		define( 'DBUSER', 'root' );
 		define( 'DBPASS', '' );
