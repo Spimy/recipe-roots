@@ -73,6 +73,27 @@ abstract class Model {
 		];
 	}
 
+	protected function integerField( bool $nullable = false, bool $unique = false ) {
+		return [ 
+			'type' => "INTEGER",
+			'unique' => $unique,
+			'nullable' => $nullable
+		];
+	}
+
+	protected function booleanField() {
+		return [ 
+			'type' => "BOOLEAN"
+		];
+	}
+
+	protected function textField( bool $nullable = false ) {
+		return [ 
+			'type' => "TEXT",
+			'nullable' => $nullable
+		];
+	}
+
 	protected function foreignKey( Model $model, bool $cascade = true ) {
 		return [ 
 			'type' => "INTEGER",
