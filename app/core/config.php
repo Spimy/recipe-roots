@@ -9,7 +9,7 @@ switch ( $_SERVER['SERVER_NAME'] ) {
 		define( 'DBPASS', '' );
 		define( 'DBDRIVER', '' );
 
-		define( 'ROOT', 'http://localhost/web2202/assignment/public' );
+		define( 'ROOT', 'http://localhost/web2202/recipe-roots/public' );
 		break;
 
 	default:

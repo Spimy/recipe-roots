@@ -1,0 +1,100 @@
+.hero {
+  text-align: center;
+  padding: 0.625rem;
+  position: relative;
+  height: 32.5rem;
+  overflow: hidden;
+  background-color: #f5f7fa;
+}
+
+h1 {
+  text-align: center;
+  color: #263238;
+  margin-bottom: 1.25rem;
+  font-size: 1.5rem;
+}
+
+.hero-images {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.top-dish {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  width: 15.625rem;
+  height: auto;
+  border-radius: 20%;
+  z-index: 0;
+}
+
+.bottom-dish {
+  position: absolute;
+  bottom: 8rem;
+  left: 1.25rem;
+  width: 15.625rem;
+  height: auto;
+  border-radius: 10%;
+  z-index: 0;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  color: #333;
+  text-align: center;
+  margin-bottom: 0;
+  padding-bottom: 0.3125rem;
+}
+
+.hero-title {
+  font-size: 3.75rem;
+  font-weight: bold;
+  margin-top: 4rem;
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  color: #666;
+  margin: 1.25rem 0;
+  text-align: center;
+}
+
+.hero-button {
+  background-color: #28a745;
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.3125rem;
+  font-size: 1.125rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  z-index: 2;
+  margin: 1.25rem auto 1rem;
+}
+
+.hero-button:hover {
+  background-color: #218838;
+}
+
+@media (max-width: 48px) {
+  .top-dish {
+    width: 12.5rem;
+    right: 0.625rem;
+  }
+
+  .bottom-dish {
+    left: 0.625rem;
+    bottom: 6rem;
+  }
+
+  .hero-title {
+    margin-top: 3rem;
+  }
+
+  .hero-content {
+    margin-bottom: 3rem;
+  }
+}

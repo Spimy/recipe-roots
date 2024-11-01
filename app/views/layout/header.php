@@ -1,5 +1,5 @@
 <header>
-	<h1>Logo</h1>
+	<img src="<?= ROOT ?>/assets/images/logo.svg" alt="Logo" class="logo">
 	<nav>
 		<ul>
 			<li><a href="<?= ROOT ?>/">Home</a></li>
