@@ -10,19 +10,14 @@
 
 <body>
 	<?php include 'layout/header.php' ?>
+
 	<section class="hero">
-		<div class="hero-images">
-			<img src="<?= ROOT ?>/assets/images/food2.svg" alt="Top Dish" class="top-dish" />
-			<img src="<?= ROOT ?>/assets/images/food1.svg" alt="Bottom Dish" class="bottom-dish" />
-		</div>
-		<div class="hero-content">
-			<h1 class="hero-title">Your Kitchen Assistant</h1>
-			<p class="hero-subtitle">
-				Create and share your recipes with fellow enthusiasts with easy access
-				to all your cooking needs
-			</p>
-			<button class="hero-button">Get started -></button>
-		</div>
+		<h1 class="hero__content__title">Your Kitchen Assistant</h1>
+		<p class="hero__content__subtitle">
+			Create and share your recipes with fellow enthusiasts with easy access
+			to all your cooking needs
+		</p>
+		<a href="<?= ROOT ?>/signup" class="btn btn--next">Get started</a>
 	</section>
 
 	<h1 class="features-header">Why Us?</h1>
@@ -38,8 +33,7 @@
 		</div>
 		<div class="feature">
 			<div class="feature-images">
-				<img src="<?= ROOT ?>/assets/images/rafiki.svg" alt="Group of people talking"
-					class="community-driven" />
+				<img src="<?= ROOT ?>/assets/images/rafiki.svg" alt="Group of people talking" class="community-driven" />
 			</div>
 			<h2>Community Driven</h2>
 			<p>
