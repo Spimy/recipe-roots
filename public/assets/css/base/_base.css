@@ -17,6 +17,7 @@
 
 	/* Sizing */
 	--content-padding: 5rem;
+	--navbar-height: 4rem;
 
 	font-family: 'Inter', sans-serif;
 	font-size: 18px;
