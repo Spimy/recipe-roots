@@ -1,8 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
 :root {
-	font-family: 'Inter', sans-serif;
-
 	/* Colours */
 	--primary-clr: hsl(122, 39%, 49%);
 	--secondary-clr: hsl(200, 19%, 18%);
@@ -19,12 +17,32 @@
 
 	/* Sizing */
 	--content-padding: 5rem;
+
+	font-family: 'Inter', sans-serif;
+	font-size: 18px;
+	color: var(--secondary-clr);
 }
 
 @media screen and (max-width: 480px) {
 	:root {
 		--content-padding: 2rem;
 	}
+}
+
+h1 {
+	font-size: 3.55rem;
+}
+
+h2 {
+	font-size: 2rem;
+}
+
+h3 {
+	font-size: 1.55rem;
+}
+
+h4 {
+	font-size: 1.11rem;
 }
 
 .btn {
