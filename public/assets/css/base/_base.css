@@ -52,7 +52,7 @@ h4 {
 	justify-content: center;
 	width: max-content;
 	font-size: 1rem;
-	padding: 1em;
+	padding: 0.75em 2em;
 	border-radius: 0.5rem;
 	background-color: var(--primary-clr);
 	cursor: pointer;
