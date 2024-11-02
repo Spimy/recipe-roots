@@ -3,5 +3,90 @@
 :root {
 	font-family: 'Inter', sans-serif;
 
-	/* Setup colours here */
+	/* Colours */
+	--primary-clr: hsl(122, 39%, 49%);
+	--secondary-clr: hsl(200, 19%, 18%);
+	--info-clr: hsl(207, 90%, 54%);
+
+	--dark-grey: hsl(0, 0%, 30%);
+	--grey: hsl(0, 0%, 44%);
+	--light-grey: hsl(211, 10%, 58%);
+	--grey-blue: hsl(210, 29%, 75%);
+	--silver: hsl(216, 33%, 97%);
+	--white: hsl(0, 0%, 100%);
+
+	--shade: hsl(122, 43%, 39%);
+
+	/* Sizing */
+	--content-padding: 5rem;
+}
+
+@media screen and (max-width: 480px) {
+	:root {
+		--content-padding: 2rem;
+	}
+}
+
+.btn {
+	display: flex;
+	gap: 0.5em;
+	align-items: center;
+	justify-content: center;
+	width: max-content;
+	font-size: 1rem;
+	padding: 1em;
+	border-radius: 0.5rem;
+	background-color: var(--primary-clr);
+	cursor: pointer;
+	outline: none;
+}
+
+.btn:focus-visible:not(.btn--disabled) {
+	outline: 0.2em solid var(--secondary-clr);
+}
+
+.btn:active:not(.btn--disabled) {
+	background-color: var(--shade);
+}
+
+.btn--invert:not(.btn--disabled) {
+	background-color: var(--white);
+	border: 0.2em solid var(--primary-clr);
+	color: var(--primary-clr);
+}
+
+.btn--next::after,
+.btn--add::before {
+	content: '';
+	display: inline-block;
+	width: 1em;
+	height: 1em;
+	mask-repeat: no-repeat;
+	mask-position: center;
+	background-color: var(--white);
+}
+
+.btn--next::after {
+	-webkit-mask-image: url(../../icons/arrow.svg);
+	mask-image: url(../../icons/arrow.svg);
+}
+
+.btn--add::before {
+	-webkit-mask-image: url(../../icons/add.svg);
+	mask-image: url(../../icons/add.svg);
+}
+
+.btn--invert.btn--next::after,
+.btn--invert.btn--add::before {
+	background: var(--primary-clr);
+}
+
+.btn--disabled {
+	background-color: var(--silver);
+	color: var(--grey-blue);
+}
+
+.btn--disabled.btn--next::after,
+.btn--disabled.btn--add::before {
+	background-color: var(--grey-blue);
 }
