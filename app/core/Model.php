@@ -103,7 +103,7 @@ abstract class Model {
 		return [ 
 			'type' => "INTEGER",
 			'model' => $model,
-			'cascade' => $cascade,
+			'cascade' => $cascade == '' ? 'FALSE' : 'TRUE',
 			'nullable' => false
 		];
 	}
@@ -113,7 +113,7 @@ abstract class Model {
 	 * It only inserts columns that are defined in the model and ignores any extra data provided.
 	 *
 	 * @param array $data An associative array of column-value pairs that are the data to insert.
-	 * @return void
+	 * @return array The inserted data
 	 */
 	public function create( array $data ) {
 		// Remove unwanted data
@@ -125,7 +125,11 @@ abstract class Model {
 
 		$keys = array_keys( $data );
 		$query = "INSERT INTO $this->table (" . implode( ",", $keys ) . ") VALUES (:" . implode( ",:", $keys ) . ")";
-		$this->query( $query, $data );
+
+		$insert = $this->query( $query, $data );
+		$res = $this->query( "SELECT * FROM {$this->table} WHERE id = ?", [ $insert['connection']->lastInsertId() ] );
+
+		return $res['result'][0];
 	}
 
 	/**
@@ -176,7 +180,7 @@ abstract class Model {
 			}
 		}
 
-		return $result;
+		return $result['result'];
 	}
 
 
@@ -203,7 +207,7 @@ abstract class Model {
 				}
 			}
 		}
-		return $result;
+		return $result['result'];
 	}
 
 	/**

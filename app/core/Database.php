@@ -27,10 +27,16 @@ trait Database {
 		if ( $success ) {
 			$result = $statement->fetchAll( PDO::FETCH_ASSOC );
 			if ( is_array( $result ) && count( $result ) > 0 ) {
-				return $result;
+				return [ 
+					'result' => $result,
+					'connection' => $connection
+				];
 			}
 		}
 
-		return [];
+		return [ 
+			'result' => [],
+			'connection' => $connection
+		];
 	}
 }
