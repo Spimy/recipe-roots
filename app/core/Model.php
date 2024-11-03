@@ -51,6 +51,10 @@ abstract class Model {
 		foreach ( $this->columns as $columnName => $data ) {
 			if ( isset( $data['model'] ) ) {
 				$foreignKeys[ $index ] = "FOREIGN KEY ($columnName) REFERENCES {$data['model']->table} (id)";
+
+				if ( $data['cascade'] == 'TRUE' ) {
+					$foreignKeys[ $index ] .= ' ON DELETE CASCADE';
+				}
 			}
 			$index++;
 		}
