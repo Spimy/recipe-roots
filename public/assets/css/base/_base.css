@@ -55,7 +55,7 @@ h4 {
 .grid {
 	--_grid-layout-gap: 1rem;
 	--_grid-column-count: 3;
-	--_grid-item--min-width: 20rem;
+	--_grid-item--min-width: 15rem;
 
 	--_gap-count: calc(var(--_grid-column-count) - 1);
 	--_total-gap-width: calc(var(--_gap-count) * var(--_grid-layout-gap));
