@@ -1,7 +1,7 @@
 .hero {
 	background-color: var(--silver);
 	padding-inline: var(--content-padding);
-	height: calc(100dvh - var(--navbar-height));
+	min-height: calc(100dvh - var(--navbar-height));
 
 	/* Center align everything */
 	text-align: center;
