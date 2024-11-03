@@ -36,9 +36,7 @@ class App {
 		call_user_func_array( [ $controller, $this->method ], $url );
 	}
 
-	// public function __construct() {
-	// 	echo "<pre>";
-	// 	print_r( $this->splitURL() );
-	// 	echo "</pre>";
-	// }
+	public function __construct() {
+		show( $this->splitURL() );
+	}
 }
