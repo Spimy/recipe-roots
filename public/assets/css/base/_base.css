@@ -61,15 +61,46 @@ h4 {
 	font-size: 1.11rem;
 }
 
+a:focus-visible {
+	outline: 0.2em solid var(--primary-clr);
+}
+
 label {
 	font-weight: bold;
 }
 
 label:has(+ input[required])::after,
 label:has(+ textarea[required])::after,
-label:has(+ select[required])::after {
+label:has(+ select[required])::after,
+label:has(+ * input[required])::after,
+label:has(+ * textarea[required])::after,
+label:has(+ * select[required])::after {
 	content: ' *';
 	color: var(--error);
+}
+
+input,
+textarea,
+select {
+	border: none;
+	background-color: var(--silver);
+	border-radius: 0.2rem;
+	padding: 0.5rem 1rem;
+	filter: drop-shadow(var(--shadow-xs));
+	transition: filter 0.3s;
+	accent-color: var(--primary-clr);
+}
+
+input:hover,
+textarea:hover,
+select:hover {
+	filter: drop-shadow(var(--shadow-s));
+}
+
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+	outline: 0.2em solid var(--secondary-clr);
 }
 
 /* Grid system */
@@ -97,7 +128,6 @@ label:has(+ select[required])::after {
 	gap: 0.5em;
 	align-items: center;
 	justify-content: center;
-	width: max-content;
 	font-size: 1rem;
 	padding: 0.75em 2em;
 	border-radius: 0.5rem;
