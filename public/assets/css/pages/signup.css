@@ -55,6 +55,10 @@ h1 {
 	filter: drop-shadow(var(--shadow-s));
 }
 
+.signup__input--type label:has(input:focus-visible) {
+	outline: 0.2em solid var(--secondary-clr);
+}
+
 .signup__input--type label:has(input:checked) {
 	background-color: var(--primary-clr);
 	color: var(--white);
