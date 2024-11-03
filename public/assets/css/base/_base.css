@@ -35,6 +35,12 @@
 	}
 }
 
+body {
+	min-height: 100dvh;
+	display: grid;
+	grid-template-rows: auto 1fr auto;
+}
+
 h1 {
 	font-size: 3.55rem;
 }
