@@ -29,7 +29,7 @@
 	color: var(--secondary-clr);
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (min-width: 380px) {
 	:root {
 		--content-padding: 2rem;
 	}
