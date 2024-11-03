@@ -20,36 +20,37 @@
 		<a href="<?= ROOT ?>/signup" class="btn btn--next">Get started</a>
 	</section>
 
-	<h1 class="features-header">Why Us?</h1>
 	<section class="features">
-		<div class="feature">
-			<div class="feature-images">
-				<img src="<?= ROOT ?>/assets/images/illustrations/devices.svg" alt="Phone and laptop" class="view-device" />
+		<h2>Why Us?</h2>
+
+		<div class="features__items grid">
+			<div>
+				<img src="<?= ROOT ?>/assets/images/illustrations/devices.svg" alt="Showcasing responsiveness" />
+				<div>
+					<h3>View on any device</h3>
+					<p>
+						Whether you cook with your phone, tablet, or your laptop nearby, you can use any of them!
+					</p>
+				</div>
 			</div>
-			<h2>View on any device</h2>
-			<p>
-				Whether you cook with your phone, tablet, or your laptop nearby, you can use any of them!
-			</p>
-		</div>
-		<div class="feature">
-			<div class="feature-images">
-				<img src="<?= ROOT ?>/assets/images/illustrations/community.svg" alt="Group of people talking"
-					class="community-driven" />
+			<div>
+				<img src="<?= ROOT ?>/assets/images/illustrations/community.svg" alt="Community driven" />
+				<div>
+					<h3>Community Driven</h3>
+					<p>
+						You can find all the recipes you need shared by other fellow cooks!
+					</p>
+				</div>
 			</div>
-			<h2>Community Driven</h2>
-			<p>
-				You can find all the recipes you need shared by other fellow cooks!
-			</p>
-		</div>
-		<div class="feature">
-			<div class="feature-images">
-				<img src="<?= ROOT ?>/assets/images/illustrations/purchase.svg" alt="Girl Shopping online"
-					class="easy-ingredients" />
+			<div>
+				<img src="<?= ROOT ?>/assets/images/illustrations/purchase.svg" alt="Easily access ingredients" />
+				<div>
+					<h3>Easy Ingredients</h3>
+					<p>
+						Ran out of ingredients? Check out the latest and freshest produce from your local farmers!
+					</p>
+				</div>
 			</div>
-			<h2>Easy Ingredients</h2>
-			<p>
-				Ran out of ingredients? Check out the latest and freshest produce from your local farmers!
-			</p>
 		</div>
 	</section>
 
