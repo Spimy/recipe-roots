@@ -1,6 +1,6 @@
 <footer class="footer">
-	<div class="footer-content">
-		<div class="footer-section cookies">
+	<div class="footer__content grid">
+		<div class="footer__content__cookies">
 			<h3>Cookies</h3>
 			<p>
 				This site uses cookies to keep you authenticated and safe. We do not
@@ -8,9 +8,9 @@
 			</p>
 		</div>
 
-		<div class="footer-section links">
+		<div class="footer__content__links">
 			<h3>Useful Links</h3>
-			<ul>
+			<ul role="list">
 				<li><a href="#">Home</a></li>
 				<li><a href="#">Sitemap</a></li>
 				<li>
@@ -20,7 +20,5 @@
 		</div>
 	</div>
 
-	<div class="footer-bottom">
-		<p>Copyright © 2024 Recipe Roots. All Rights Reserved.</p>
-	</div>
+	<p class="footer__copyright">Copyright © 2024 Recipe Roots. All Rights Reserved.</p>
 </footer>
