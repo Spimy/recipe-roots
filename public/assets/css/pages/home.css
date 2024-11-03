@@ -38,6 +38,7 @@
 .features__items > * {
 	display: grid;
 	place-items: center;
+	gap: 0.5rem;
 	padding: 2em;
 	border-radius: 1em;
 	box-shadow: var(--shadow-s);
