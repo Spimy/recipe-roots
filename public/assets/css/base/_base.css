@@ -112,13 +112,13 @@ h4 {
 }
 
 .btn--next::after {
-	-webkit-mask-image: url(../../icons/arrow.svg);
-	mask-image: url(../../icons/arrow.svg);
+	-webkit-mask-image: url('../../icons/arrow.svg');
+	mask-image: url('../../icons/arrow.svg');
 }
 
 .btn--add::before {
-	-webkit-mask-image: url(../../icons/add.svg);
-	mask-image: url(../../icons/add.svg);
+	-webkit-mask-image: url('../../icons/add.svg');
+	mask-image: url('../../icons/add.svg');
 }
 
 .btn--invert.btn--next::after,
