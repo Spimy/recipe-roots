@@ -76,12 +76,13 @@
 }
 
 .faq__item__question {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	align-items: center;
+	gap: 1rem;
 	padding: 1rem;
 	margin-top: -1.5rem; /* A bit of a hacky way to do this but oh well */
 	cursor: pointer;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
 }
 
 .faq__item__question::after {
@@ -89,7 +90,6 @@
 	background-color: var(--primary-clr);
 	-webkit-mask-image: url('../../icons/expand.svg');
 	mask-image: url('../../icons/expand.svg');
-	mask-size: contain;
 	mask-repeat: no-repeat;
 	width: 1.5em;
 	height: 1.5em;
