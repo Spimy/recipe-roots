@@ -15,6 +15,14 @@
 	<main>
 		<h1>Sign Up</h1>
 
+		<?php if ( isset( $errors ) && count( $errors ) > 0 ) : ?>
+			<ul class="errors">
+				<?php foreach ( $errors as $error ) : ?>
+					<li class="errors__message"><?= $error ?></li>
+				<?php endforeach ?>
+			</ul>
+		<?php endif ?>
+
 		<form class="signup" method="post">
 			<div class="signup__input">
 				<label>You are a</label>
