@@ -37,6 +37,6 @@ class App {
 	}
 
 	public function __construct() {
-		show( $this->splitURL() );
+		// show( $this->splitURL() );
 	}
 }
