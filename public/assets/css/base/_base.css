@@ -19,6 +19,11 @@
 	--content-padding: 5rem;
 	--navbar-height: 4rem;
 
+	/* Shadows */
+	--_shadow-clr: hsla(210, 29%, 75%, 0.6);
+	--shadow-xs: 0 0.11rem 0.22rem var(--_shadow-clr);
+	--shadow-s: 0 0.22rem 0.44rem var(--_shadow-clr);
+
 	font-family: 'Inter', sans-serif;
 	font-size: 18px;
 	color: var(--secondary-clr);
