@@ -41,7 +41,7 @@ body {
 
 /* Reset all default styles for hyperlinks */
 a {
-	color: white;
+	color: var(--primary-clr);
 	text-decoration: none;
 }
 
