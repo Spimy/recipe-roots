@@ -40,7 +40,7 @@ abstract class Model {
 				. ( isset( $data['nullable'] ) && ! $data['nullable'] ? ' NOT NULL' : '' )
 				. ( isset( $data['autoincrement'] ) && $data['autoincrement'] ? ' AUTO_INCREMENT' : '' )
 				. ( isset( $data['unique'] ) && $data['unique'] ? ' UNIQUE' : '' )
-				. ( isset( $data['default'] ) ? " DEFAULT '{$data['default']}'" : '' );
+				. ( isset( $data['default'] ) && $data['default'] != "''" ? " DEFAULT {$data['default']}" : '' );
 
 			$index++;
 		}
@@ -71,7 +71,7 @@ abstract class Model {
 			'type' => "VARCHAR($maxLengh)",
 			'unique' => $unique,
 			'nullable' => $nullable,
-			'default' => $default == '' && $nullable ? null : $default,
+			'default' => $default == '' && $nullable ? null : "'$default'"
 		];
 	}
 
@@ -87,7 +87,7 @@ abstract class Model {
 	protected function booleanField( bool $default = false ) {
 		return [ 
 			'type' => "BOOLEAN",
-			"default" => is_bool( $default ) ? $default : false,
+			"default" => $default == '' ? 'FALSE' : 'TRUE',
 		];
 	}
 
@@ -95,7 +95,7 @@ abstract class Model {
 		return [ 
 			'type' => "TEXT",
 			'nullable' => $nullable,
-			'default' => $default == '' && $nullable ? null : $default,
+			'default' => $default == '' && $nullable ? null : "'$default'",
 		];
 	}
 
