@@ -57,7 +57,6 @@
 .faq__item {
 	border-radius: 0.5rem;
 	margin-bottom: 1rem;
-	overflow: hidden;
 	background-color: var(--silver);
 	box-shadow: var(--shadow-xs);
 	transition: box-shadow 0.3s;
@@ -70,6 +69,7 @@
 .faq__item__question {
 	display: block;
 	padding: 1rem;
+	margin-top: -1.5rem; /* A bit of a hacky way to do this but oh well */
 	cursor: pointer;
 	display: flex;
 	justify-content: space-between;
@@ -83,7 +83,16 @@
 	color: var(--grey);
 	font-size: 0.8rem;
 	background-color: var(--silver);
+	overflow: hidden;
 	transition: max-height 0.3s, padding 0.3s;
+}
+
+.faq__item input[type='checkbox'] {
+	opacity: 0;
+}
+
+.faq__item input[type='checkbox']:focus-visible + .faq__item__question {
+	outline: 0.2em solid var(--secondary-clr);
 }
 
 .faq__item input[type='checkbox']:checked ~ .faq__item__answer {
