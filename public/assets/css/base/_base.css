@@ -15,6 +15,10 @@
 
 	--shade: hsl(122, 43%, 39%);
 
+	--warning: hsl(43, 96%, 58%);
+	--error: hsl(1, 77%, 55%);
+	--success: hsl(122, 46%, 34%);
+
 	/* Sizing */
 	--content-padding: 2rem;
 	--navbar-height: 4rem;
@@ -55,6 +59,17 @@ h3 {
 
 h4 {
 	font-size: 1.11rem;
+}
+
+label {
+	font-weight: bold;
+}
+
+label:has(+ input[required])::after,
+label:has(+ textarea[required])::after,
+label:has(+ select[required])::after {
+	content: ' *';
+	color: var(--error);
 }
 
 /* Grid system */
