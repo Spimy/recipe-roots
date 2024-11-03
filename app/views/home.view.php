@@ -54,52 +54,44 @@
 		</div>
 	</section>
 
-	<section class="faq-section">
-		<h1>FAQ</h1>
+	<section class="faq">
+		<h2>FAQ</h2>
 
-		<div class="faq-item">
-			<input type="checkbox" id="faq1" class="faq-checkbox" />
-			<label for="faq1" class="faq-question">Are my recipes public?</label>
-			<div class="faq-answer">
-				<p>
-					Your recipes can either be private or public depending on your
-					preference.
-				</p>
-			</div>
+		<div class="faq__item">
+			<input type="checkbox" id="faq1" hidden />
+			<label for="faq1" class="faq__item__question">Are my recipes public?</label>
+			<p class="faq__item__answer">
+				Your recipes can either be private or public depending on your
+				preference.
+			</p>
 		</div>
 
-		<div class="faq-item">
-			<input type="checkbox" id="faq2" class="faq-checkbox" />
-			<label for="faq2" class="faq-question">Do I need an account for each device?</label>
-			<div class="faq-answer">
-				<p>
-					There is no need for an account for each device. As long as you log
-					into your account on a device, you'll only always need one account.
-				</p>
-			</div>
+		<div class="faq__item">
+			<input type="checkbox" id="faq2" hidden />
+			<label for="faq2" class="faq__item__question">Do I need an account for each device?</label>
+			<p class="faq__item__answer">
+				There is no need for an account for each device. As long as you log
+				into your account on a device, you'll only always need one account.
+			</p>
 		</div>
 
-		<div class="faq-item">
-			<input type="checkbox" id="faq3" class="faq-checkbox" />
-			<label for="faq3" class="faq-question">Can I have both a farmer and normal user account?</label>
-			<div class="faq-answer">
-				<p>
-					Yes, most certainly! If you produce ingredients and also have a
-					knack for creating outstanding recipes, then feel free to have access
-					to both accounts.
-				</p>
-			</div>
+		<div class="faq__item">
+			<input type="checkbox" id="faq3" hidden />
+			<label for="faq3" class="faq__item__question">Can I have both a farmer and normal user account?</label>
+			<p class="faq__item__answer">
+				Yes, most certainly! If you produce ingredients and also have a
+				knack for creating outstanding recipes, then feel free to have access
+				to both accounts.
+			</p>
 		</div>
 
-		<div class="faq-item">
-			<input type="checkbox" id="faq4" class="faq-checkbox" />
-			<label for="faq4" class="faq-question">How long do ingredients take to be delivered?</label>
-			<div class="faq-answer">
-				<p>
-					Your ingredients should be delivered to you within 1-2 hours after
-					placing your order.
-				</p>
-			</div>
+		<div class="faq__item">
+			<input type="checkbox" id="faq4" hidden />
+			<label for="faq4" class="faq__item__question">How long do ingredients take to be delivered?</label>
+			<p class="faq__item__answer">
+				Your ingredients should be delivered to you within 1-2 hours after
+				placing your order.
+			</p>
 		</div>
 	</section>
 
