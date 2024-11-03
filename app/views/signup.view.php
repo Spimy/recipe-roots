@@ -15,7 +15,7 @@
 	<main>
 		<h1>Sign Up</h1>
 
-		<?php if ( isset( $errors ) && count( $errors ) > 0 ) : ?>
+		<?php if ( ! empty( $errors ) ) : ?>
 			<ul class="errors">
 				<?php foreach ( $errors as $error ) : ?>
 					<li class="errors__message"><?= $error ?></li>

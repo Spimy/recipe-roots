@@ -4,6 +4,8 @@ class Signup {
 	use Controller;
 
 	public function index() {
+		$data = [];
+
 		if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 			$user = new User();
 			$profile = new Profile();
@@ -25,8 +27,9 @@ class Signup {
 				redirect( 'signin' );
 			}
 
+			$data['errors'] = $errors;
 		}
 
-		$this->view( 'signup', [ 'errors' => $errors ] );
+		$this->view( 'signup', $data );
 	}
 }
