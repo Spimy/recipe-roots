@@ -46,6 +46,26 @@ h4 {
 	font-size: 1.11rem;
 }
 
+/* Grid system */
+.grid {
+	--_grid-layout-gap: 1rem;
+	--_grid-column-count: 3;
+	--_grid-item--min-width: 20rem;
+
+	--_gap-count: calc(var(--_grid-column-count) - 1);
+	--_total-gap-width: calc(var(--_gap-count) * var(--_grid-layout-gap));
+	--_grid-item--max-width: calc(
+		(100% - var(--_total-gap-width)) / var(--_grid-column-count)
+	);
+
+	display: grid;
+	grid-template-columns: repeat(
+		auto-fill,
+		minmax(max(var(--_grid-item--min-width), var(--_grid-item--max-width)), 1fr)
+	);
+	gap: var(--_grid-layout-gap);
+}
+
 .btn {
 	display: flex;
 	gap: 0.5em;
