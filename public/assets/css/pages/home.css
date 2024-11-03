@@ -76,7 +76,6 @@
 }
 
 .faq__item__question {
-	display: block;
 	padding: 1rem;
 	margin-top: -1.5rem; /* A bit of a hacky way to do this but oh well */
 	cursor: pointer;
@@ -94,7 +93,6 @@
 	mask-repeat: no-repeat;
 	width: 1.5em;
 	height: 1.5em;
-	color: #4caf4f;
 	transform: rotate(0);
 	transition: transform 0.3s;
 }
