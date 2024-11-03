@@ -58,6 +58,7 @@ h4 {
 	background-color: var(--primary-clr);
 	cursor: pointer;
 	outline: none;
+	color: var(--white);
 }
 
 .btn:focus-visible:not(.btn--disabled) {
