@@ -15,4 +15,29 @@ class User extends Model {
 		$this->verified = $this->booleanField( false );
 		parent::__construct();
 	}
+
+	public function validate( $data ) {
+		$errors = [];
+
+		if ( empty( $data['email'] ) ) {
+			$errors['email'] = "Email is required";
+		} else
+			if ( ! filter_var( $data['email'], FILTER_VALIDATE_EMAIL ) ) {
+				$errors['email'] = "Email is not valid";
+			}
+
+		if ( $this->findOne( [ 'email' => $data['email'] ] ) ) {
+			$errors['email'] = 'This email is already in use';
+		}
+
+		if ( empty( $data['password'] ) ) {
+			$errors['password'] = "Password is required";
+		}
+
+		if ( $data['password'] != $data['confirmPassword'] ) {
+			$errors['password'] = 'Passwords do not match';
+		}
+
+		return $errors;
+	}
 }

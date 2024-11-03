@@ -19,4 +19,18 @@ class Profile extends Model {
 		$this->type = $this->booleanField( PROFILE_TYPES['user'] );
 		parent::__construct();
 	}
+
+	public function validate( $data ) {
+		$errors = [];
+
+		if ( strlen( $data['username'] ) > 16 ) {
+			$errors['username'] = 'The username is too long';
+		}
+
+		if ( $this->findOne( [ 'username' => $data['username'] ] ) ) {
+			$errors['username'] = 'This username is taken';
+		}
+
+		return $errors;
+	}
 }
