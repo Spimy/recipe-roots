@@ -24,7 +24,7 @@
 	<section class="features">
 		<div class="feature">
 			<div class="feature-images">
-				<img src="<?= ROOT ?>/assets/images/Group 235.svg" alt="Phone and laptop" class="view-device" />
+				<img src="<?= ROOT ?>/assets/images/illustrations/devices.svg" alt="Phone and laptop" class="view-device" />
 			</div>
 			<h2>View on any device</h2>
 			<p>
@@ -33,7 +33,8 @@
 		</div>
 		<div class="feature">
 			<div class="feature-images">
-				<img src="<?= ROOT ?>/assets/images/rafiki.svg" alt="Group of people talking" class="community-driven" />
+				<img src="<?= ROOT ?>/assets/images/illustrations/community.svg" alt="Group of people talking"
+					class="community-driven" />
 			</div>
 			<h2>Community Driven</h2>
 			<p>
@@ -42,7 +43,8 @@
 		</div>
 		<div class="feature">
 			<div class="feature-images">
-				<img src="<?= ROOT ?>/assets/images/bro.svg" alt="Girl Shopping online" class="easy-ingredients" />
+				<img src="<?= ROOT ?>/assets/images/illustrations/purchase.svg" alt="Girl Shopping online"
+					class="easy-ingredients" />
 			</div>
 			<h2>Easy Ingredients</h2>
 			<p>
