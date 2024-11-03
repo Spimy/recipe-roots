@@ -141,6 +141,7 @@ abstract class Model {
 	 *
 	 * @param array $data An associative array of column-value pairs to include in the WHERE clause as equality conditions.
 	 * @param array $data_not An associative array of column-value pairs to include in the WHERE clause as inequality conditions.
+	 * @param bool $join If true, the result will include all related models with foreign keys associated.
 	 * @return array The records found as an array of an associative array.
 	 */
 	public function findAll( array $data = [], array $data_not = [], bool $join = false ) {
@@ -186,6 +187,26 @@ abstract class Model {
 
 		return $result['result'];
 	}
+
+
+	/**
+	 * Finds and returns the first record from the table that matches the specified conditions.
+	 *
+	 * @param array $data An associative array of column-value pairs to include in the WHERE clause as equality conditions.
+	 * @param array $data_not An associative array of column-value pairs to include in the WHERE clause as inequality conditions.
+	 * @param bool $join If true, the result will include all related models with foreign keys associated.
+	 * @return array|null The first record data as an associative array, or null if no record is found.
+	 */
+	public function findOne( array $data = [], array $data_not = [], bool $join = false ) {
+		$result = $this->findAll( $data, $data_not, $join );
+
+		if ( count( $result ) > 0 ) {
+			return $result[0];
+		}
+
+		return [];
+	}
+
 
 
 	/**
