@@ -49,6 +49,10 @@
 	transform: translateY(-0.3rem);
 }
 
+.features__items > * p {
+	color: var(--grey);
+}
+
 .faq {
 	padding-inline: var(--content-padding);
 	max-width: 60rem;
