@@ -188,7 +188,6 @@ abstract class Model {
 		return $result['result'];
 	}
 
-
 	/**
 	 * Finds and returns the first record from the table that matches the specified conditions.
 	 *
@@ -206,8 +205,6 @@ abstract class Model {
 
 		return [];
 	}
-
-
 
 	/**
 	 * Find a record from the table by its ID.
