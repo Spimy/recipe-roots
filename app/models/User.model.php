@@ -40,4 +40,18 @@ class User extends Model {
 
 		return $errors;
 	}
+
+	public function verifyLogin( $data ) {
+		$user = $this->findOne( [ 'email' => $data['email'] ] );
+		if ( empty( $user ) ) {
+			return [];
+		}
+
+		if ( ! password_verify( $data['password'], $user['password'] ) ) {
+			return [];
+		}
+
+		unset( $user['password'] );
+		return $user;
+	}
 }
