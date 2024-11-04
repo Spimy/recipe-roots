@@ -24,6 +24,7 @@ class Signup {
 					'accountType' => $_POST['accountType'] == 'user' ? PROFILE_TYPES['user'] : PROFILE_TYPES['farmer']
 				] );
 
+				$_SESSION['signup'] = 'Successfully signed up. Proceed by signing in.';
 				redirect( 'signin' );
 			}
 
