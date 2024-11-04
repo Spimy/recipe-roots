@@ -46,7 +46,7 @@
 						Remember me for 30 days
 					</label>
 
-					<a href="<?= ROOT ?>/forgot-password">Forgot your password?</a>
+					<a href="<?= ROOT ?>/forgotpassword">Forgot your password?</a>
 				</div>
 			</div>
 
