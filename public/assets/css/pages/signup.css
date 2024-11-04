@@ -67,11 +67,3 @@ h1 {
 .signup p {
 	text-align: center;
 }
-
-.errors {
-	background-color: hsl(from var(--error) h s 10%);
-	border: 0.2em solid var(--error);
-	color: var(--error);
-	padding: 1rem 2rem;
-	border-radius: 0.5rem;
-}

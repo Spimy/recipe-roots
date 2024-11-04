@@ -187,3 +187,22 @@ select:focus-visible {
 .btn--disabled.btn--add::before {
 	background-color: var(--grey-blue);
 }
+
+.errors,
+.success {
+	padding: 1rem 2rem;
+	border-radius: 0.5rem;
+	margin-bottom: 1rem;
+}
+
+.errors {
+	background-color: hsl(from var(--error) h s l / 0.2);
+	border: 0.1em solid var(--error);
+	color: var(--error);
+}
+
+.success {
+	background-color: #c8e6c9;
+	border: 0.1em solid var(--success);
+	color: var(--success);
+}
