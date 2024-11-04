@@ -21,7 +21,7 @@
 		<?php endif; ?>
 
 		<?php if ( ! empty( $_SESSION['profile'] ) ) : ?>
-			<p class="success">Currently signed in as <?= $_SESSION['profile']['username'] ?></p>
+			<p class="success">Currently signed in as <?= escape( $_SESSION['profile']['username'] ) ?></p>
 		<?php endif; ?>
 
 		<?php if ( ! empty( $error ) ) : ?>
