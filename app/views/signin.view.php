@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="<?= ROOT ?>/assets/css/styles.css">
 	<link rel="stylesheet" href="<?= ROOT ?>/assets/css/pages/signin.css">
-	<title>Recipe Roots - Sign Up</title>
+	<title>Recipe Roots - Sign In</title>
 </head>
 
 <body>
