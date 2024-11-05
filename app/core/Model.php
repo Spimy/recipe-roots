@@ -148,32 +148,32 @@ abstract class Model {
 	 * Find all records from the table that match the specified conditions.
 	 *
 	 * @param array $data An associative array of column-value pairs to include in the WHERE clause as equality conditions.
-	 * @param array $data_not An associative array of column-value pairs to include in the WHERE clause as inequality conditions.
+	 * @param array $dataNot An associative array of column-value pairs to include in the WHERE clause as inequality conditions.
 	 * @param bool $join If true, the result will include all related models with foreign keys associated.
 	 * @return array The records found as an array of an associative array.
 	 */
-	public function findAll( array $data = [], array $data_not = [], bool $join = false ) {
+	public function findAll( array $data = [], array $dataNot = [], bool $join = false ) {
 		$query = "SELECT * FROM $this->table";
 
 		$keys = array_keys( $data );
-		$keys_not = array_keys( $data_not );
+		$keysNot = array_keys( $dataNot );
 
 		// Construct the WHERE clause if conditions are specified
-		if ( ! empty( $keys ) || ! empty( $keys_not ) ) {
+		if ( ! empty( $keys ) || ! empty( $keysNot ) ) {
 			$query .= " WHERE ";
 
 			foreach ( $keys as $key ) {
 				$query .= "$key = :$key && ";
 			}
 
-			foreach ( $keys_not as $key ) {
+			foreach ( $keysNot as $key ) {
 				$query .= "$key != :$key && ";
 			}
 
 			$query = trim( $query, " && " );
 		}
 
-		$data = array_merge( $data, $data_not );
+		$data = array_merge( $data, $dataNot );
 		$result = $this->query( $query, $data );
 
 		// O(n^3) HELP
