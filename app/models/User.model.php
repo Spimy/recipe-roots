@@ -36,11 +36,15 @@ class User extends Model {
 			$errors['password'] = "Password is required";
 		}
 
-		if ( $data['password'] != $data['confirmPassword'] ) {
+		if ( ! $this->validatePassword( $data['password'], $data['confirmPassword'] ) ) {
 			$errors['password'] = 'Passwords do not match';
 		}
 
 		return $errors;
+	}
+
+	public function validatePassword( $password, $confirmPassword ) {
+		return $password != $confirmPassword ? false : true;
 	}
 
 	public function verifyLogin( $data ) {
