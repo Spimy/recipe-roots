@@ -7,12 +7,14 @@ class User extends Model {
 	protected $password;
 	protected $dietaryType;
 	protected $verified;
+	protected $isAdmin;
 
 	public function __construct() {
 		$this->email = $this->charField( 255, false, true );
 		$this->password = $this->charField( 255, false );
 		$this->dietaryType = $this->charField( 10, true, false );
 		$this->verified = $this->booleanField( false );
+		$this->isAdmin = $this->booleanField( false );
 		parent::__construct();
 	}
 
