@@ -38,9 +38,7 @@ class Recipes {
 		if ( $id === '' ) {
 			// $recipe->create( [ 'userId' => 1 ] );
 
-			echo "<pre>";
-			print_r( $recipe->findAll( join: true ) );
-			echo "</pre>";
+			show( $recipe->findAll( join: true ) );
 
 			return $this->view(
 				'recipes/recipes',
@@ -56,10 +54,7 @@ class Recipes {
 			die;
 		}
 
-
-		echo "<pre>";
-		print_r( $recipe->findById( $id, true ) );
-		echo "</pre>";
+		show( $recipe->findById( $id, true ) );
 
 		$this->view(
 			'recipes/recipe-detail',

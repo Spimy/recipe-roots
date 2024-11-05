@@ -40,7 +40,7 @@ abstract class Model {
 				. ( isset( $data['nullable'] ) && ! $data['nullable'] ? ' NOT NULL' : '' )
 				. ( isset( $data['autoincrement'] ) && $data['autoincrement'] ? ' AUTO_INCREMENT' : '' )
 				. ( isset( $data['unique'] ) && $data['unique'] ? ' UNIQUE' : '' )
-				. ( isset( $data['default'] ) ? " DEFAULT '{$data['default']}'" : '' );
+				. ( isset( $data['default'] ) && $data['default'] != "''" ? " DEFAULT {$data['default']}" : '' );
 
 			$index++;
 		}
@@ -51,6 +51,10 @@ abstract class Model {
 		foreach ( $this->columns as $columnName => $data ) {
 			if ( isset( $data['model'] ) ) {
 				$foreignKeys[ $index ] = "FOREIGN KEY ($columnName) REFERENCES {$data['model']->table} (id)";
+
+				if ( $data['cascade'] == 'TRUE' ) {
+					$foreignKeys[ $index ] .= ' ON DELETE CASCADE';
+				}
 			}
 			$index++;
 		}
@@ -71,7 +75,7 @@ abstract class Model {
 			'type' => "VARCHAR($maxLengh)",
 			'unique' => $unique,
 			'nullable' => $nullable,
-			'default' => $default == '' && $nullable ? null : $default,
+			'default' => $default == '' && $nullable ? null : "'$default'"
 		];
 	}
 
@@ -87,7 +91,7 @@ abstract class Model {
 	protected function booleanField( bool $default = false ) {
 		return [ 
 			'type' => "BOOLEAN",
-			"default" => is_bool( $default ) ? $default : false,
+			"default" => $default == '' ? 'FALSE' : 'TRUE',
 		];
 	}
 
@@ -95,7 +99,15 @@ abstract class Model {
 		return [ 
 			'type' => "TEXT",
 			'nullable' => $nullable,
-			'default' => $default == '' && $nullable ? null : $default,
+			'default' => $default == '' && $nullable ? null : "'$default'",
+		];
+	}
+
+	protected function dateTimeField( bool $nullable = false, string $default = '' ) {
+		return [ 
+			'type' => "DATETIME",
+			'nullable' => $nullable,
+			'default' => $default == '' && $nullable ? null : "'$default'",
 		];
 	}
 
@@ -103,7 +115,7 @@ abstract class Model {
 		return [ 
 			'type' => "INTEGER",
 			'model' => $model,
-			'cascade' => $cascade,
+			'cascade' => $cascade == '' ? 'FALSE' : 'TRUE',
 			'nullable' => false
 		];
 	}
@@ -113,7 +125,7 @@ abstract class Model {
 	 * It only inserts columns that are defined in the model and ignores any extra data provided.
 	 *
 	 * @param array $data An associative array of column-value pairs that are the data to insert.
-	 * @return void
+	 * @return array The inserted data
 	 */
 	public function create( array $data ) {
 		// Remove unwanted data
@@ -125,38 +137,43 @@ abstract class Model {
 
 		$keys = array_keys( $data );
 		$query = "INSERT INTO $this->table (" . implode( ",", $keys ) . ") VALUES (:" . implode( ",:", $keys ) . ")";
-		$this->query( $query, $data );
+
+		$insert = $this->query( $query, $data );
+		$res = $this->query( "SELECT * FROM {$this->table} WHERE id = ?", [ $insert['connection']->lastInsertId() ] );
+
+		return $res['result'][0];
 	}
 
 	/**
 	 * Find all records from the table that match the specified conditions.
 	 *
 	 * @param array $data An associative array of column-value pairs to include in the WHERE clause as equality conditions.
-	 * @param array $data_not An associative array of column-value pairs to include in the WHERE clause as inequality conditions.
+	 * @param array $dataNot An associative array of column-value pairs to include in the WHERE clause as inequality conditions.
+	 * @param bool $join If true, the result will include all related models with foreign keys associated.
 	 * @return array The records found as an array of an associative array.
 	 */
-	public function findAll( array $data = [], array $data_not = [], bool $join = false ) {
+	public function findAll( array $data = [], array $dataNot = [], bool $join = false ) {
 		$query = "SELECT * FROM $this->table";
 
 		$keys = array_keys( $data );
-		$keys_not = array_keys( $data_not );
+		$keysNot = array_keys( $dataNot );
 
 		// Construct the WHERE clause if conditions are specified
-		if ( ! empty( $keys ) || ! empty( $keys_not ) ) {
+		if ( ! empty( $keys ) || ! empty( $keysNot ) ) {
 			$query .= " WHERE ";
 
 			foreach ( $keys as $key ) {
 				$query .= "$key = :$key && ";
 			}
 
-			foreach ( $keys_not as $key ) {
+			foreach ( $keysNot as $key ) {
 				$query .= "$key != :$key && ";
 			}
 
 			$query = trim( $query, " && " );
 		}
 
-		$data = array_merge( $data, $data_not );
+		$data = array_merge( $data, $dataNot );
 		$result = $this->query( $query, $data );
 
 		// O(n^3) HELP
@@ -176,9 +193,26 @@ abstract class Model {
 			}
 		}
 
-		return $result;
+		return $result['result'];
 	}
 
+	/**
+	 * Finds and returns the first record from the table that matches the specified conditions.
+	 *
+	 * @param array $data An associative array of column-value pairs to include in the WHERE clause as equality conditions.
+	 * @param array $data_not An associative array of column-value pairs to include in the WHERE clause as inequality conditions.
+	 * @param bool $join If true, the result will include all related models with foreign keys associated.
+	 * @return array|null The first record data as an associative array, or null if no record is found.
+	 */
+	public function findOne( array $data = [], array $data_not = [], bool $join = false ) {
+		$result = $this->findAll( $data, $data_not, $join );
+
+		if ( count( $result ) > 0 ) {
+			return $result[0];
+		}
+
+		return [];
+	}
 
 	/**
 	 * Find a record from the table by its ID.
@@ -203,7 +237,7 @@ abstract class Model {
 				}
 			}
 		}
-		return $result;
+		return $result['result'] ?? [];
 	}
 
 	/**
@@ -212,7 +246,7 @@ abstract class Model {
 	 *
 	 * @param int $id The ID of the record to update.
 	 * @param array $data An associative array of column-value pairs which are the new data to update.
-	 * @return void
+	 * @return bool True if the record was successfully updated
 	 */
 	public function update( int $id, array $data ) {
 		// Remove unwanted data
@@ -233,7 +267,13 @@ abstract class Model {
 		$query .= " WHERE id = :id ";
 
 		$data['id'] = $id;
-		$this->query( $query, $data );
+
+		try {
+			$this->query( $query, $data );
+			return true;
+		} catch (PDOException) {
+			return false;
+		}
 	}
 
 	/**

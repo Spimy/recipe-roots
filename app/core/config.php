@@ -9,7 +9,8 @@ switch ( $_SERVER['SERVER_NAME'] ) {
 		define( 'DBPASS', '' );
 		define( 'DBDRIVER', '' );
 
-		define( 'ROOT', 'http://localhost/web2202/assignment/public' );
+		define( 'DOMAIN', 'localhost' );
+		define( 'ROOT', 'http://' . DOMAIN . '/web2202/assignment/public' );
 		break;
 
 	default:
@@ -20,7 +21,8 @@ switch ( $_SERVER['SERVER_NAME'] ) {
 		define( 'DBPASS', '' );
 		define( 'DBDRIVER', '' );
 
-		define( 'ROOT', 'https://recipe-roots.spimy.dev' );
+		define( 'DOMAIN', 'recipe-roots.spimy.dev' );
+		define( 'ROOT', 'https://' . DOMAIN );
 		break;
 }
 

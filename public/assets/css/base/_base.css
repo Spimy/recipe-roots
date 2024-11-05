@@ -15,6 +15,10 @@
 
 	--shade: hsl(122, 43%, 39%);
 
+	--warning: hsl(43, 96%, 58%);
+	--error: hsl(1, 77%, 55%);
+	--success: hsl(122, 46%, 34%);
+
 	/* Sizing */
 	--content-padding: 2rem;
 	--navbar-height: 4rem;
@@ -57,6 +61,48 @@ h4 {
 	font-size: 1.11rem;
 }
 
+a:focus-visible {
+	outline: 0.2em solid var(--primary-clr);
+}
+
+label {
+	font-weight: bold;
+}
+
+label:has(+ input[required])::after,
+label:has(+ textarea[required])::after,
+label:has(+ select[required])::after,
+label:has(+ * input[required])::after,
+label:has(+ * textarea[required])::after,
+label:has(+ * select[required])::after {
+	content: ' *';
+	color: var(--error);
+}
+
+input,
+textarea,
+select {
+	border: none;
+	background-color: var(--silver);
+	border-radius: 0.2rem;
+	padding: 0.5rem 1rem;
+	filter: drop-shadow(var(--shadow-xs));
+	transition: filter 0.3s;
+	accent-color: var(--primary-clr);
+}
+
+input:hover,
+textarea:hover,
+select:hover {
+	filter: drop-shadow(var(--shadow-s));
+}
+
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+	outline: 0.2em solid var(--secondary-clr);
+}
+
 /* Grid system */
 .grid {
 	--_grid-layout-gap: 1rem;
@@ -82,7 +128,6 @@ h4 {
 	gap: 0.5em;
 	align-items: center;
 	justify-content: center;
-	width: max-content;
 	font-size: 1rem;
 	padding: 0.75em 2em;
 	border-radius: 0.5rem;
@@ -141,4 +186,23 @@ h4 {
 .btn--disabled.btn--next::after,
 .btn--disabled.btn--add::before {
 	background-color: var(--grey-blue);
+}
+
+.errors,
+.success {
+	padding: 1rem 2rem;
+	border-radius: 0.5rem;
+	margin-bottom: 1rem;
+}
+
+.errors {
+	background-color: hsl(from var(--error) h s l / 0.2);
+	border: 0.1em solid var(--error);
+	color: var(--error);
+}
+
+.success {
+	background-color: #c8e6c9;
+	border: 0.1em solid var(--success);
+	color: var(--success);
 }
