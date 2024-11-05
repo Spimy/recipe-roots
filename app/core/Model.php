@@ -103,6 +103,14 @@ abstract class Model {
 		];
 	}
 
+	protected function dateTimeField( bool $nullable = false, string $default = '' ) {
+		return [ 
+			'type' => "DATETIME",
+			'nullable' => $nullable,
+			'default' => $default == '' && $nullable ? null : "'$default'",
+		];
+	}
+
 	protected function foreignKey( Model $model, bool $cascade = true ) {
 		return [ 
 			'type' => "INTEGER",
@@ -229,7 +237,7 @@ abstract class Model {
 				}
 			}
 		}
-		return $result['result'];
+		return $result['result'] ?? [];
 	}
 
 	/**
@@ -238,7 +246,7 @@ abstract class Model {
 	 *
 	 * @param int $id The ID of the record to update.
 	 * @param array $data An associative array of column-value pairs which are the new data to update.
-	 * @return void
+	 * @return bool True if the record was successfully updated
 	 */
 	public function update( int $id, array $data ) {
 		// Remove unwanted data
@@ -259,7 +267,13 @@ abstract class Model {
 		$query .= " WHERE id = :id ";
 
 		$data['id'] = $id;
-		$this->query( $query, $data );
+
+		try {
+			$this->query( $query, $data );
+			return true;
+		} catch (PDOException) {
+			return false;
+		}
 	}
 
 	/**
