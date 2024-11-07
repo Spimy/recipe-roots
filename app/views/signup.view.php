@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="<?= ROOT ?>/assets/css/styles.css">
-	<link rel="stylesheet" href="<?= ROOT ?>/assets/css/pages/signup.css">
+	<link rel="stylesheet" href="<?= ROOT ?>/assets/css/layout/auth.css">
 	<title>Recipe Roots - Sign Up</title>
 </head>
 
@@ -23,40 +23,40 @@
 			</ul>
 		<?php endif ?>
 
-		<form class="signup" method="post">
-			<div class="signup__input">
+		<form class="auth" method="post">
+			<div class="auth__input">
 				<label>You are a</label>
 
-				<div class="signup__input--radio signup__input--type">
+				<div class="auth__input--radio auth__input--type">
 					<label for="user"><input type="radio" name="accountType" id="user" value="user" required>User</label>
 					<label for="farmer"><input type="radio" name="accountType" id="farmer" value="farmer">Farmer</label>
 				</div>
 			</div>
 
-			<div class="signup__input">
+			<div class="auth__input">
 				<label for="email">Email</label>
 				<input type="email" name="email" id="email" required>
 			</div>
 
-			<div class="signup__input">
+			<div class="auth__input">
 				<label for="username">Username</label>
 				<input type="text" name="username" id="username" required>
 			</div>
 
-			<div class="signup__input">
+			<div class="auth__input">
 				<label for="password">Password</label>
 				<input type="password" name="password" id="password" required>
 			</div>
 
-			<div class="signup__input">
+			<div class="auth__input">
 				<label for="confirm-password">Confirm Password</label>
 				<input type="password" name="confirmPassword" id="confirm-password" required>
 			</div>
 
-			<div class="signup__input">
+			<div class="auth__input">
 				<label>Dietary Type</label>
 
-				<div class="signup__input--radio">
+				<div class="auth__input--radio">
 					<label for="none"><input type="radio" name="dietaryType" id="none" value="none" required>None</label>
 					<label for="vegetarian">
 						<input type="radio" name="dietaryType" id="vegetarian" value="vegetarian">

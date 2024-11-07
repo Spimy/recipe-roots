@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="<?= ROOT ?>/assets/css/styles.css">
-	<link rel="stylesheet" href="<?= ROOT ?>/assets/css/pages/forgot-password.css">
+	<link rel="stylesheet" href="<?= ROOT ?>/assets/css/layout/auth.css">
 	<title>Recipe Roots - Forgot Password</title>
 </head>
 
@@ -23,8 +23,8 @@
 			<p class="errors"><?= $error ?></p>
 		<?php endif ?>
 
-		<form class="forgot-password" method="post">
-			<div class="forgot-password__input">
+		<form class="auth" method="post">
+			<div class="auth__input">
 				<label for="email">Email</label>
 				<input type="email" name="email" id="email" required>
 			</div>
