@@ -102,7 +102,7 @@ class ForgotPassword {
 				$password = $_POST['password'];
 				$confirmPassword = $_POST['confirmPassword'];
 
-				if ( ! $userModel->validatePassword( $password, $confirmPassword ) ) {
+				if ( $password != $confirmPassword ) {
 					$data['error'] = 'Passwords do not match';
 					break;
 				}
