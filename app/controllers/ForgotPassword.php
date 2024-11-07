@@ -61,62 +61,43 @@ class ForgotPassword {
 	}
 
 	public function reset() {
-		$data = [];
+		$data = [ 'show' => true ];
+		$method = $_SERVER['REQUEST_METHOD'];
+
+		// Check if a token has been provided
+		$token = $method == 'POST' ? $_POST['token'] ?? null : $_GET['token'] ?? null;
+		if ( empty( $token ) ) {
+			$data['error'] = 'No reset password token provided';
+			$data['show'] = false;
+			return $this->view( 'reset-password/reset', $data );
+		}
+
+		// Look up the token in the database to check if it is valid
+		// It needs to be hashed first as a hash of the token is saved in the database
 		$resetTokenModel = new ResetToken();
+		$tokenHash = hash( 'sha256', $token );
+		$resetToken = $resetTokenModel->findOne( [ 'token' => $tokenHash ] );
 
-		switch ( $_SERVER['REQUEST_METHOD'] ) {
+		// If the token is not found then it must be invalid
+		if ( empty( $resetToken ) ) {
+			$data['error'] = 'Invalid reset password token';
+			$data['show'] = false;
+			return $this->view( 'reset-password/reset', $data );
+		}
+
+		// If the expiry time is less than the current time, then it has expired
+		if ( strtotime( $resetToken['expiresAt'] ) <= time() ) {
+			$data['error'] = 'Reset password token expired';
+			$data['show'] = false;
+			return $this->view( 'reset-password/reset', $data );
+		}
+
+		switch ( $method ) {
 			case 'GET':
-				if ( empty( $_GET['token'] ) ) {
-					$data['error'] = 'No reset password token provided';
-					$data['show'] = false;
-					break;
-				}
-
-				$token = $_GET['token'];
-				$tokenHash = hash( 'sha256', $token );
-				$resetToken = $resetTokenModel->findOne( [ 'token' => $tokenHash ] );
-
-				if ( empty( $resetToken ) ) {
-					$data['error'] = 'Invalid reset password token';
-					$data['show'] = false;
-					break;
-				}
-
-				if ( strtotime( $resetToken['expiresAt'] ) <= time() ) {
-					$data['error'] = 'Reset password token expired';
-					$data['show'] = false;
-					break;
-				}
-
 				$data['token'] = $token;
-				$data['show'] = true;
 				break;
 
 			case 'POST':
-				$data['show'] = true;
-				$token = $_POST['token'];
-
-				if ( empty( $_GET['token'] ) ) {
-					$data['error'] = 'No reset password token provided';
-					$data['show'] = false;
-					break;
-				}
-
-				$tokenHash = hash( 'sha256', $token );
-				$resetToken = $resetTokenModel->findOne( [ 'token' => $tokenHash ] );
-
-				if ( empty( $resetToken ) ) {
-					$data['error'] = 'Invalid reset password token';
-					$data['show'] = false;
-					break;
-				}
-
-				if ( strtotime( $resetToken['expiresAt'] ) <= time() ) {
-					$data['error'] = 'Reset password token expired';
-					$data['show'] = false;
-					break;
-				}
-
 				$userModel = new User();
 				$password = $_POST['password'];
 				$confirmPassword = $_POST['confirmPassword'];
