@@ -66,6 +66,12 @@ class ForgotPassword {
 
 		switch ( $_SERVER['REQUEST_METHOD'] ) {
 			case 'GET':
+				if ( empty( $_GET['token'] ) ) {
+					$data['error'] = 'No reset password token provided';
+					$data['show'] = false;
+					break;
+				}
+
 				$token = $_GET['token'];
 				$tokenHash = hash( 'sha256', $token );
 				$resetToken = $resetTokenModel->findOne( [ 'token' => $tokenHash ] );
@@ -89,6 +95,13 @@ class ForgotPassword {
 			case 'POST':
 				$data['show'] = true;
 				$token = $_POST['token'];
+
+				if ( empty( $_GET['token'] ) ) {
+					$data['error'] = 'No reset password token provided';
+					$data['show'] = false;
+					break;
+				}
+
 				$tokenHash = hash( 'sha256', $token );
 				$resetToken = $resetTokenModel->findOne( [ 'token' => $tokenHash ] );
 
