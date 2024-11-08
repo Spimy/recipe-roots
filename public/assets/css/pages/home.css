@@ -87,6 +87,7 @@
 	padding: 1rem;
 	margin-top: -1.5rem; /* A bit of a hacky way to do this but oh well */
 	cursor: pointer;
+	font-weight: normal;
 }
 
 .faq__item__question::after {
