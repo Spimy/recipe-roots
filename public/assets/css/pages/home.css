@@ -108,6 +108,7 @@
 .faq__item__answer {
 	height: auto;
 	max-height: 0;
+	border-radius: 0.5rem;
 	padding-inline: 1rem;
 	color: var(--grey);
 	font-size: 0.8rem;
