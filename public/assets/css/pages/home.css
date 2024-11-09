@@ -71,11 +71,7 @@
 	box-shadow: var(--shadow-s);
 }
 
-.faq__item input[type='checkbox'] {
-	opacity: 0;
-}
-
-.faq__item:has(input[type='checkbox']:focus-visible) {
+.faq__item:has(.faq__item__question:focus-visible) {
 	outline: 0.2em solid var(--secondary-clr);
 }
 
@@ -85,9 +81,9 @@
 	align-items: center;
 	gap: 1rem;
 	padding: 1rem;
-	margin-top: -1.5rem; /* A bit of a hacky way to do this but oh well */
 	cursor: pointer;
-	font-weight: normal;
+	outline: none;
+	transition: margin 0.3s;
 }
 
 .faq__item__question::after {
@@ -102,22 +98,19 @@
 	transition: transform 0.3s;
 }
 
-.faq__item input[type='checkbox']:checked + .faq__item__question::after {
-	transform: rotate(-180deg);
-}
-.faq__item__answer {
-	height: auto;
-	max-height: 0;
-	border-radius: 0.5rem;
-	padding-inline: 1rem;
-	color: var(--grey);
-	font-size: 0.8rem;
-	background-color: var(--silver);
-	overflow: hidden;
-	transition: max-height 0.3s, padding 0.3s;
+.faq__item[open] > .faq__item__question {
+	margin-bottom: 1rem;
 }
 
-.faq__item input[type='checkbox']:checked ~ .faq__item__answer {
-	max-height: 10em;
+.faq__item[open] > .faq__item__question::after {
+	transform: rotate(-180deg);
+}
+
+.faq__item__answer {
+	border-radius: 0.5rem;
+	padding-inline: 1rem;
 	padding-bottom: 1rem;
+	margin-top: -1rem;
+	color: var(--grey);
+	font-size: 0.8rem;
 }
