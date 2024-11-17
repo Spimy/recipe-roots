@@ -2,6 +2,10 @@ main {
 	padding-inline: var(--content-padding);
 }
 
+.btn {
+	padding: 0.3em 1.5em;
+}
+
 .heading {
 	--_margin-bottom: 1rem;
 	display: flex;
@@ -52,8 +56,4 @@ main {
 	background-size: 1rem;
 	background-repeat: no-repeat;
 	background-position: 78% center;
-}
-
-.filter__input .btn {
-	padding: 0.3em 1.5em;
 }
