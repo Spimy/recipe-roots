@@ -16,7 +16,7 @@
 	<main>
 		<h1><?= $action ?> Recipe</h1>
 
-		<form class="editor" method="post">
+		<form class="editor" method="post" enctype="multipart/form-data">
 			<div class="editor__input">
 				<label for="title">Title</label>
 				<input type="text" name="title" id="title" required>
@@ -109,7 +109,7 @@
 
 			<div class="editor__input">
 				<label for="instructions">Instructions</label>
-				<textarea name="instructions" id="instructions" required></textarea>
+				<textarea name="instructions" id="instructions" required hidden></textarea>
 			</div>
 
 			<button type="submit" class="btn">
