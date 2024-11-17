@@ -109,7 +109,7 @@
 
 			<div class="editor__input">
 				<label for="instructions">Instructions</label>
-				<textarea name="instructions" id="instructions" required hidden></textarea>
+				<textarea name="instructions" id="instructions" required></textarea>
 			</div>
 
 			<button type="submit" class="btn">
