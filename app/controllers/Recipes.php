@@ -32,19 +32,23 @@ class Recipes {
 		]
 	];
 
-	public function index( string $id = '' ) {
-		if ( ! isAuthenticated() ) {
-			handleUnauthenticated( 'recipes' );
-		}
+	private $profile;
 
-		$profile = $_SESSION['profile'];
+	public function __construct() {
+		if ( ! isAuthenticated() ) {
+			handleUnauthenticated( $_GET['url'] );
+		}
+		$this->profile = $_SESSION['profile'];
+	}
+
+	public function index( string $id = '' ) {
 		$recipe = new Recipe();
 
 		if ( $id === '' ) {
 			return $this->view(
 				'recipes/recipes',
 				[ 
-					'recipes' => $recipe->findAll( [ 'userId' => $profile['userId'] ] )
+					'recipes' => $recipe->findAll( [ 'userId' => $this->profile['userId'] ] )
 				]
 			);
 		}
@@ -64,7 +68,6 @@ class Recipes {
 			]
 		);
 	}
-
 
 	public function edit( string $id = '' ) {
 		if ( $id === '' || ! is_numeric( $id ) || $id <= 0 ) {
