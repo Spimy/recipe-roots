@@ -100,7 +100,7 @@ select:hover {
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
-	outline: 0.2em solid var(--secondary-clr);
+	outline: 0.2em solid var(--primary-clr);
 }
 
 /* Grid system */
@@ -152,6 +152,10 @@ select:focus-visible {
 	color: var(--primary-clr);
 }
 
+.btn--invert:active:not(.btn--disabled) {
+	background-color: hsl(from var(--silver) h s l / 0.5);
+}
+
 .btn--next::after,
 .btn--add::before {
 	content: '';
@@ -176,6 +180,20 @@ select:focus-visible {
 .btn--invert.btn--next::after,
 .btn--invert.btn--add::before {
 	background: var(--primary-clr);
+}
+
+.btn--error,
+.btn--invert.btn--error {
+	background-color: var(--error);
+	color: var(--white);
+}
+
+.btn--invert.btn--error {
+	border-color: var(--error);
+}
+
+.btn--error:active:not(.btn--disabled) {
+	background-color: hsl(from var(--error) h s 25%);
 }
 
 .btn--disabled {
