@@ -111,6 +111,14 @@ abstract class Model {
 		];
 	}
 
+	protected function jsonField( array $default = [] ) {
+		return [ 
+			'type' => 'JSON',
+			'nullable' => false,
+			'default' => "'" . json_encode( $default ) . "'"
+		];
+	}
+
 	protected function foreignKey( Model $model, bool $cascade = true ) {
 		return [ 
 			'type' => "INTEGER",
