@@ -72,7 +72,7 @@
 }
 
 .faq__item:has(.faq__item__question:focus-visible) {
-	outline: 0.2em solid var(--secondary-clr);
+	outline: 0.2em solid var(--primary-clr);
 }
 
 .faq__item__question {
