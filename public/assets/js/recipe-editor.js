@@ -62,14 +62,14 @@ function addIngredient(root) {
 				<img src="${root}/assets/icons/swap.svg" alt="sort">
 			</label>
 		</td>
-		<td role="cell"><input type="text" inputmode="numeric" name="amount[]" id="amount"></td>
+		<td role="cell"><input type="text" inputmode="numeric" name="amounts[]" id="amount"></td>
 		<td role="cell">
-			<select name="unit[]" id="unit" class="btn btn--invert">
+			<select name="units[]" id="unit" class="btn btn--invert">
 				<option value="" selected disabled>Select</option>
 				${units.map((unit) => `<option value="${unit}">${unit}</option>`).join('\n')}
 			</select>
 		</td>
-		<td role="cell"><input type="text" name="ingredient[]" id="ingredient"></td>
+		<td role="cell"><input type="text" name="ingredients[]" id="ingredient"></td>
 		<td role="cell">
 			<button class="remove-ingredient" type="button">
 				<img src="${root}/assets/icons/close.svg" alt="remove">
