@@ -69,6 +69,10 @@ class Recipes {
 		);
 	}
 
+	public function create() {
+		$this->view( 'recipes/recipe-editor', [ 'action' => 'Create' ] );
+	}
+
 	public function edit( string $id = '' ) {
 		if ( $id === '' || ! is_numeric( $id ) || $id <= 0 ) {
 			http_response_code( 404 );
@@ -77,8 +81,9 @@ class Recipes {
 		}
 
 		$this->view(
-			'recipes/recipe-edit',
+			'recipes/recipe-editor',
 			[ 
+				'action' => 'Edit',
 				'recipe' => $this->recipes[ $id - 1 ]
 			]
 		);
