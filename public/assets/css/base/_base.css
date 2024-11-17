@@ -79,7 +79,7 @@ label:has(+ * select[required])::after {
 	color: var(--error);
 }
 
-input,
+input:not([type='file']),
 textarea,
 select {
 	border: none;
@@ -91,16 +91,44 @@ select {
 	accent-color: var(--primary-clr);
 }
 
-input:hover,
+input:not([type='file']):hover,
 textarea:hover,
 select:hover {
 	filter: drop-shadow(var(--shadow-s));
 }
 
-input:focus-visible,
+input:not([type='file']):focus-visible,
 textarea:focus-visible,
 select:focus-visible {
 	outline: 0.2em solid var(--primary-clr);
+}
+
+/* File input styles */
+input[type='file'] {
+	font-size: 0.8rem;
+	color: var(--grey);
+}
+
+input[type='file']::file-selector-button {
+	display: none;
+}
+
+.input__file label {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border: 0.2rem dashed var(--secondary-clr);
+	cursor: pointer;
+	height: 100%;
+	min-height: 15rem;
+	position: relative;
+}
+
+.input__file--preview {
+	position: absolute;
+	width: 100%;
+	height: inherit;
+	object-fit: cover;
 }
 
 /* Grid system */
@@ -153,7 +181,7 @@ select:focus-visible {
 }
 
 .btn--invert:active:not(.btn--disabled) {
-	background-color: hsl(from var(--silver) h s l / 0.5);
+	background-color: hsl(from var(--silver) h s 95%);
 }
 
 .btn--next::after,
