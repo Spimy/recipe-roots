@@ -103,6 +103,19 @@ select:focus-visible {
 	outline: 0.2em solid var(--primary-clr);
 }
 
+select {
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	appearance: none;
+
+	background-color: var(--primary-clr);
+	background-image: url('../../icons/expand-2.svg');
+	background-size: 1rem;
+	background-repeat: no-repeat;
+	background-position: calc(100% - 1rem) center;
+	padding-right: 2rem;
+}
+
 /* File input styles */
 input[type='file'] {
 	font-size: 0.8rem;

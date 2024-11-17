@@ -45,15 +45,3 @@ main {
 	bottom: 0;
 	right: 1rem;
 }
-
-.filter__input select {
-	-moz-appearance: none;
-	-webkit-appearance: none;
-	appearance: none;
-
-	background-color: var(--primary-clr);
-	background-image: url('../../icons/expand-2.svg');
-	background-size: 1rem;
-	background-repeat: no-repeat;
-	background-position: 78% center;
-}
