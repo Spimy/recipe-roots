@@ -6,6 +6,11 @@ class Signin {
 	public function index() {
 		$data = [];
 
+		if ( isset( $_SESSION['require_auth'] ) ) {
+			$data['error'] = $_SESSION['require_auth'];
+			unset( $_SESSION['require_auth'] );
+		}
+
 		if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 			$userModel = new User();
 			$profileModel = new Profile();
