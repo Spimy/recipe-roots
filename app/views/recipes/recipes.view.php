@@ -16,6 +16,7 @@
 		<header>
 			<div class="heading">
 				<h1>Your Recipes</h1>
+				<a href="<?= ROOT ?>/recipes/create" class="btn btn--add">Create</a>
 			</div>
 
 			<form class="filter" method="GET">
