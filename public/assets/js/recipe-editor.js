@@ -15,6 +15,10 @@ thumbnailInput.addEventListener('change', (event) => {
 });
 
 const easyMDE = new EasyMDE();
+const instructionInput = document.getElementById('instructions');
+easyMDE.codemirror.on('change', () => {
+	instructionInput.innerHTML = easyMDE.value();
+});
 
 // ==== Button functions ====
 
