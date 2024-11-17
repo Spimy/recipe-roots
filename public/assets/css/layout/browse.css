@@ -1,0 +1,59 @@
+main {
+	padding-inline: var(--content-padding);
+}
+
+.heading {
+	--_margin-bottom: 1rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	gap: 0.5rem;
+	margin-bottom: var(--_margin-bottom);
+}
+
+.heading h1 {
+	color: var(--primary-clr);
+	margin-bottom: calc(var(--_margin-bottom) * -1);
+}
+
+.filter > * + * {
+	margin-block-start: 1rem;
+}
+
+.filter__input {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	position: relative;
+	gap: 0.5rem;
+}
+
+.filter__input input[type='text'] {
+	width: 100%;
+}
+
+.filter__input__submit {
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 1rem;
+}
+
+.filter__input select {
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	appearance: none;
+
+	background-color: var(--primary-clr);
+	background-image: url('../../icons/expand-2.svg');
+	background-size: 1rem;
+	background-repeat: no-repeat;
+	background-position: 78% center;
+}
+
+.filter__input .btn {
+	padding: 0.3em 1.5em;
+}
