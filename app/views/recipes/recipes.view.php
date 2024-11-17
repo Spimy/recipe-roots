@@ -34,8 +34,6 @@
 						<option value="vegetarian">Vegetarian</option>
 						<option value="vegan">Vegan</option>
 						<option value="halal">Halal</option>
-						<!-- This is here so that the select box is long enough to also include the arrow -->
-						<option value="vegetarian" hidden>Vegetarian long</option>
 					</select>
 
 					<button class="btn btn--invert btn--error" type="reset">Clear</button>
