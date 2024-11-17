@@ -33,17 +33,18 @@ class Recipes {
 	];
 
 	public function index( string $id = '' ) {
+		if ( ! isAuthenticated() ) {
+			handleUnauthenticated( 'recipes' );
+		}
+
+		$profile = $_SESSION['profile'];
 		$recipe = new Recipe();
 
 		if ( $id === '' ) {
-			// $recipe->create( [ 'userId' => 1 ] );
-
-			show( $recipe->findAll( join: true ) );
-
 			return $this->view(
 				'recipes/recipes',
 				[ 
-					'recipes' => [ 'Medium Rare Steak', 'Classic Carbonara Pasta', 'Alfredo Pasta' ]
+					'recipes' => $recipe->findAll( [ 'userId' => $profile['userId'] ] )
 				]
 			);
 		}
