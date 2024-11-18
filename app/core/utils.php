@@ -38,3 +38,17 @@ function uploadFile( string $folder, string $tempfile, string $filename ) {
 	move_uploaded_file( $tempfile, "$folderpath/$filename" );
 	return ROOT . "/uploads/$folder/$filename";
 }
+
+function extractTitleLetters( string $title ) {
+	$titleWords = explode( ' ', $title );
+	$firstLetters = '';
+
+	for ( $i = 0; $i < count( $titleWords ); $i++ ) {
+		if ( $i == 2 ) {
+			break;
+		}
+		$firstLetters .= strtoupper( $titleWords[ $i ][0] );
+	}
+
+	return $firstLetters;
+}
