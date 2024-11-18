@@ -48,7 +48,7 @@ class Recipes {
 			return $this->view(
 				'recipes/recipes',
 				[ 
-					'recipes' => $recipe->findAll( [ 'userId' => $this->profile['userId'] ] )
+					'recipes' => $recipe->findAll( [ 'profileId' => $this->profile['id'] ], join: true ),
 				]
 			);
 		}
@@ -81,7 +81,7 @@ class Recipes {
 			}
 
 			$newRecipe = [ 
-				'userId' => $this->profile['userId'],
+				'profileId' => $this->profile['id'],
 				'title' => $_POST['title'],
 				'prepTime' => $_POST['prepTime'] ?? null,
 				'waitingTime' => $_POST['waitingTime'] ?? null,
