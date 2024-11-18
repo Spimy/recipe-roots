@@ -96,6 +96,11 @@ noscript.ingredient-count .btn {
 	cursor: pointer;
 }
 
+textarea {
+	resize: vertical;
+	min-height: 10rem;
+}
+
 table {
 	width: 100%;
 	text-align: left;
