@@ -97,7 +97,7 @@ select:hover {
 	filter: drop-shadow(var(--shadow-s));
 }
 
-input:not([type='file']):focus-visible,
+input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
 	outline: 0.2em solid var(--primary-clr);
