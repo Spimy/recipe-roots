@@ -182,7 +182,7 @@ abstract class Model {
 		}
 
 		$data = array_merge( $data, $dataNot );
-		$result = $this->query( $query, $data );
+		$result = $this->query( $query, $data )['result'];
 
 		// O(n^3) HELP
 		// Can't figure out a better way to optimise the code
@@ -201,7 +201,7 @@ abstract class Model {
 			}
 		}
 
-		return $result['result'];
+		return $result;
 	}
 
 	/**
@@ -229,7 +229,7 @@ abstract class Model {
 	 * @return array|null The record data as an associative array, or null if not found.
 	 */
 	public function findById( int $id, bool $join = false ) {
-		$result = $this->query( "SELECT * FROM $this->table WHERE id = ?", [ $id ] )[0] ?? null;
+		$result = $this->query( "SELECT * FROM $this->table WHERE id = ?", [ $id ] )['result'][0] ?? null;
 
 		// O(n^2)
 		// Similar to findAll() but with one less loop... can't think of a better way to optimise the code
@@ -245,7 +245,7 @@ abstract class Model {
 				}
 			}
 		}
-		return $result['result'] ?? [];
+		return $result ?? [];
 	}
 
 	/**
