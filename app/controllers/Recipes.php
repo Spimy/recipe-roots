@@ -70,6 +70,50 @@ class Recipes {
 	}
 
 	public function create() {
+		if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
+			$recipe = new Recipe();
+
+			$errors = $recipe->validate( array_merge( $_POST, $_FILES ) );
+			if ( count( $errors ) > 0 ) {
+				http_response_code( 400 );
+				$this->view( 'recipes/recipe-editor', [ 'action' => 'Create', 'errors' => $errors ] );
+				die;
+			}
+
+			$newRecipe = [ 
+				'userId' => $this->profile['userId'],
+				'title' => $_POST['title'],
+				'prepTime' => $_POST['prepTime'] ?? null,
+				'waitingTime' => $_POST['waitingTime'] ?? null,
+				'servings' => $_POST['servings'] ?? null,
+				'public' => $_POST['public'] == 'yes' ? true : false,
+				'instructions' => $_POST['instructions'],
+			];
+
+			if ( isset( $_FILES['thumbnail'] ) ) {
+				$tmp_name = $_FILES['thumbnail']['tmp_name'];
+				$name = basename( $_FILES['thumbnail']['name'] );
+				$newRecipe['thumbnail'] = uploadFile( 'thumbnails', $tmp_name, $name );
+			}
+
+			$amounts = $_POST['amounts'];
+			$units = $_POST['units'];
+			$ingredients = $_POST['ingredients'];
+
+			$ingredientList = [];
+			foreach ( $ingredients as $index => $ingredient ) {
+				$ingredientList[] = [ 
+					'ingredient' => $ingredient,
+					'unit' => $units[ $index ],
+					'amount' => $amounts[ $index ]
+				];
+			}
+
+			$newRecipe['ingredients'] = json_encode( $ingredientList );
+			$recipe->create( $newRecipe );
+			redirect( 'recipes' );
+		}
+
 		$this->view( 'recipes/recipe-editor', [ 'action' => 'Create' ] );
 	}
 
