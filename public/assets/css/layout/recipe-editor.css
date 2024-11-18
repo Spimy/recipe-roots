@@ -1,11 +1,25 @@
 main {
 	padding-inline: var(--content-padding);
 	margin-bottom: 1rem;
+	position: relative;
 }
 
 h1 {
 	color: var(--primary-clr);
 	margin-bottom: calc(var(--_margin-bottom) * -1);
+}
+
+noscript.ingredient-count {
+	position: absolute;
+	padding-inline: var(--content-padding);
+	padding-top: 25dvh;
+	inset: 0;
+	background-color: var(--white);
+	z-index: 999;
+}
+
+noscript.ingredient-count .btn {
+	width: 100%;
 }
 
 .btn {

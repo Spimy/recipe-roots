@@ -16,6 +16,18 @@
 	<main>
 		<h1><?= $action ?> Recipe</h1>
 
+		<?php if ( $action == 'Create' && empty( $_GET['ingredientCount'] ) ) : ?>
+			<noscript class="ingredient-count">
+				<form method="get">
+					<div class="editor__input">
+						<label for="ingredient-count">Number of Ingredients</label>
+						<input type="text" inputmode="numeric" name="ingredientCount" id="ingredient-count" required>
+					</div>
+					<button class="btn btn--next">Start Creating</button>
+				</form>
+			</noscript>
+		<?php endif; ?>
+
 		<?php if ( ! empty( $errors ) ) : ?>
 			<ul class="errors">
 				<?php foreach ( $errors as $error ) : ?>
@@ -72,7 +84,12 @@
 
 			<div class="editor__ingredients">
 				<h2>Ingredients</h2>
-				<?php $units = [ "tbsp", "tsp", "oz", "fl. oz", "qt", "pt", "gal", "lb", "mL", "kg" ] ?>
+
+				<noscript>
+					<p class="errors" style="margin-top: 0.5rem">
+						Some features do not work without JavaScript. Enable JavaScript for the best experience.
+					</p>
+				</noscript>
 
 				<table role="table" class="editor__ingredients__list">
 					<thead role="rowgroup">
@@ -85,6 +102,7 @@
 						</tr>
 					</thead>
 
+					<?php $units = [ "tbsp", "tsp", "oz", "fl. oz", "qt", "pt", "gal", "lb", "mL", "kg" ] ?>
 					<tbody role="rowgroup">
 						<?php if ( isset( $data['ingredients'] ) ) : ?>
 							<?php foreach ( $data['ingredients'] as $index => $ingredient ) : ?>
@@ -117,29 +135,32 @@
 								</tr>
 							<?php endforeach; ?>
 						<?php else : ?>
-							<tr role="row">
-								<td role="cell">
-									<label draggable="true" ondragend="dragEnd()" ondragover="dragOver(event)"
-										ondragstart="dragStart(event)">
-										<img src="<?= ROOT ?>/assets/icons/swap.svg" alt="sort">
-									</label>
-								</td>
-								<td role="cell"><input type="text" inputmode="numeric" name="amounts[]" id="amount" required></td>
-								<td role="cell">
-									<select name="units[]" id="unit" class="btn btn--invert" required>
-										<option value="" selected disabled>Select</option>
-										<?php foreach ( $units as $unit ) : ?>
-											<option value="<?= $unit ?>"><?= $unit ?></option>
-										<?php endforeach ?>
-									</select>
-								</td>
-								<td role="cell"><input type="text" name="ingredients[]" id="ingredient" required></td>
-								<td role="cell">
-									<button class="remove-ingredient" type="button">
-										<img src="<?= ROOT ?>/assets/icons/close.svg" alt="remove">
-									</button>
-								</td>
-							</tr>
+							<?php $count = $_GET['ingredientCount'] ?? 1; ?>
+							<?php for ( $i = 0; $i < $count; $i++ ) : ?>
+								<tr role="row">
+									<td role="cell">
+										<label draggable="true" ondragend="dragEnd()" ondragover="dragOver(event)"
+											ondragstart="dragStart(event)">
+											<img src="<?= ROOT ?>/assets/icons/swap.svg" alt="sort">
+										</label>
+									</td>
+									<td role="cell"><input type="text" inputmode="numeric" name="amounts[]" id="amount" required></td>
+									<td role="cell">
+										<select name="units[]" id="unit" class="btn btn--invert" required>
+											<option value="" selected disabled>Select</option>
+											<?php foreach ( $units as $unit ) : ?>
+												<option value="<?= $unit ?>"><?= $unit ?></option>
+											<?php endforeach ?>
+										</select>
+									</td>
+									<td role="cell"><input type="text" name="ingredients[]" id="ingredient" required></td>
+									<td role="cell">
+										<button class="remove-ingredient" type="button">
+											<img src="<?= ROOT ?>/assets/icons/close.svg" alt="remove">
+										</button>
+										<phpd>
+								</tr>
+							<?php endfor; ?>
 						<?php endif; ?>
 
 					</tbody>
@@ -163,7 +184,7 @@
 			<a class="btn btn--error" href="<?= ROOT ?>/recipes">
 				Cancel
 			</a>
-		</form>
+			<pm>
 	</main>
 
 	<?php include '../app/views/layout/footer.php' ?>
