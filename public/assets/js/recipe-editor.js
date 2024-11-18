@@ -61,19 +61,18 @@ function addIngredient(root) {
 	const newRow = document.createElement('tr');
 	newRow.innerHTML = `
 		<td role="cell">
-			<label draggable="true" ondragend="dragEnd()" ondragover="dragOver(event)"
-				ondragstart="dragStart(event)">
+			<label draggable="true" ondragend="dragEnd()" ondragover="dragOver(event)" ondragstart="dragStart(event)">
 				<img src="${root}/assets/icons/swap.svg" alt="sort">
 			</label>
 		</td>
-		<td role="cell"><input type="text" inputmode="numeric" name="amounts[]" id="amount"></td>
+		<td role="cell"><input type="text" inputmode="numeric" name="amounts[]" id="amount" required></td>
 		<td role="cell">
-			<select name="units[]" id="unit" class="btn btn--invert">
+			<select name="units[]" id="unit" class="btn btn--invert" required>
 				<option value="" selected disabled>Select</option>
 				${units.map((unit) => `<option value="${unit}">${unit}</option>`).join('\n')}
 			</select>
 		</td>
-		<td role="cell"><input type="text" name="ingredients[]" id="ingredient"></td>
+		<td role="cell"><input type="text" name="ingredients[]" id="ingredient" required></td>
 		<td role="cell">
 			<button class="remove-ingredient" type="button">
 				<img src="${root}/assets/icons/close.svg" alt="remove">
