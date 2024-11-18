@@ -1,7 +1,7 @@
 <?php
 
 class Recipe extends Model {
-	protected $userId;
+	protected $profileId;
 	protected $title;
 	protected $thumbnail;
 	protected $prepTime;
@@ -12,7 +12,7 @@ class Recipe extends Model {
 	protected $instructions;
 
 	public function __construct() {
-		$this->userId = $this->foreignKey( new User, true );
+		$this->profileId = $this->foreignKey( new Profile, true );
 		$this->title = $this->charField( 100 );
 		$this->thumbnail = $this->charField( 255, true );
 		$this->prepTime = $this->integerField( true );
