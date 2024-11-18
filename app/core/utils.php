@@ -24,3 +24,17 @@ function handleUnauthenticated( string $next ) {
 	$_SESSION['require_auth'] = 'You need to be signed in first';
 	redirect( "signin?next=$next" );
 }
+
+function uploadFile( string $folder, string $tempfile, string $filename ) {
+	if ( ! is_dir( '../public/uploads' ) ) {
+		mkdir( '../public/uploads' );
+	}
+
+	$folderpath = "../public/uploads/$folder";
+	if ( ! is_dir( $folderpath ) ) {
+		mkdir( $folderpath );
+	}
+
+	move_uploaded_file( $tempfile, "$folderpath/$filename" );
+	return ROOT . "/uploads/$folder/$filename";
+}
