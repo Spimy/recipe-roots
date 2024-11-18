@@ -193,7 +193,7 @@ abstract class Model {
 					if ( isset( $columnData['model'] ) ) {
 						foreach ( $row as $key => $value ) {
 							if ( $key == $columnName ) {
-								$result[ $index ][ $columnData['model']->table ] = $columnData['model']->findById( $value );
+								$result[ $index ][ $columnData['model']->table ] = $columnData['model']->findById( $value, true );
 							}
 						}
 					}
@@ -239,7 +239,7 @@ abstract class Model {
 				if ( isset( $columnData['model'] ) ) {
 					foreach ( $result as $key => $value ) {
 						if ( $key == $columnName ) {
-							$result[ $columnData['model']->table ] = $columnData['model']->findById( $value );
+							$result[ $columnData['model']->table ] = $columnData['model']->findById( $value, true );
 						}
 					}
 				}
