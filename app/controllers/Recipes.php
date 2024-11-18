@@ -76,7 +76,13 @@ class Recipes {
 			$errors = $recipe->validate( array_merge( $_POST, $_FILES ) );
 			if ( count( $errors ) > 0 ) {
 				http_response_code( 400 );
-				$this->view( 'recipes/recipe-editor', [ 'action' => 'Create', 'errors' => $errors ] );
+				$this->view(
+					'recipes/recipe-editor',
+					[ 
+						'action' => 'Create',
+						'errors' => $errors,
+						'data' => $_POST
+					] );
 				die;
 			}
 

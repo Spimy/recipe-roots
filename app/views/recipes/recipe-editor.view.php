@@ -27,7 +27,7 @@
 		<form class="editor" method="post" enctype="multipart/form-data">
 			<div class="editor__input">
 				<label for="title">Title</label>
-				<input type="text" name="title" id="title" required>
+				<input type="text" name="title" id="title" value="<?= $data['title'] ?? null ?>" required>
 			</div>
 
 			<div class="grid">
@@ -44,24 +44,27 @@
 				<div class="editor--metadata">
 					<div class="editor__input">
 						<label for="prepTime">Preparation Time (min)</label>
-						<input type="text" inputmode="numeric" name="prepTime" id="prepTime">
+						<input type="text" inputmode="numeric" name="prepTime" id="prepTime"
+							value="<?= $data['prepTime'] ?? null ?>">
 					</div>
 
 					<div class="editor__input">
 						<label for="waitingTime">Waiting Time (min)</label>
-						<input type="text" inputmode="numeric" name="waitingTime" id="waitingTime">
+						<input type="text" inputmode="numeric" name="waitingTime" id="waitingTime"
+							value="<?= $data['waitingTime'] ?? null ?>">
 					</div>
 
 					<div class="editor__input">
 						<label for="servings">Servings</label>
-						<input type="text" inputmode="numeric" name="servings" id="servings">
+						<input type="text" inputmode="numeric" name="servings" id="servings"
+							value="<?= $data['servings'] ?? null ?>">
 					</div>
 
 					<div class="editor__input">
 						<label>Public</label>
 						<div class="editor__input--radio">
-							<label for="no"><input type="radio" name="public" id="no" value="no" required checked>No</label>
-							<label for="yes"><input type="radio" name="public" id="yes" value="yes">Yes</label>
+							<label for="no"><input type="radio" name="public" id="no" value="no" required <?= empty( $data['public'] ) ? 'checked' : ( $data['public'] == 'no' ? 'checked' : '' ) ?>>No</label>
+							<label for="yes"><input type="radio" name="public" id="yes" value="yes" <?= empty( $data['public'] ) ? '' : ( $data['public'] == 'yes' ? 'checked' : '' ) ?>>Yes</label>
 						</div>
 					</div>
 				</div>
@@ -83,29 +86,62 @@
 					</thead>
 
 					<tbody role="rowgroup">
-						<tr role="row">
-							<td role="cell">
-								<label draggable="true" ondragend="dragEnd()" ondragover="dragOver(event)"
-									ondragstart="dragStart(event)">
-									<img src="<?= ROOT ?>/assets/icons/swap.svg" alt="sort">
-								</label>
-							</td>
-							<td role="cell"><input type="text" inputmode="numeric" name="amounts[]" id="amount" required></td>
-							<td role="cell">
-								<select name="units[]" id="unit" class="btn btn--invert" required>
-									<option value="" selected disabled>Select</option>
-									<?php foreach ( $units as $unit ) : ?>
-										<option value="<?= $unit ?>"><?= $unit ?></option>
-									<?php endforeach ?>
-								</select>
-							</td>
-							<td role="cell"><input type="text" name="ingredients[]" id="ingredient" required></td>
-							<td role="cell">
-								<button class="remove-ingredient" type="button">
-									<img src="<?= ROOT ?>/assets/icons/close.svg" alt="remove">
-								</button>
-							</td>
-						</tr>
+						<?php if ( isset( $data['ingredients'] ) ) : ?>
+							<?php foreach ( $data['ingredients'] as $index => $ingredient ) : ?>
+								<tr role="row">
+									<td role="cell">
+										<label draggable="true" ondragend="dragEnd()" ondragover="dragOver(event)"
+											ondragstart="dragStart(event)">
+											<img src="<?= ROOT ?>/assets/icons/swap.svg" alt="sort">
+										</label>
+									</td>
+									<td role="cell"><input type="text" inputmode="numeric" name="amounts[]" id="amount"
+											value="<?= $data['amounts'][ $index ] ?? null ?>" required></td>
+									<td role="cell">
+										<select name="units[]" id="unit" class="btn btn--invert" required>
+											<option value="" selected disabled>Select</option>
+											<?php foreach ( $units as $unit ) : ?>
+												<option value="<?= $unit ?>" <?= $data['units'][ $index ] == $unit ? 'selected' : '' ?>>
+													<?= $unit ?>
+												</option>
+											<?php endforeach ?>
+										</select>
+									</td>
+									<td role="cell"><input type="text" name="ingredients[]" id="ingredient" value="<?= $ingredient ?? null ?>"
+											required></td>
+									<td role="cell">
+										<button class="remove-ingredient" type="button">
+											<img src="<?= ROOT ?>/assets/icons/close.svg" alt="remove">
+										</button>
+									</td>
+								</tr>
+							<?php endforeach; ?>
+						<?php else : ?>
+							<tr role="row">
+								<td role="cell">
+									<label draggable="true" ondragend="dragEnd()" ondragover="dragOver(event)"
+										ondragstart="dragStart(event)">
+										<img src="<?= ROOT ?>/assets/icons/swap.svg" alt="sort">
+									</label>
+								</td>
+								<td role="cell"><input type="text" inputmode="numeric" name="amounts[]" id="amount" required></td>
+								<td role="cell">
+									<select name="units[]" id="unit" class="btn btn--invert" required>
+										<option value="" selected disabled>Select</option>
+										<?php foreach ( $units as $unit ) : ?>
+											<option value="<?= $unit ?>"><?= $unit ?></option>
+										<?php endforeach ?>
+									</select>
+								</td>
+								<td role="cell"><input type="text" name="ingredients[]" id="ingredient" required></td>
+								<td role="cell">
+									<button class="remove-ingredient" type="button">
+										<img src="<?= ROOT ?>/assets/icons/close.svg" alt="remove">
+									</button>
+								</td>
+							</tr>
+						<?php endif; ?>
+
 					</tbody>
 				</table>
 
@@ -117,7 +153,7 @@
 
 			<div class="editor__input">
 				<label for="instructions">Instructions</label>
-				<textarea name="instructions" id="instructions" required></textarea>
+				<textarea name="instructions" id="instructions" required><?= $data['instructions'] ?? null ?></textarea>
 			</div>
 
 			<button type="submit" class="btn">
