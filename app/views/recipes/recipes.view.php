@@ -71,6 +71,7 @@
 			<?php endforeach; ?>
 		</section>
 
+		<!-- TODO: Add paginator -->
 	</main>
 
 	<?php include '../app/views/layout/footer.php' ?>
