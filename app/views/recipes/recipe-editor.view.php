@@ -16,6 +16,14 @@
 	<main>
 		<h1><?= $action ?> Recipe</h1>
 
+		<?php if ( ! empty( $errors ) ) : ?>
+			<ul class="errors">
+				<?php foreach ( $errors as $error ) : ?>
+					<li class="errors__message"><?= $error ?></li>
+				<?php endforeach ?>
+			</ul>
+		<?php endif ?>
+
 		<form class="editor" method="post" enctype="multipart/form-data">
 			<div class="editor__input">
 				<label for="title">Title</label>
