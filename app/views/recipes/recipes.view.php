@@ -41,9 +41,33 @@
 			</form>
 		</header>
 
-		<section>
+		<section class="grid">
 			<?php foreach ( $recipes as $recipe ) : ?>
-				<h2><?= $recipe['id'] ?> => <?= $recipe['userId'] ?></h2>
+				<article class="card">
+					<img class="card__thumbnail" src="<?= $recipe['thumbnail'] ?>"
+						alt="<?= extractTitleLetters( $recipe['title'] ) ?>">
+					<div>
+						<div class="card__head">
+							<div class="card__head__title">
+								<h2><?= $recipe['title'] ?></h2>
+							</div>
+							<div class="card__head__info">
+								<!-- TODO: Stars should be based on a rounded average ranking of all comments  -->
+								<img src="<?= ROOT ?>/assets/icons/star-yellow.svg" alt="yellow star">
+								<img src="<?= ROOT ?>/assets/icons/star-yellow.svg" alt="yellow star">
+								<img src="<?= ROOT ?>/assets/icons/star-yellow.svg" alt="yellow star">
+								<img src="<?= ROOT ?>/assets/icons/star-yellow.svg" alt="yellow star">
+								<img src="<?= ROOT ?>/assets/icons/star-grey.svg" alt="grey star">
+							</div>
+						</div>
+						<div class="card__body">
+							<div class="card__body__author">
+								<p><?= $recipe['profile']['username'] ?></p>
+							</div>
+							<a href="<?= ROOT ?>/recipes/<?= $recipe['id'] ?>" class="btn btn--invert btn--next">View</a>
+						</div>
+					</div>
+				</article>
 			<?php endforeach; ?>
 		</section>
 
