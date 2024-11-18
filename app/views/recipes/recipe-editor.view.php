@@ -139,8 +139,7 @@
 								</tr>
 							<?php endforeach; ?>
 						<?php else : ?>
-							<?php $count = $_GET['ingredientCount'] ?? 1; ?>
-							<?php for ( $i = 0; $i < $count; $i++ ) : ?>
+							<?php for ( $i = 0; $i < ( $_GET['ingredientCount'] ?? 1 ); $i++ ) : ?>
 								<tr role="row">
 									<td role="cell">
 										<label draggable="true" ondragend="dragEnd()" ondragover="dragOver(event)"
