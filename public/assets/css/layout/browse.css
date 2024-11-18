@@ -51,3 +51,7 @@ main {
 	bottom: 0;
 	right: 1rem;
 }
+
+.grid {
+	margin-block: 1rem;
+}
