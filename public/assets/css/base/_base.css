@@ -128,8 +128,10 @@ input[type='file']::file-selector-button {
 
 .input__file label {
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	text-align: center;
 	border: 0.2rem dashed var(--secondary-clr);
 	cursor: pointer;
 	height: 100%;

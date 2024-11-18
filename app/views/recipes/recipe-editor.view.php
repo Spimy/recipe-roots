@@ -48,6 +48,10 @@
 					<div class="input__file">
 						<label for="thumbnail">
 							<img src="<?= ROOT ?>/assets/icons/image-picker.svg" alt="image picker">
+							<noscript>
+								<p>Image preview does not work without JavaScript.</p>
+								<p>Refer to file name below instead.</p>
+							</noscript>
 						</label>
 						<input type="file" name="thumbnail" id="thumbnail" accept="image/*">
 					</div>
