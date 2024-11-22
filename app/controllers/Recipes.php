@@ -117,7 +117,7 @@ class Recipes {
 				'instructions' => $_POST['instructions'],
 			];
 
-			if ( isset( $_FILES['thumbnail'] ) ) {
+			if ( $_FILES['thumbnail']['error'] == UPLOAD_ERR_OK ) {
 				$tmp_name = $_FILES['thumbnail']['tmp_name'];
 				$name = basename( $_FILES['thumbnail']['name'] );
 				$newRecipe['thumbnail'] = uploadFile( 'thumbnails', $tmp_name, $name );
