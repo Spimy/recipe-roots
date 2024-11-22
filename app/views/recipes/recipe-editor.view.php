@@ -48,6 +48,11 @@
 					<div class="input__file">
 						<label for="thumbnail">
 							<img src="<?= ROOT ?>/assets/icons/image-picker.svg" alt="image picker">
+
+							<?php if ( isset( $data['thumbnail'] ) ) : ?>
+								<img src="<?= $data['thumbnail'] ?>" alt="thumbnail" class="input__file--preview">
+							<?php endif; ?>
+
 							<noscript>
 								<p>Image preview does not work without JavaScript.</p>
 								<p>Refer to file name below instead.</p>
