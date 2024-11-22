@@ -1,11 +1,11 @@
 main {
 	margin: 0 auto;
-	padding-inline: var(--content-padding);
 	width: min(100%, 75ch);
 }
 
 h1 {
 	margin-block: 1rem;
+	color: var(--secondary-clr);
 }
 
 .auth {

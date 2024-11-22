@@ -1,7 +1,3 @@
-main {
-	padding-inline: var(--content-padding);
-}
-
 .btn {
 	padding: 0.3em 1.5em;
 }
@@ -17,7 +13,6 @@ main {
 }
 
 .heading h1 {
-	color: var(--primary-clr);
 	margin-bottom: calc(var(--_margin-bottom) * -1);
 	flex-grow: 9999;
 }

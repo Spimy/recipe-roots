@@ -1,3 +1,11 @@
+html {
+	overflow-x: hidden;
+}
+
+main {
+	margin-inline: calc(var(--content-padding) * -1);
+}
+
 .hero {
 	background-color: var(--silver);
 	padding-inline: var(--content-padding);

@@ -45,8 +45,13 @@ body {
 	grid-template-rows: auto 1fr auto;
 }
 
+main {
+	padding-inline: var(--content-padding);
+}
+
 h1 {
 	font-size: 3.55rem;
+	color: var(--primary-clr);
 }
 
 h2 {

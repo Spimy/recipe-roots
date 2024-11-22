@@ -10,7 +10,12 @@
 
 <body>
 	<?php include 'layout/header.php' ?>
-	<h1>404 Page Not Found</h1>
+
+	<main>
+		<h1>404 Page Not Found</h1>
+	</main>
+
+	<?php include 'layout/footer.php' ?>
 </body>
 
 </html>

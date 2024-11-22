@@ -1,5 +1,4 @@
 main {
-	padding-inline: var(--content-padding);
 	margin-bottom: 1rem;
 	position: relative;
 }
@@ -20,7 +19,6 @@ h1 {
 }
 
 .heading h1 {
-	color: var(--primary-clr);
 	margin-bottom: calc(var(--_margin-bottom) * -1);
 	flex-grow: 9999;
 }
