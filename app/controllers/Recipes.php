@@ -63,9 +63,22 @@ class Recipes {
 			return $this->view( '404' );
 		}
 
+		$commentModel = new Comment();
+
+		// Posting comments are POST requests so we need to handle that here
+		if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
+			$errors = $commentModel->validate( $_POST );
+			if ( count( $errors ) > 0 ) {
+				// TODO: handle errors
+			}
+
+			$commentModel->create( [ ...$_POST, 'recipeId' => $recipe['id'], 'profileId' => $this->profile['id'] ] );
+		}
+
+		$comments = $commentModel->findAll( [ 'recipeId' => $recipe['id'] ], join: true );
 		$this->view(
 			'recipes/recipe-detail',
-			[ 'recipe' => $recipe ]
+			[ 'recipe' => $recipe, 'comments' => $comments ]
 		);
 	}
 
