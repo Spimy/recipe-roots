@@ -1,0 +1,214 @@
+main {
+	padding-inline: var(--content-padding);
+	margin-bottom: 1rem;
+	position: relative;
+}
+
+h1 {
+	color: var(--primary-clr);
+	margin-bottom: calc(var(--_margin-bottom) * -1);
+}
+
+.heading {
+	--_margin-bottom: 1rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	flex-wrap: wrap;
+	gap: 1em;
+	margin-bottom: var(--_margin-bottom);
+}
+
+.heading h1 {
+	color: var(--primary-clr);
+	margin-bottom: calc(var(--_margin-bottom) * -1);
+	flex-grow: 9999;
+}
+
+.heading__dropdown {
+	flex-grow: 1;
+	position: relative;
+}
+
+.heading__dropdown img {
+	width: 2rem;
+	cursor: pointer;
+}
+
+.heading__dropdown input {
+	display: none;
+}
+
+.heading__dropdown__menu {
+	display: grid;
+	gap: 0.5rem;
+	overflow: hidden;
+	clip: rect(auto, auto, 0, auto);
+	transition: clip 0.5s;
+	padding: 1rem;
+	border-radius: 0.25rem;
+	background-color: var(--silver);
+	position: absolute;
+	right: 0;
+	top: 50%;
+}
+
+.heading__dropdown input:checked + .heading__dropdown__menu {
+	clip: rect(auto, auto, 10rem, auto);
+}
+
+.metadata {
+	display: flex;
+	justify-content: space-between;
+	gap: 0.5rem;
+	flex-wrap: wrap;
+}
+
+.metadata__info {
+	display: grid;
+	grid-template-columns: max-content 1fr;
+	place-items: center;
+	gap: 0.25rem;
+}
+
+.metadata__info img {
+	width: 3.25rem;
+}
+
+.metadata__info:nth-of-type(2) img {
+	width: 2rem;
+}
+
+.metadata__info p {
+	margin: 0;
+}
+
+.metadata__info p:first-of-type {
+	font-weight: 600;
+}
+
+.details {
+	display: grid;
+	gap: 1rem;
+	margin-block: 1rem;
+}
+
+.details__thumbnail img {
+	background-color: var(--primary-clr);
+	font-weight: bold;
+	font-size: 2rem;
+	width: 100%;
+	min-height: 10rem;
+	max-height: 25rem;
+	object-fit: cover;
+	object-position: center;
+	display: grid;
+	place-items: center;
+	border-radius: 0.5rem;
+}
+
+.details__ingredients {
+	color: var(--white);
+	background-color: var(--secondary-clr);
+	border-radius: 0.5rem;
+	padding: 1rem;
+	overflow: auto;
+}
+
+.details__ingredients .btn:focus-visible {
+	outline: 0.2em solid var(--primary-clr);
+}
+
+.details__instructions {
+	margin-block: 2rem;
+	padding-block: 2rem;
+	border-block: 0.1rem solid var(--secondary-clr);
+}
+
+.details__comments h2 {
+	color: var(--primary-clr);
+}
+
+table {
+	width: 100%;
+	text-align: left;
+	border-collapse: collapse;
+}
+
+th {
+	color: var(--grey-blue);
+	font-weight: normal;
+}
+
+tr {
+	border-radius: 0.25rem;
+	padding: 0.2rem;
+}
+
+td {
+	border-top: 0.1rem solid var(--grey-blue);
+}
+
+td,
+th {
+	padding: 6px;
+	text-align: left;
+}
+
+@media only screen and (max-width: 760px),
+	(min-device-width: 768px) and (max-device-width: 1024px) {
+	/* Force table to not be like tables anymore */
+	table,
+	thead,
+	tbody,
+	th,
+	td,
+	tr {
+		display: block;
+	}
+
+	tr:nth-of-type(even) {
+		background: hsl(from var(--secondary-clr) h s 25%);
+	}
+
+	/* Hide table headers (but not display: none;, for accessibility) */
+	thead tr {
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+
+	td {
+		/* Behave  like a "row" */
+		position: relative;
+		padding-left: 50%;
+		border-top: 0;
+	}
+
+	td:before {
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%;
+		padding-right: 10px;
+		white-space: nowrap;
+		border-right: 0.1rem solid var(--grey-blue);
+	}
+
+	/*
+	Label the data
+	*/
+	td:nth-of-type(1):before {
+		content: 'Amount';
+	}
+
+	td:nth-of-type(2):before {
+		content: 'Unit';
+	}
+
+	td:nth-of-type(3):before {
+		content: 'Ingredient';
+	}
+}
