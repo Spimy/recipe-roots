@@ -134,6 +134,10 @@ class Recipes {
 	}
 
 	public function edit( string $id = '' ) {
+		if ( ! $id ) {
+			redirect( 'recipes' );
+		}
+
 		$recipeModel = new Recipe();
 		$recipe = $recipeModel->findById( $id, true );
 
