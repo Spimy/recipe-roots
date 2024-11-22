@@ -176,6 +176,7 @@ class Recipes {
 		}
 
 		$recipe['ingredients'] = json_decode( $recipe['ingredients'], true );
+		$recipe['public'] = $recipe['public'] ? 'yes' : 'no';
 		$this->view(
 			'recipes/recipe-editor',
 			[ 
