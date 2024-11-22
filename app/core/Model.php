@@ -247,7 +247,7 @@ abstract class Model {
 				}
 			}
 		}
-		return $result ?? [];
+		return $result ?? null;
 	}
 
 	/**
