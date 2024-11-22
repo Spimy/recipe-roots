@@ -120,7 +120,7 @@ h1 {
 .details__instructions {
 	margin-block: 2rem;
 	padding-block: 2rem;
-	border-block: 0.1rem solid var(--secondary-clr);
+	border-block: 0.1rem solid var(--grey-blue);
 }
 
 .details__comments h2 {
