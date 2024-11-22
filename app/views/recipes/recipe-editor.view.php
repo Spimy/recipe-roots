@@ -189,7 +189,7 @@
 				<img src="<?= ROOT ?>/assets/icons/save.svg" alt="save icon">
 				Save
 			</button>
-			<a class="btn btn--error" href="<?= ROOT ?>/recipes">
+			<a class="btn btn--error" href="<?= ROOT ?>/recipes/<?= $action == 'Edit' ? $data['id'] : '' ?>">
 				Cancel
 			</a>
 			<pm>
