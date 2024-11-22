@@ -127,6 +127,110 @@ h1 {
 	color: var(--primary-clr);
 }
 
+.details__comments__container {
+	display: grid;
+	gap: 1.5rem;
+}
+
+.details__comments__comment {
+	box-shadow: var(--shadow-s);
+	border-radius: 0.5rem;
+	padding: 1rem;
+}
+
+.details__comments__comment > * + * {
+	margin-block-start: 0.5rem;
+}
+
+.details__comments__comment__header .avatar {
+	display: grid;
+	place-items: center;
+	border-radius: 100%;
+	background-color: var(--silver);
+	width: 2rem;
+	height: 2rem;
+	object-fit: cover;
+}
+
+.details__comments__comment__header,
+.details__comments__comment__header p,
+.details__comments__comment__header > div {
+	font-weight: 600;
+	display: flex;
+	gap: 0.5rem;
+}
+
+.details__comments__comment__header > div {
+	align-items: center;
+	justify-content: space-between;
+}
+
+.details__comments__comment__header p img {
+	width: 0.75rem;
+	height: 0.75rem;
+}
+
+.details__comments__comment__header p.rating {
+	gap: 0.25rem;
+}
+
+.details__comments__editor textarea {
+	width: 100%;
+	resize: vertical;
+	min-height: 10rem;
+	max-height: 15rem;
+	overflow: auto;
+}
+
+.details__comments__editor__footer {
+	display: flex;
+	justify-content: space-between;
+	gap: 1rem;
+	margin-block-start: 1rem;
+}
+
+.details__comments__editor__footer .btn {
+	padding: 0.3em 1.5em;
+}
+
+.rating-input:hover > input + label:hover:after,
+.rating-input:hover > input + label:hover ~ input + label:after,
+.rating-input > input:checked ~ label:after {
+	content: url('../../icons/star-yellow.svg');
+}
+
+.rating-input:hover > input + label:after,
+.rating-input > label:after,
+.rating-score > .rating-score-item:after {
+	content: url('../../icons/star-grey.svg');
+}
+
+.rating-input:hover > input + label:hover:after,
+.rating-input:hover > input + label:hover ~ input + label:after,
+.rating-input > input:checked ~ label:after,
+.rating-input:hover > input + label:after,
+.rating-input > label:after,
+.rating-score > .rating-score-item:after {
+	display: inline-block;
+	transform: scale(1.75);
+}
+
+.rating-input {
+	border: none;
+	background-color: var(--silver);
+	border-radius: 10rem;
+	display: inline-flex;
+	flex-direction: row-reverse;
+	justify-content: flex-end;
+	gap: 0.75rem;
+	margin: 0;
+	padding: 0.1rem 1rem;
+}
+
+.rating-input > input {
+	display: none;
+}
+
 table {
 	width: 100%;
 	text-align: left;

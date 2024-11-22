@@ -106,6 +106,53 @@
 
 			<section class="details__comments">
 				<h2>Comments</h2>
+
+				<div class="details__comments__container">
+					<?php foreach ( $comments as $comment ) : ?>
+						<article class="details__comments__comment">
+							<div class="details__comments__comment__header">
+								<div>
+									<img class="avatar" src="<?= $comment['profile']['avatar'] ?>"
+										alt="<?= extractTitleLetters( $comment['profile']['username'] ) ?>">
+
+									<div>
+										<p><?= escape( $comment['profile']['username'] ) ?></p>
+										<p class="rating">
+											<?php for ( $i = 0; $i < min( $comment['rating'], 5 ); $i++ ) : ?>
+												<img src="<?= ROOT ?>/assets/icons/star-yellow.svg" alt="rated-star">
+											<?php endfor ?>
+											<?php for ( $i = min( $comment['rating'], 5 ); $i < 5; $i++ ) : ?>
+												<img src="<?= ROOT ?>/assets/icons/star-grey.svg" alt="star">
+											<?php endfor ?>
+										</p>
+									</div>
+								</div>
+							</div>
+							<p><?= escape( $comment['content'] ) ?></p>
+						</article>
+					<?php endforeach; ?>
+
+					<form class="details__comments__editor" method="post">
+						<textarea name="content" id="comment" placeholder="Write a comment..." required></textarea>
+
+						<div class="details__comments__editor__footer">
+							<fieldset class="rating-input">
+								<input type="radio" value="5" id="stars-star5" name="rating" required>
+								<label for="stars-star5" title="5 Stars"></label>
+								<input type="radio" value="4" id="stars-star4" name="rating">
+								<label for="stars-star4" title="4 Stars"></label>
+								<input type="radio" value="3" id="stars-star3" name="rating">
+								<label for="stars-star3" title="3 Stars"></label>
+								<input type="radio" value="2" id="stars-star2" name="rating">
+								<label for="stars-star2" title="2 Stars"></label>
+								<input type="radio" value="1" id="stars-star1" name="rating">
+								<label for="stars-star1" title="1 Stars"></label>
+							</fieldset>
+
+							<button type="submit" class="btn">Comment</button>
+						</div>
+					</form>
+				</div>
 			</section>
 		</article>
 	</main>
