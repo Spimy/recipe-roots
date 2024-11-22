@@ -66,12 +66,33 @@ class Recipes {
 		);
 	}
 
+	private function formatIngredients( $amounts, $units, $ingredients ) {
+		$ingredientList = [];
+
+		if ( ! $amounts || ! $units || ! $ingredients ) {
+			return $ingredientList;
+		}
+
+		foreach ( $ingredients as $index => $ingredient ) {
+			$ingredientList[] = [ 
+				'ingredient' => $ingredient,
+				'unit' => $units[ $index ],
+				'amount' => $amounts[ $index ]
+			];
+		}
+
+		return $ingredientList;
+	}
+
 	public function create() {
 		if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 			$recipe = new Recipe();
 
 			$errors = $recipe->validate( array_merge( $_POST, $_FILES ) );
 			if ( count( $errors ) > 0 ) {
+				$ingredientList = $this->formatIngredients( $_POST['amounts'] ?? null, $_POST['units'] ?? null, $_POST['ingredients'] ?? null );
+				$_POST['ingredients'] = $ingredientList;
+
 				http_response_code( 400 );
 				$this->view(
 					'recipes/recipe-editor',
@@ -99,19 +120,7 @@ class Recipes {
 				$newRecipe['thumbnail'] = uploadFile( 'thumbnails', $tmp_name, $name );
 			}
 
-			$amounts = $_POST['amounts'];
-			$units = $_POST['units'];
-			$ingredients = $_POST['ingredients'];
-
-			$ingredientList = [];
-			foreach ( $ingredients as $index => $ingredient ) {
-				$ingredientList[] = [ 
-					'ingredient' => $ingredient,
-					'unit' => $units[ $index ],
-					'amount' => $amounts[ $index ]
-				];
-			}
-
+			$ingredientList = $this->formatIngredients( $_POST['amounts'], $_POST['units'], $_POST['ingredients'] );
 			$newRecipe['ingredients'] = json_encode( $ingredientList );
 			$recipe->create( $newRecipe );
 			redirect( 'recipes' );
@@ -121,17 +130,27 @@ class Recipes {
 	}
 
 	public function edit( string $id = '' ) {
-		if ( $id === '' || ! is_numeric( $id ) || $id <= 0 ) {
+		$recipeModel = new Recipe();
+
+		if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
+
+			redirect( "recipes/$id" );
+		}
+
+		$recipe = $recipeModel->findById( $id, true );
+
+		if ( ! $recipe ) {
 			http_response_code( 404 );
 			$this->view( '404' );
 			die;
 		}
 
+		$recipe['ingredients'] = json_decode( $recipe['ingredients'], true );
 		$this->view(
 			'recipes/recipe-editor',
 			[ 
 				'action' => 'Edit',
-				'recipe' => $this->recipes[ $id - 1 ]
+				'data' => $recipe
 			]
 		);
 	}

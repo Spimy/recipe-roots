@@ -109,7 +109,7 @@
 					<?php $units = [ "tbsp", "tsp", "oz", "fl. oz", "qt", "pt", "gal", "lb", "mL", "kg" ] ?>
 					<tbody role="rowgroup">
 						<?php if ( isset( $data['ingredients'] ) ) : ?>
-							<?php foreach ( $data['ingredients'] as $index => $ingredient ) : ?>
+							<?php foreach ( $data['ingredients'] as $ingredient ) : ?>
 								<tr role="row">
 									<td role="cell">
 										<label draggable="true" ondragend="dragEnd()" ondragover="dragOver(event)"
@@ -118,19 +118,19 @@
 										</label>
 									</td>
 									<td role="cell"><input type="text" inputmode="numeric" name="amounts[]" id="amount"
-											value="<?= $data['amounts'][ $index ] ?? null ?>" required></td>
+											value="<?= $ingredient['amount'] ?? null ?>" required></td>
 									<td role="cell">
 										<select name="units[]" id="unit" class="btn btn--invert" required>
 											<option value="" selected disabled>Select</option>
 											<?php foreach ( $units as $unit ) : ?>
-												<option value="<?= $unit ?>" <?= $data['units'][ $index ] == $unit ? 'selected' : '' ?>>
+												<option value="<?= $unit ?>" <?= $ingredient['unit'] == $unit ? 'selected' : '' ?>>
 													<?= $unit ?>
 												</option>
 											<?php endforeach ?>
 										</select>
 									</td>
-									<td role="cell"><input type="text" name="ingredients[]" id="ingredient" value="<?= $ingredient ?? null ?>"
-											required></td>
+									<td role="cell"><input type="text" name="ingredients[]" id="ingredient"
+											value="<?= $ingredient['ingredient'] ?? null ?>" required></td>
 									<td role="cell">
 										<button class="remove-ingredient" type="button">
 											<img src="<?= ROOT ?>/assets/icons/close.svg" alt="remove">
