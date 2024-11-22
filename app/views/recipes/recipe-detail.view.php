@@ -110,7 +110,7 @@
 
 	<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 	<script>
-		document.getElementById('markdown').innerHTML = marked.parse('<?= escape( $recipe['instructions'] ) ?>');
+		document.getElementById('markdown').innerHTML = marked.parse(`<?= escape( $recipe['instructions'] ) ?>`);
 	</script>
 </body>
 
