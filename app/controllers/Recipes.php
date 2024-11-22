@@ -83,10 +83,14 @@ class Recipes {
 		return $ingredientList;
 	}
 
-	private function handleErrors( $errors, $action ) {
+	private function handleErrors( $errors, $action, $id = null ) {
 		if ( count( $errors ) > 0 ) {
 			$ingredientList = $this->formatIngredients( $_POST['amounts'] ?? null, $_POST['units'] ?? null, $_POST['ingredients'] ?? null );
 			$_POST['ingredients'] = $ingredientList;
+
+			if ( $id ) {
+				$_POST['id'] = $id;
+			}
 
 			http_response_code( 400 );
 			$this->view(
@@ -153,7 +157,7 @@ class Recipes {
 
 		if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 			$errors = $recipeModel->validate( array_merge( $_POST, $_FILES ) );
-			$this->handleErrors( $errors, 'Edit' );
+			$this->handleErrors( $errors, 'Edit', $id );
 
 			$recipeData = [ 
 				'title' => $_POST['title'],
