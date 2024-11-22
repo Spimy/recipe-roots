@@ -42,30 +42,27 @@ class Recipes {
 	}
 
 	public function index( string $id = '' ) {
-		$recipe = new Recipe();
+		$recipeModel = new Recipe();
 
 		if ( $id === '' ) {
 			return $this->view(
 				'recipes/recipes',
 				[ 
-					'recipes' => $recipe->findAll( [ 'profileId' => $this->profile['id'] ], join: true ),
+					'recipes' => $recipeModel->findAll( [ 'profileId' => $this->profile['id'] ], join: true ),
 				]
 			);
 		}
 
-		if ( ! is_numeric( $id ) || $id <= 0 ) {
+		$recipe = $recipeModel->findById( $id, true );
+		if ( ! $recipe ) {
 			http_response_code( 404 );
 			$this->view( '404' );
 			die;
 		}
 
-		show( $recipe->findById( $id, true ) );
-
 		$this->view(
 			'recipes/recipe-detail',
-			[ 
-				'recipe' => $this->recipes[ $id - 1 ]
-			]
+			[ 'recipe' => $recipe ]
 		);
 	}
 
