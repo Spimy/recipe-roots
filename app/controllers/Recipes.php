@@ -146,6 +146,11 @@ class Recipes {
 			return $this->view( '404' );
 		}
 
+		if ( $recipe['profileId'] != $this->profile['id'] ) {
+			http_response_code( 403 );
+			return $this->view( '403', [ 'message' => 'You do not have permissions to edit this recipe' ] );
+		}
+
 		if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 			$errors = $recipeModel->validate( array_merge( $_POST, $_FILES ) );
 			$this->handleErrors( $errors, 'Edit' );
