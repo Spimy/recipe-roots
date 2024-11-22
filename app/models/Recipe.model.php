@@ -37,6 +37,17 @@ class Recipe extends Model {
 			}
 		}
 
+		if ( isset( $data['prepTime'] ) && ! is_numeric( $data['prepTime'] ) ) {
+			$errors['prepTime'] = 'Preparation time must be a number in minutes';
+		}
+		if ( isset( $data['waitingTime'] ) && ! is_numeric( $data['waitingTime'] ) ) {
+			$errors['waitingTime'] = 'Waiting time must be a number in minutes';
+		}
+
+		if ( isset( $data['servings'] ) && ! is_numeric( $data['servings'] ) ) {
+			$errors['servings'] = 'Servings must be a number';
+		}
+
 		if ( empty( $data['public'] ) ) {
 			$errors['public'] = 'Specify whether the recipe is public or private';
 		}
@@ -48,6 +59,10 @@ class Recipe extends Model {
 				|| count( $data['amounts'] ) != count( $data['units'] )
 			) {
 				$errors['ingredients'] = 'Ingredient details are not complete';
+			}
+
+			if ( count( array_filter( $data['amounts'], fn( $amount ) => ! is_numeric( $amount ) ) ) > 0 ) {
+				$errors['amounts'] = 'Ingredient amount detail should be a number';
 			}
 		} else {
 			$errors['ingredients'] = 'At least one ingredient is required';
