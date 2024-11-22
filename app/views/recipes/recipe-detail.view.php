@@ -98,7 +98,11 @@
 				</ol>
 			</section>
 
-			<section id="markdown" class="details__instructions"></section>
+			<section id="markdown" class="details__instructions">
+				<noscript>
+					<p><?= nl2br( escape( $recipe['instructions'] ) ) ?></p>
+				</noscript>
+			</section>
 
 			<section class="details__comments">
 				<h2>Comments</h2>
