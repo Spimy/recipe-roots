@@ -39,11 +39,14 @@ class Recipes {
 			handleUnauthenticated( $_GET['url'] );
 		}
 		$this->profile = $_SESSION['profile'];
+
+		// TODO: If profile is not a 'user' profile but a 'farmer' profile, ask to create a new profile
 	}
 
 	public function index( string $id = '' ) {
 		$recipeModel = new Recipe();
 
+		// List of all recipes for the authenticated user are controlled below
 		if ( $id === '' ) {
 			return $this->view(
 				'recipes/recipes',
@@ -53,6 +56,7 @@ class Recipes {
 			);
 		}
 
+		// Detailed recipe page are controlled below
 		$recipe = $recipeModel->findById( $id, true );
 		if ( ! $recipe ) {
 			http_response_code( 404 );
@@ -104,6 +108,10 @@ class Recipes {
 		}
 	}
 
+	/**
+	 * Controller for create recipe page
+	 * @return void
+	 */
 	public function create() {
 		if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 			$recipe = new Recipe();
@@ -137,6 +145,11 @@ class Recipes {
 		$this->view( 'recipes/recipe-editor', [ 'action' => 'Create' ] );
 	}
 
+	/**
+	 * Controller for edit recipe page
+	 * @param string $id - id of the recipe provided in the URL
+	 * @return void
+	 */
 	public function edit( string $id = '' ) {
 		if ( ! $id ) {
 			redirect( 'recipes' );
