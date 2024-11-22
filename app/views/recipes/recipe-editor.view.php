@@ -50,7 +50,7 @@
 							<img src="<?= ROOT ?>/assets/icons/image-picker.svg" alt="image picker">
 
 							<?php if ( isset( $data['thumbnail'] ) ) : ?>
-								<img src="<?= $data['thumbnail'] ?>" alt="thumbnail" class="input__file--preview">
+								<img src="<?= $data['thumbnail'] ?>" alt="" class="input__file--preview">
 							<?php endif; ?>
 
 							<noscript>
