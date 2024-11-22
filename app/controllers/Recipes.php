@@ -89,13 +89,14 @@ class Recipes {
 			$_POST['ingredients'] = $ingredientList;
 
 			http_response_code( 400 );
-			return $this->view(
+			$this->view(
 				'recipes/recipe-editor',
 				[ 
 					'action' => $action,
 					'errors' => $errors,
 					'data' => $_POST
 				] );
+			die;
 		}
 	}
 
