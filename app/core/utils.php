@@ -52,3 +52,15 @@ function extractTitleLetters( string $title ) {
 
 	return $firstLetters;
 }
+
+function convertToHoursMins( $mins ) {
+	if ( $mins < 1 ) {
+		return;
+	}
+
+	$hours = floor( $mins / 60 );
+	$minutes = $mins % 60;
+
+	$format = $hours > 0 ? '%01d hr %02d min' : '%02d min';
+	return $hours > 0 ? sprintf( $format, $hours, $minutes ) : sprintf( $format, $minutes );
+}
