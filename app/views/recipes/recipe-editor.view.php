@@ -51,6 +51,7 @@
 
 							<?php if ( isset( $data['thumbnail'] ) ) : ?>
 								<img src="<?= $data['thumbnail'] ?>" alt="" class="input__file--preview">
+								<input type="text" name="thumbnail" value="<?= $data['thumbnail'] ?>" hidden>
 							<?php endif; ?>
 
 							<noscript>
