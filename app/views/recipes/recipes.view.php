@@ -52,12 +52,12 @@
 								<h2><?= $recipe['title'] ?></h2>
 							</div>
 							<div class="card__head__info">
-								<!-- TODO: Stars should be based on a rounded average ranking of all comments  -->
-								<img src="<?= ROOT ?>/assets/icons/star-yellow.svg" alt="yellow star">
-								<img src="<?= ROOT ?>/assets/icons/star-yellow.svg" alt="yellow star">
-								<img src="<?= ROOT ?>/assets/icons/star-yellow.svg" alt="yellow star">
-								<img src="<?= ROOT ?>/assets/icons/star-yellow.svg" alt="yellow star">
-								<img src="<?= ROOT ?>/assets/icons/star-grey.svg" alt="grey star">
+								<?php for ( $i = 0; $i < min( $recipe['rating'], 5 ); $i++ ) : ?>
+									<img src="<?= ROOT ?>/assets/icons/star-yellow.svg" alt="yellow star">
+								<?php endfor ?>
+								<?php for ( $i = min( $recipe['rating'], 5 ); $i < 5; $i++ ) : ?>
+									<img src="<?= ROOT ?>/assets/icons/star-grey.svg" alt="grey star">
+								<?php endfor ?>
 							</div>
 						</div>
 						<div class="card__body">

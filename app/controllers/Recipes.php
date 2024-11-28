@@ -48,10 +48,20 @@ class Recipes {
 
 		// List of all recipes for the authenticated user are controlled below
 		if ( $id === '' ) {
+			$recipes = $recipeModel->findAll( [ 'profileId' => $this->profile['id'] ], join: true );
+			$recipes = array_map(
+				function ($recipe) {
+					$commentModel = new Comment();
+					$comments = $commentModel->findAll( [ 'recipeId' => $recipe['id'] ] );
+					$averageRating = array_reduce( $comments, fn( $carry, $comment ) => $carry + $comment['rating'], 0 ) / count( $comments );
+					return [ ...$recipe, "rating" => round( $averageRating, 0 ) ];
+				},
+				$recipes );
+
 			return $this->view(
 				'recipes/recipes',
 				[ 
-					'recipes' => $recipeModel->findAll( [ 'profileId' => $this->profile['id'] ], join: true ),
+					'recipes' => $recipes,
 				]
 			);
 		}
