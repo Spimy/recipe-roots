@@ -160,11 +160,12 @@ abstract class Model {
 	 * @param bool $join If true, the result will include all related models with foreign keys associated.
 	 * @return array The records found as an array of an associative array.
 	 */
-	public function findAll( array $data = [], array $dataNot = [], bool $join = false ) {
+	public function findAll( array $data = [], array $dataNot = [], array $contain = [], bool $join = false ) {
 		$query = "SELECT * FROM $this->table";
 
 		$keys = array_keys( $data );
 		$keysNot = array_keys( $dataNot );
+		$keysContain = array_keys( $contain );
 
 		// Construct the WHERE clause if conditions are specified
 		if ( ! empty( $keys ) || ! empty( $keysNot ) ) {
@@ -181,7 +182,17 @@ abstract class Model {
 			$query = trim( $query, " && " );
 		}
 
-		$data = array_merge( $data, $dataNot );
+		if ( ! empty( $keysContain ) ) {
+			$query .= " && ";
+
+			foreach ( $keysContain as $key ) {
+				$query .= "$key LIKE :$key || ";
+			}
+
+			$query = trim( $query, " || " );
+		}
+
+		$data = array_merge( $data, $dataNot, $contain );
 		$result = $this->query( $query, $data )['result'];
 
 		// O(n^3) HELP
@@ -213,8 +224,8 @@ abstract class Model {
 	 * @param bool $join If true, the result will include all related models with foreign keys associated.
 	 * @return array|null The first record data as an associative array, or null if no record is found.
 	 */
-	public function findOne( array $data = [], array $dataNot = [], bool $join = false ) {
-		$result = $this->findAll( $data, $dataNot, $join );
+	public function findOne( array $data = [], array $dataNot = [], array $contain = [], bool $join = false ) {
+		$result = $this->findAll( $data, $dataNot, $contain, $join );
 
 		if ( count( $result ) > 0 ) {
 			return $result[0];
