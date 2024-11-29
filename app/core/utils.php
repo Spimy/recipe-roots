@@ -64,3 +64,22 @@ function convertToHoursMins( $mins ) {
 	$format = $hours > 0 ? '%01d hr %02d min' : '%02d min';
 	return $hours > 0 ? sprintf( $format, $hours, $minutes ) : sprintf( $format, $minutes );
 }
+
+function getPaginatorPages( $currentPage, $totalPages ) {
+	// Handle edge cases where total pages are less than or equal to 3
+	if ( $totalPages <= 3 ) {
+		return range( 1, $totalPages );
+	}
+
+	// Calculate the range of pages to display
+	if ( $currentPage == 1 ) {
+		// First page: show 1, 2, 3
+		return [ 1, 2, 3 ];
+	} elseif ( $currentPage == $totalPages ) {
+		// Last page: show last three pages
+		return [ $totalPages - 2, $totalPages - 1, $totalPages ];
+	} else {
+		// Middle pages
+		return [ $currentPage - 1, $currentPage, $currentPage + 1 ];
+	}
+}
