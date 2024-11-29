@@ -2,6 +2,7 @@
 
 class Comment extends Model {
 	protected $profileId;
+	protected $recipeId;
 	protected $content;
 	protected $rating;
 
