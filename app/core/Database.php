@@ -2,7 +2,7 @@
 
 trait Database {
 	private function connect() {
-		$connectionString = "mysql:hostname=" . DBHOST;
+		$connectionString = "mysql:host=" . DBHOST;
 
 		$connection = new PDO( $connectionString, DBUSER, DBPASS );
 		$connection->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
