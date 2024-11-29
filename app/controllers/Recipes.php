@@ -223,8 +223,6 @@ class Recipes {
 			$ingredientList = $this->formatIngredients( $_POST['amounts'], $_POST['units'], $_POST['ingredients'] );
 			$recipeData['ingredients'] = json_encode( $ingredientList );
 
-			show( $_FILES['thumbnail'] );
-
 			if ( $_FILES['thumbnail']['error'] == UPLOAD_ERR_OK ) {
 				$tmp_name = $_FILES['thumbnail']['tmp_name'];
 				$name = basename( $_FILES['thumbnail']['name'] );
@@ -234,8 +232,6 @@ class Recipes {
 			if ( empty( $_FILES['thumbnail'] ) ) {
 				$recipeData['thumbnail'] = '';
 			}
-
-			show( $recipeData );
 
 			$recipeModel->update( $id, $recipeData );
 			redirect( "recipes/$id" );
