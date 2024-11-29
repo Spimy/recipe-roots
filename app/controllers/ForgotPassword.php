@@ -121,7 +121,7 @@ class ForgotPassword {
 
 				// Let user know that password has been reset and change expiry to current time to mark it as expired or 'used'
 				$data['message'] = 'Your password has been reset successfully.';
-				$resetTokenModel->update( $resetToken['id'], [ 'expiresAt' => time() ] );
+				$resetTokenModel->update( $resetToken['id'], [ 'expiresAt' => date( 'Y-m-d H:i:s', time() ) ] );
 				break;
 		}
 
