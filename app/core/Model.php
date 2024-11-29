@@ -160,7 +160,7 @@ abstract class Model {
 	 * @param bool $join If true, the result will include all related models with foreign keys associated.
 	 * @return array The records found as an array of an associative array.
 	 */
-	public function findAll( array $data = [], array $dataNot = [], array $contain = [], bool $join = false ) {
+	public function findAll( array $data = [], array $dataNot = [], array $contain = [], bool $join = false, int $limit = null, int $offset = 0 ) {
 		$query = "SELECT * FROM $this->table";
 
 		$keys = array_keys( $data );
@@ -190,6 +190,10 @@ abstract class Model {
 			}
 
 			$query = trim( $query, " || " );
+		}
+
+		if ( $limit ) {
+			$query .= " LIMIT $limit OFFSET $offset";
 		}
 
 		$data = array_merge( $data, $dataNot, $contain );
