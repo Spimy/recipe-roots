@@ -175,7 +175,7 @@ class Recipes {
 				'prepTime' => $_POST['prepTime'] ?? null,
 				'waitingTime' => $_POST['waitingTime'] ?? null,
 				'servings' => $_POST['servings'] ?? null,
-				'public' => $_POST['public'] == 'yes' ? true : false,
+				'public' => $_POST['public'] == 'yes' ? 1 : 0,
 				'instructions' => $_POST['instructions'],
 			];
 
