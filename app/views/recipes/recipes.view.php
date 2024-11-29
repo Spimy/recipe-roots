@@ -21,7 +21,7 @@
 
 			<form class="filter" method="GET">
 				<div class="filter__input">
-					<input type="text" name="filter" id="filter">
+					<input type="text" name="filter" id="filter" value="<?= $_GET['filter'] ?? null ?>">
 					<button class="filter__input__submit" type="submit">
 						<img src="<?= ROOT ?>/assets/icons/search.svg" alt="search icon">
 					</button>

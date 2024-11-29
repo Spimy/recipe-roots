@@ -48,7 +48,23 @@ class Recipes {
 
 		// List of all recipes for the authenticated user are controlled below
 		if ( $id === '' ) {
-			$recipes = $recipeModel->findAll( [ 'profileId' => $this->profile['id'] ], join: true );
+			$recipeParams = [];
+
+			if ( isset( $_GET['filter'] ) && $_GET['filter'] !== '' ) {
+				$recipeParams = [ 
+					"title" => "%" . $_GET['filter'] . "%",
+					"ingredients" => "%" . $_GET['filter'] . "%",
+					"instructions" => "%" . $_GET['filter'] . "%"
+				];
+			}
+
+			$recipes = $recipeModel->findAll(
+				[ 'profileId' => $this->profile['id'] ],
+				contain: $recipeParams,
+				join: true
+			);
+
+
 			$recipes = array_map(
 				function ($recipe) {
 					$commentModel = new Comment();
