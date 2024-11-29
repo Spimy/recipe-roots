@@ -50,3 +50,14 @@
 .grid {
 	margin-block: 1rem;
 }
+
+.paginator {
+	display: flex;
+	justify-content: center;
+	gap: 0.5rem;
+	margin-block-end: 1rem;
+}
+
+.paginator .selected {
+	background-color: var(--shade-2);
+}

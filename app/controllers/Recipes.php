@@ -58,18 +58,27 @@ class Recipes {
 				];
 			}
 
+			$itemsPerPage = 1;
+			$currentPage = isset( $_GET['page'] ) && is_numeric( $_GET['page'] ) ? (int) $_GET['page'] : 1;
+			$offset = ( $currentPage - 1 ) * $itemsPerPage;
+
+			$totalRecipes = count( $recipeModel->findAll( [ 'profileId' => $this->profile['id'] ], contain: $recipeParams ) );
+			$totalPages = floor( $totalRecipes / $itemsPerPage );
+			$totalPages = $totalPages == 0 ? 1 : $totalPages;
+
 			$recipes = $recipeModel->findAll(
 				[ 'profileId' => $this->profile['id'] ],
 				contain: $recipeParams,
-				join: true
+				join: true,
+				limit: $itemsPerPage,
+				offset: $offset
 			);
-
 
 			$recipes = array_map(
 				function ($recipe) {
 					$commentModel = new Comment();
 					$comments = $commentModel->findAll( [ 'recipeId' => $recipe['id'] ] );
-					$averageRating = array_reduce( $comments, fn( $carry, $comment ) => $carry + $comment['rating'], 0 ) / count( $comments );
+					$averageRating = array_reduce( $comments, fn( $carry, $comment ) => $carry + $comment['rating'], 0 ) / ( count( $comments ) || 1 );
 					return [ ...$recipe, "rating" => round( $averageRating, 0 ) ];
 				},
 				$recipes );
@@ -78,6 +87,8 @@ class Recipes {
 				'recipes/recipes',
 				[ 
 					'recipes' => $recipes,
+					'currentPage' => $currentPage,
+					'totalPages' => $totalPages,
 				]
 			);
 		}

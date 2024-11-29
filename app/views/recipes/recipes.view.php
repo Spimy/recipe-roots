@@ -72,6 +72,23 @@
 		</section>
 
 		<!-- TODO: Add paginator -->
+		<section class="paginator">
+			<a class="btn" href="<?= isset( $_GET['filter'] ) ? '?filter=' . $_GET['filter'] . '&' : '?' ?>page=1">«</a>
+			<a class="btn"
+				href="<?= isset( $_GET['filter'] ) ? '?filter=' . $_GET['filter'] . '&' : '?' ?>page=<?= $currentPage == 1 ? $currentPage : $currentPage - 1 ?>">
+				←
+			</a>
+			<?php foreach ( getPaginatorPages( $currentPage, $totalPages ) as $page ) : ?>
+				<a href="<?= isset( $_GET['filter'] ) ? '?filter=' . $_GET['filter'] . '&' : '?' ?>page=<?= $page ?>"
+					class="btn <?= $page == $currentPage ? 'selected' : '' ?>"><?= $page ?></a>
+			<?php endforeach; ?>
+			<a class="btn"
+				href="<?= isset( $_GET['filter'] ) ? '?filter=' . $_GET['filter'] . '&' : '?' ?>page=<?= $currentPage == $totalPages ? $totalPages : $currentPage + 1 ?>">
+				→
+			</a>
+			<a class="btn"
+				href="<?= isset( $_GET['filter'] ) ? '?filter=' . $_GET['filter'] . '&' : '?' ?>page=<?= $totalPages ?>">»</a>
+		</section>
 	</main>
 
 	<?php include '../app/views/layout/footer.php' ?>
