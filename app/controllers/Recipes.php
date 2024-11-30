@@ -51,7 +51,8 @@ class Recipes {
 				function ($recipe) {
 					$commentModel = new Comment();
 					$comments = $commentModel->findAll( [ 'recipeId' => $recipe['id'] ] );
-					$averageRating = array_reduce( $comments, fn( $carry, $comment ) => $carry + $comment['rating'], 0 ) / ( count( $comments ) || 1 );
+					$numComments = count( $comments ) > 0 ? count( $comments ) : 1;
+					$averageRating = array_reduce( $comments, fn( $carry, $comment ) => $carry + $comment['rating'], 0 ) / $numComments;
 					return [ ...$recipe, "rating" => round( $averageRating, 0 ) ];
 				},
 				$recipes );
