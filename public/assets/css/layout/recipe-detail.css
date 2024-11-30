@@ -4,23 +4,25 @@ main {
 }
 
 h1 {
-	color: var(--primary-clr);
-	margin-bottom: calc(var(--_margin-bottom) * -1);
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+	word-break: break-all;
+	word-break: break-word;
+	hyphens: auto;
+	flex-basis: 50%;
+	flex-grow: 9999;
 }
 
 .heading {
-	--_margin-bottom: 1rem;
 	display: flex;
 	justify-content: space-between;
 	align-items: flex-end;
-	flex-wrap: wrap;
 	gap: 1em;
-	margin-bottom: var(--_margin-bottom);
+	margin-block: 1rem;
 }
 
 .heading h1 {
-	margin-bottom: calc(var(--_margin-bottom) * -1);
-	flex-grow: 9999;
+	line-height: 1em;
 }
 
 .heading__dropdown {
