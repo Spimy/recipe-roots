@@ -211,6 +211,7 @@ h1 {
 .rating-input:hover > input + label:after,
 .rating-input > label:after,
 .rating-score > .rating-score-item:after {
+	cursor: pointer;
 	display: inline-block;
 	transform: scale(1.75);
 }
