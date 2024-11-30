@@ -107,6 +107,14 @@
 			<section class="details__comments">
 				<h2>Comments</h2>
 
+				<?php if ( ! empty( $errors ) ) : ?>
+					<ul class="errors">
+						<?php foreach ( $errors as $error ) : ?>
+							<li class="errors__message"><?= escape( $error ) ?></li>
+						<?php endforeach ?>
+					</ul>
+				<?php endif ?>
+
 				<div class="details__comments__container">
 					<?php foreach ( $comments as $comment ) : ?>
 						<article class="details__comments__comment">
