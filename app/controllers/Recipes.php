@@ -67,6 +67,11 @@ class Recipes {
 			);
 		}
 
+		if ( ! is_numeric( $id ) ) {
+			http_response_code( 404 );
+			return $this->view( '404' );
+		}
+
 		// Detailed recipe page are controlled below
 		$recipe = $recipeModel->findById( $id, true );
 		if ( ! $recipe ) {
@@ -168,6 +173,11 @@ class Recipes {
 	public function edit( string $id = '' ) {
 		if ( ! $id ) {
 			redirect( 'recipes' );
+		}
+
+		if ( ! is_numeric( $id ) ) {
+			http_response_code( 404 );
+			return $this->view( '404' );
 		}
 
 		$recipeModel = new Recipe();
