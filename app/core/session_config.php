@@ -21,11 +21,7 @@ header( 'Access-Control-Allow-Origin: ' . ROOT );
 // Generate a token to prevent CSRF attacks
 $_SESSION['csrfToken'] ??= bin2hex( random_bytes( 32 ) );
 
-$_SESSION['profile'] =
-	! empty( $_SESSION['profile'] )
-	? $_SESSION['profile']
-	: (
-		isset( $_COOKIE['profile'] )
-		? json_decode( base64_decode( $_COOKIE['profile'] ), true )
-		: null
-	);
+// If the profile token is set in the cookie, we can assume they are signed in from the "remember me" option
+$_SESSION['profile'] ??= isset( $_COOKIE['profile'] )
+	? json_decode( base64_decode( $_COOKIE['profile'] ), true )
+	: null;
