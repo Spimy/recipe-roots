@@ -25,6 +25,8 @@
 
 			<?php if ( ! empty( $show ) && $show ) : ?>
 				<form class="auth" method="post">
+					<?php injectCsrfToken(); ?>
+
 					<input type="hidden" name="token" value="<?= escape( $token ) ?>">
 
 					<div class="auth__input">

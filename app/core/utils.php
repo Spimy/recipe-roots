@@ -83,3 +83,28 @@ function getPaginatorPages( $currentPage, $totalPages ) {
 		return [ $currentPage - 1, $currentPage, $currentPage + 1 ];
 	}
 }
+
+function injectCsrfToken() {
+	echo <<<HTML
+		<input type="hidden" name="csrfToken" value="{$_SESSION['csrfToken']}" />
+	HTML;
+}
+
+function hasValidCsrfToken() {
+	return isset( $_POST['csrfToken'] ) && hash_equals( $_POST['csrfToken'], $_SESSION['csrfToken'] );
+}
+
+function handleInvalidCsrfToken( object $controller ) {
+	if ( $_SERVER['REQUEST_METHOD'] !== 'POST' ) {
+		return;
+	}
+
+	if ( hasValidCsrfToken() ) {
+		return;
+	}
+
+	http_response_code( 403 );
+	/** @var Controller $controller */
+	$controller->view( '403', [ 'message' => 'No valid CSRF token provided.' ] );
+	die;
+}

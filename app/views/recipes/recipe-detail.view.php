@@ -133,6 +133,7 @@
 					<?php endforeach; ?>
 
 					<form class="details__comments__editor" method="post">
+						<?php injectCsrfToken() ?>
 						<textarea name="content" id="comment" placeholder="Write a comment..." required></textarea>
 
 						<div class="details__comments__editor__footer">

@@ -41,6 +41,8 @@ class Recipes {
 		$this->profile = $_SESSION['profile'];
 
 		// TODO: If profile is not a 'user' profile but a 'farmer' profile, ask to create a new profile
+
+		handleInvalidCsrfToken( $this );
 	}
 
 	public function index( string $id = '' ) {

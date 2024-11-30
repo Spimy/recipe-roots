@@ -24,6 +24,8 @@
 		<?php endif ?>
 
 		<form class="auth" method="post">
+			<?php injectCsrfToken(); ?>
+
 			<div class="auth__input">
 				<label>You are a</label>
 

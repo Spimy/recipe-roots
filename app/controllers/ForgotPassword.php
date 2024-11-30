@@ -3,6 +3,10 @@
 class ForgotPassword {
 	use Controller;
 
+	public function __construct() {
+		handleInvalidCsrfToken( $this );
+	}
+
 	public function index() {
 		$data = [];
 

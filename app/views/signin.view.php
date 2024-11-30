@@ -29,6 +29,8 @@
 		<?php endif ?>
 
 		<form class="auth" method="post">
+			<?php injectCsrfToken(); ?>
+
 			<div class="auth__input">
 				<label for="email">Email</label>
 				<input type="email" name="email" id="email" required>

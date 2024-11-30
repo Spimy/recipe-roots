@@ -4,6 +4,7 @@ class Signup {
 	use Controller;
 
 	public function index() {
+		handleInvalidCsrfToken( $this );
 		$data = [];
 
 		if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {

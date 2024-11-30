@@ -37,6 +37,8 @@
 		<?php endif ?>
 
 		<form class="editor" method="post" enctype="multipart/form-data">
+			<?php injectCsrfToken(); ?>
+
 			<div class="editor__input">
 				<label for="title">Title</label>
 				<input type="text" name="title" id="title" value="<?= $data['title'] ?? null ?>" required>

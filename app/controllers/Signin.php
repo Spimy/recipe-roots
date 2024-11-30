@@ -4,6 +4,7 @@ class Signin {
 	use Controller;
 
 	public function index() {
+		handleInvalidCsrfToken( $this );
 		$data = [];
 
 		if ( isset( $_SESSION['require_auth'] ) ) {
