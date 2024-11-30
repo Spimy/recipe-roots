@@ -3,35 +3,6 @@
 class Recipes {
 	use Controller;
 
-	private $recipes = [ 
-		[ 
-			'title' => 'Medium Rare Steak',
-			'ingredients' => [ 'Meat', 'Onion', 'Salt', 'Pepper' ],
-			'instructions' => 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quos sapiente unde consequuntur dignissimos expedita! Tempore nobis voluptatibus beatae, aspernatur et aliquam quos eligendi, illum magnam, alias nostrum voluptatum sunt rerum!',
-			'comments' => [ 
-				'John Doe' => [ 
-					'content' => 'glass discussion cheese share discuss act into sell thousand customs card electricity ants house old heart shinning deer bag older rays putting ought born',
-					'rating' => 4
-				],
-				'Jane Doe' => [ 
-					'content' => 'came sell blew seven hat having sure line yard grain properly faster lake wealth passage hunt expression symbol buy somewhere eat nearby invented table',
-					'rating' => 3
-				]
-			]
-		],
-		[ 
-			'title' => 'Classic Carbonara Pasta',
-			'ingredients' => [ 'Spaghetti', 'Onion', 'Salt', 'Pepper' ],
-			'instructions' => 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quos sapiente unde consequuntur dignissimos expedita! Tempore nobis voluptatibus beatae, aspernatur et aliquam quos eligendi, illum magnam, alias nostrum voluptatum sunt rerum!',
-			'comments' => [ 
-				'John Doe' => [ 
-					'content' => 'glass discussion cheese share discuss act into sell thousand customs card electricity ants house old heart shinning deer bag older rays putting ought born',
-					'rating' => 4
-				]
-			]
-		]
-	];
-
 	private $profile;
 
 	public function __construct() {
