@@ -21,7 +21,7 @@
 
 			<form class="filter" method="GET">
 				<div class="filter__input">
-					<input type="text" name="filter" id="filter" value="<?= $_GET['filter'] ?? null ?>">
+					<input type="text" name="filter" id="filter" value="<?= escape( $_GET['filter'] ?? '' ) ?>">
 					<button class="filter__input__submit" type="submit">
 						<img src="<?= ROOT ?>/assets/icons/search.svg" alt="search icon">
 					</button>
@@ -44,50 +44,50 @@
 		<section class="grid">
 			<?php foreach ( $recipes as $recipe ) : ?>
 				<article class="card">
-					<img class="card__thumbnail" src="<?= $recipe['thumbnail'] ?>"
-						alt="<?= extractTitleLetters( $recipe['title'] ) ?>">
+					<img class="card__thumbnail" src="<?= escape( $recipe['thumbnail'] ) ?>"
+						alt="<?= extractTitleLetters( escape( $recipe['title'] ) ) ?>">
 					<div>
 						<div class="card__head">
 							<div class="card__head__title">
 								<h2><?= $recipe['title'] ?></h2>
 							</div>
 							<div class="card__head__info">
-								<?php for ( $i = 0; $i < min( $recipe['rating'], 5 ); $i++ ) : ?>
+								<?php for ( $i = 0; $i < min( escape( $recipe['rating'] ), 5 ); $i++ ) : ?>
 									<img src="<?= ROOT ?>/assets/icons/star-yellow.svg" alt="yellow star">
 								<?php endfor ?>
-								<?php for ( $i = min( $recipe['rating'], 5 ); $i < 5; $i++ ) : ?>
+								<?php for ( $i = min( escape( $recipe['rating'] ), 5 ); $i < 5; $i++ ) : ?>
 									<img src="<?= ROOT ?>/assets/icons/star-grey.svg" alt="grey star">
 								<?php endfor ?>
 							</div>
 						</div>
 						<div class="card__body">
 							<div class="card__body__author">
-								<p><?= $recipe['profile']['username'] ?></p>
+								<p><?= escape( $recipe['profile']['username'] ) ?></p>
 							</div>
-							<a href="<?= ROOT ?>/recipes/<?= $recipe['id'] ?>" class="btn btn--invert btn--next">View</a>
+							<a href="<?= ROOT ?>/recipes/<?= escape( $recipe['id'] ) ?>" class="btn btn--invert btn--next">View</a>
 						</div>
 					</div>
 				</article>
 			<?php endforeach; ?>
 		</section>
 
-		<!-- TODO: Add paginator -->
 		<section class="paginator">
-			<a class="btn" href="<?= isset( $_GET['filter'] ) ? '?filter=' . $_GET['filter'] . '&' : '?' ?>page=1">«</a>
 			<a class="btn"
-				href="<?= isset( $_GET['filter'] ) ? '?filter=' . $_GET['filter'] . '&' : '?' ?>page=<?= $currentPage == 1 ? $currentPage : $currentPage - 1 ?>">
+				href="<?= isset( $_GET['filter'] ) ? '?filter=' . escape( $_GET['filter'] ) . '&' : '?' ?>page=1">«</a>
+			<a class="btn"
+				href="<?= isset( $_GET['filter'] ) ? '?filter=' . escape( $_GET['filter'] ) . '&' : '?' ?>page=<?= $currentPage == 1 ? $currentPage : $currentPage - 1 ?>">
 				←
 			</a>
 			<?php foreach ( getPaginatorPages( $currentPage, $totalPages ) as $page ) : ?>
-				<a href="<?= isset( $_GET['filter'] ) ? '?filter=' . $_GET['filter'] . '&' : '?' ?>page=<?= $page ?>"
-					class="btn <?= $page == $currentPage ? 'selected' : '' ?>"><?= $page ?></a>
+				<a href="<?= isset( $_GET['filter'] ) ? '?filter=' . escape( $_GET['filter'] ) . '&' : '?' ?>page=<?= escape( $page ) ?>"
+					class="btn <?= $page == $currentPage ? 'selected' : '' ?>"><?= escape( $page ) ?></a>
 			<?php endforeach; ?>
 			<a class="btn"
-				href="<?= isset( $_GET['filter'] ) ? '?filter=' . $_GET['filter'] . '&' : '?' ?>page=<?= $currentPage == $totalPages ? $totalPages : $currentPage + 1 ?>">
+				href="<?= isset( $_GET['filter'] ) ? '?filter=' . escape( $_GET['filter'] ) . '&' : '?' ?>page=<?= $currentPage == $totalPages ? $totalPages : $currentPage + 1 ?>">
 				→
 			</a>
 			<a class="btn"
-				href="<?= isset( $_GET['filter'] ) ? '?filter=' . $_GET['filter'] . '&' : '?' ?>page=<?= $totalPages ?>">»</a>
+				href="<?= isset( $_GET['filter'] ) ? '?filter=' . escape( $_GET['filter'] ) . '&' : '?' ?>page=<?= $totalPages ?>">»</a>
 		</section>
 	</main>
 

@@ -85,8 +85,9 @@ function getPaginatorPages( $currentPage, $totalPages ) {
 }
 
 function injectCsrfToken() {
+	$token = escape( $_SESSION['csrfToken'] );
 	echo <<<HTML
-		<input type="hidden" name="csrfToken" value="{$_SESSION['csrfToken']}" />
+		<input type="hidden" name="csrfToken" value="{$token}" />
 	HTML;
 }
 

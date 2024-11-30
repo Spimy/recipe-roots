@@ -20,7 +20,7 @@
 			<p>Click <a href="<?= ROOT ?>/signin">here</a> to sign in.</p>
 		<?php else : ?>
 			<?php if ( ! empty( $error ) ) : ?>
-				<p class="errors"><?= $error ?></p>
+				<p class="errors"><?= escape( $error ) ?></p>
 			<?php endif; ?>
 
 			<?php if ( ! empty( $show ) && $show ) : ?>

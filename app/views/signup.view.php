@@ -18,7 +18,7 @@
 		<?php if ( ! empty( $errors ) ) : ?>
 			<ul class="errors">
 				<?php foreach ( $errors as $error ) : ?>
-					<li class="errors__message"><?= $error ?></li>
+					<li class="errors__message"><?= escape( $error ) ?></li>
 				<?php endforeach ?>
 			</ul>
 		<?php endif ?>

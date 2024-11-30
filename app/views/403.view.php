@@ -15,7 +15,7 @@
 		<h1>403 Forbidden</h1>
 
 		<?php if ( isset( $message ) ) : ?>
-			<p class="errors"><?= $message ?></p>
+			<p class="errors"><?= escape( $message ) ?></p>
 		<?php endif; ?>
 	</main>
 

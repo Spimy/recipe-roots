@@ -16,7 +16,7 @@
 		<h1>Sign In</h1>
 
 		<?php if ( ! empty( $_SESSION['signup'] ) ) : ?>
-			<p class="success"><?= $_SESSION['signup'] ?></p>
+			<p class="success"><?= escape( $_SESSION['signup'] ) ?></p>
 			<?php unset( $_SESSION['signup'] ) ?>
 		<?php endif; ?>
 
@@ -25,7 +25,7 @@
 		<?php endif; ?>
 
 		<?php if ( ! empty( $error ) ) : ?>
-			<p class="errors"><?= $error ?></p>
+			<p class="errors"><?= escape( $error ) ?></p>
 		<?php endif ?>
 
 		<form class="auth" method="post">

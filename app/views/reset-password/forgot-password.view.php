@@ -16,11 +16,11 @@
 		<h1>Forgot Password</h1>
 
 		<?php if ( ! empty( $message ) ) : ?>
-			<p class="success"><?= $message ?></p>
+			<p class="success"><?= escape( $message ) ?></p>
 		<?php endif; ?>
 
 		<?php if ( ! empty( $error ) ) : ?>
-			<p class="errors"><?= $error ?></p>
+			<p class="errors"><?= escape( $error ) ?></p>
 		<?php endif ?>
 
 		<form class="auth" method="post">

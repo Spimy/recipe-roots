@@ -112,8 +112,8 @@
 						<article class="details__comments__comment">
 							<div class="details__comments__comment__header">
 								<div>
-									<img class="avatar" src="<?= $comment['profile']['avatar'] ?>"
-										alt="<?= extractTitleLetters( $comment['profile']['username'] ) ?>">
+									<img class="avatar" src="<?= escape( $comment['profile']['avatar'] ) ?>"
+										alt="<?= extractTitleLetters( escape( $comment['profile']['username'] ) ) ?>">
 
 									<div>
 										<p><?= escape( $comment['profile']['username'] ) ?></p>
