@@ -15,6 +15,9 @@ session_start();
 
 session_regenerate_id( true );
 
+// Generate a token to prevent CSRF attacks
+$_SESSION['csrfToken'] ??= bin2hex( random_bytes( 32 ) );
+
 $_SESSION['profile'] =
 	! empty( $_SESSION['profile'] )
 	? $_SESSION['profile']
