@@ -259,6 +259,11 @@ class Recipes {
 				$recipeModel = new Recipe();
 				$recipe = $recipeModel->findById( $recipeId, true );
 
+				if ( ! $recipe ) {
+					http_response_code( 404 );
+					redirect( '404' );
+				}
+
 				$newComment = $commentModel->create( [ ...$_POST, 'recipeId' => $recipe['id'], 'profileId' => $this->profile['id'] ] );
 				redirect( "recipes/$recipeId#comment-" . $newComment['id'] );
 				break;
