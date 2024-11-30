@@ -356,3 +356,14 @@ input[type='file']::file-selector-button {
 .card__body .btn {
 	padding: 0.05em 1em;
 }
+
+.paginator {
+	display: flex;
+	justify-content: center;
+	gap: 0.5rem;
+	margin-block: 1rem;
+}
+
+.paginator .selected {
+	background-color: var(--shade-2);
+}
