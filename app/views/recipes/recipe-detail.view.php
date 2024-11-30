@@ -33,7 +33,7 @@
 						<img src="<?= ROOT ?>/assets/icons/clock.svg" alt="clock">
 						<div>
 							<p>Preparation</p>
-							<p><?= convertToHoursMins( $recipe['prepTime'] ) ?></p>
+							<p><?= escape( convertToHoursMins( $recipe['prepTime'] ) ) ?></p>
 						</div>
 					</div>
 				<?php endif; ?>
@@ -43,7 +43,7 @@
 						<img src="<?= ROOT ?>/assets/icons/watch.svg" alt="watch">
 						<div>
 							<p>Waiting</p>
-							<p><?= convertToHoursMins( $recipe['waitingTime'] ) ?></p>
+							<p><?= escape( convertToHoursMins( $recipe['waitingTime'] ) ) ?></p>
 						</div>
 					</div>
 				<?php endif; ?>
@@ -53,7 +53,7 @@
 						<img src="<?= ROOT ?>/assets/icons/serving.svg" alt="serving">
 						<div>
 							<p>Servings</p>
-							<p><?= $recipe['servings'] ?></p>
+							<p><?= escape( $recipe['servings'] ) ?></p>
 						</div>
 					</div>
 				<?php endif; ?>
@@ -70,7 +70,7 @@
 
 		<article class="details">
 			<section class="details__thumbnail">
-				<img src="<?= $recipe['thumbnail'] ?>" alt="<?= extractTitleLetters( $recipe['title'] ) ?>">
+				<img src="<?= $recipe['thumbnail'] ?>" alt="<?= extractTitleLetters( escape( $recipe['title'] ) ) ?>">
 			</section>
 
 			<section class="details__ingredients">
@@ -87,9 +87,9 @@
 					<tbody role="rowgroup">
 						<?php foreach ( json_decode( $recipe['ingredients'], true ) as $ingredient ) : ?>
 							<tr role="row">
-								<td role="cell"><?= $ingredient['amount'] ?></td>
-								<td role="cell"><?= $ingredient['unit'] ?></td>
-								<td role="cell"><?= $ingredient['ingredient'] ?></td>
+								<td role="cell"><?= escape( $ingredient['amount'] ) ?></td>
+								<td role="cell"><?= escape( $ingredient['unit'] ) ?></td>
+								<td role="cell"><?= escape( $ingredient['ingredient'] ) ?></td>
 							</tr>
 						<?php endforeach ?>
 					</tbody>
