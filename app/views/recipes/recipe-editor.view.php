@@ -185,9 +185,7 @@
 
 			<div class="editor__input">
 				<label for="instructions">Instructions</label>
-				<textarea name="instructions" id="instructions" required>
-					<?= escape( $data['instructions'] ) ?? null ?>
-				</textarea>
+				<textarea name="instructions" id="instructions" required><?= escape( $data['instructions'] ) ?? null ?></textarea>
 			</div>
 
 			<button type="submit" class="btn">
