@@ -87,7 +87,7 @@ class ForgotPassword {
 		// If the token is not found then it must be invalid
 		if ( empty( $resetToken ) ) {
 			http_response_code( 400 );
-			$data['error'] = 'Invalid reset password token';
+			$data['error'] = 'Reset password token is invalid or has expired';
 			$data['show'] = false;
 			return $this->view( 'reset-password/reset', $data );
 		}
@@ -95,7 +95,7 @@ class ForgotPassword {
 		// If the expiry time is less than the current time, then it has expired
 		if ( strtotime( $resetToken['expiresAt'] ) <= time() ) {
 			http_response_code( 400 );
-			$data['error'] = 'Reset password token expired';
+			$data['error'] = 'Reset password token is invalid or has expired';
 			$data['show'] = false;
 			return $this->view( 'reset-password/reset', $data );
 		}
