@@ -41,7 +41,7 @@
 
 			<div class="editor__input">
 				<label for="title">Title</label>
-				<input type="text" name="title" id="title" value="<?= escape( $data['title'] ) ?? null ?>" required>
+				<input type="text" name="title" id="title" value="<?= escape( $data['title'] ?? '' ) ?? null ?>" required>
 			</div>
 
 			<div class="grid">
@@ -52,8 +52,8 @@
 							<img src="<?= ROOT ?>/assets/icons/image-picker.svg" alt="image picker">
 
 							<?php if ( isset( $data['thumbnail'] ) ) : ?>
-								<img src="<?= escape( $data['thumbnail'] ) ?>" alt="" class="input__file--preview">
-								<input type="text" name="thumbnail" value="<?= escape( $data['thumbnail'] ) ?>" hidden>
+								<img src="<?= escape( $data['thumbnail'] ?? '' ) ?>" alt="" class="input__file--preview">
+								<input type="text" name="thumbnail" value="<?= escape( $data['thumbnail'] ?? '' ) ?>" hidden>
 							<?php endif; ?>
 
 							<noscript>
@@ -69,19 +69,19 @@
 					<div class="editor__input">
 						<label for="prepTime">Preparation Time (min)</label>
 						<input type="text" inputmode="numeric" name="prepTime" id="prepTime"
-							value="<?= escape( $data['prepTime'] ) ?? null ?>">
+							value="<?= escape( $data['prepTime'] ?? '' ) ?? null ?>">
 					</div>
 
 					<div class="editor__input">
 						<label for="waitingTime">Waiting Time (min)</label>
 						<input type="text" inputmode="numeric" name="waitingTime" id="waitingTime"
-							value="<?= escape( $data['waitingTime'] ) ?? null ?>">
+							value="<?= escape( $data['waitingTime'] ?? '' ) ?? null ?>">
 					</div>
 
 					<div class="editor__input">
 						<label for="servings">Servings</label>
 						<input type="text" inputmode="numeric" name="servings" id="servings"
-							value="<?= escape( $data['servings'] ) ?? null ?>">
+							value="<?= escape( $data['servings'] ?? '' ) ?? null ?>">
 					</div>
 
 					<div class="editor__input">
@@ -126,19 +126,19 @@
 										</label>
 									</td>
 									<td role="cell"><input type="text" inputmode="numeric" name="amounts[]" id="amount"
-											value="<?= escape( $ingredient['amount'] ) ?? null ?>" required></td>
+											value="<?= escape( $ingredient['amount'] ?? '' ) ?? null ?>" required></td>
 									<td role="cell">
 										<select name="units[]" id="unit" class="btn btn--invert" required>
 											<option value="" selected disabled>Select</option>
 											<?php foreach ( $units as $unit ) : ?>
-												<option value="<?= $unit ?>" <?= escape( $ingredient['unit'] ) == $unit ? 'selected' : '' ?>>
+												<option value="<?= $unit ?>" <?= escape( $ingredient['unit'] ?? '' ) == $unit ? 'selected' : '' ?>>
 													<?= $unit ?>
 												</option>
 											<?php endforeach ?>
 										</select>
 									</td>
 									<td role="cell"><input type="text" name="ingredients[]" id="ingredient"
-											value="<?= escape( $ingredient['ingredient'] ) ?? null ?>" required></td>
+											value="<?= escape( $ingredient['ingredient'] ?? '' ) ?? null ?>" required></td>
 									<td role="cell">
 										<button class="remove-ingredient" type="button">
 											<img src="<?= ROOT ?>/assets/icons/close.svg" alt="remove">
@@ -185,14 +185,15 @@
 
 			<div class="editor__input">
 				<label for="instructions">Instructions</label>
-				<textarea name="instructions" id="instructions" required><?= escape( $data['instructions'] ) ?? null ?></textarea>
+				<textarea name="instructions" id="instructions"
+					required><?= escape( $data['instructions'] ?? '' ) ?? null ?></textarea>
 			</div>
 
 			<button type="submit" class="btn">
 				<img src="<?= ROOT ?>/assets/icons/save.svg" alt="save icon">
 				Save
 			</button>
-			<a class="btn btn--error" href="<?= ROOT ?>/recipes/<?= $action == 'Edit' ? escape( $data['id'] ) : '' ?>">
+			<a class="btn btn--error" href="<?= ROOT ?>/recipes/<?= $action == 'Edit' ? escape( $data['id'] ?? '' ) : '' ?>">
 				Cancel
 			</a>
 			<pm>
