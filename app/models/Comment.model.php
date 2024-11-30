@@ -17,6 +17,10 @@ class Comment extends Model {
 	public function validate( $data ) {
 		$errors = [];
 
+		if ( empty( $data['recipeId'] ) ) {
+			$errors['recipeId'] = 'No recipe id has been provided';
+		}
+
 		if ( empty( $data['content'] ) ) {
 			$errors['content'] = 'Your comment has no content';
 		}

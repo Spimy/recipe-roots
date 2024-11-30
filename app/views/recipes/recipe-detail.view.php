@@ -105,7 +105,7 @@
 			</section>
 
 			<section class="details__comments">
-				<h2>Comments</h2>
+				<h2 id="comments">Comments</h2>
 
 				<?php if ( ! empty( $errors ) ) : ?>
 					<ul class="errors">
@@ -117,7 +117,7 @@
 
 				<div class="details__comments__container">
 					<?php foreach ( $comments as $comment ) : ?>
-						<article class="details__comments__comment">
+						<article class="details__comments__comment" id="comment-<?= escape( $comment['id'] ) ?>">
 							<div class="details__comments__comment__header">
 								<div>
 									<img class="avatar" src="<?= escape( $comment['profile']['avatar'] ) ?>"
@@ -140,8 +140,10 @@
 						</article>
 					<?php endforeach; ?>
 
-					<form class="details__comments__editor" method="post">
+					<form class="details__comments__editor" action="<?= ROOT ?>/recipes/comment/add" method="post">
 						<?php injectCsrfToken() ?>
+
+						<input type="hidden" name="recipeId" value="<?= escape( $recipe['id'] ) ?>">
 						<textarea name="content" id="comment" placeholder="Write a comment..." required></textarea>
 
 						<div class="details__comments__editor__footer">

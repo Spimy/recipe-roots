@@ -74,24 +74,13 @@ class Recipes {
 		}
 
 		$commentModel = new Comment();
-		$errors = [];
-
-		// Posting comments are POST requests so we need to handle that here
-		if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
-			$errors = $commentModel->validate( $_POST );
-			if ( count( $errors ) == 0 ) {
-				$commentModel->create( [ ...$_POST, 'recipeId' => $recipe['id'], 'profileId' => $this->profile['id'] ] );
-			} else {
-				http_response_code( 400 );
-			}
-
-		}
 
 		$comments = $commentModel->findAll( [ 'recipeId' => $recipe['id'] ], join: true );
 		$this->view(
 			'recipes/recipe-detail',
-			[ 'recipe' => $recipe, 'comments' => $comments, 'errors' => $errors ]
+			[ 'recipe' => $recipe, 'comments' => $comments, 'errors' => $_SESSION['comment_errors'] ?? [] ]
 		);
+		unset( $_SESSION['comment_errors'] );
 	}
 
 	private function formatIngredients( $amounts, $units, $ingredients ) {
@@ -232,5 +221,47 @@ class Recipes {
 				'data' => $recipe
 			]
 		);
+	}
+
+	public function comment( string $method = null ) {
+		if ( $_SERVER['REQUEST_METHOD'] == 'GET' ) {
+			redirect( 'recipes' );
+		}
+
+		switch ( strtolower( $method ) ) {
+			case 'add': {
+				$commentModel = new Comment();
+				$errors = $commentModel->validate( $_POST );
+
+				if ( count( $errors ) > 0 ) {
+					http_response_code( 400 );
+
+					if ( isset( $errors['recipeId'] ) ) {
+						redirect( 'recipes' );
+					}
+
+					$_SESSION['comment_errors'] = $errors;
+					redirect( 'recipes/' . $_POST['recipeId'] . '#comments' );
+				}
+
+				$recipeId = $_POST['recipeId'];
+				$recipeModel = new Recipe();
+				$recipe = $recipeModel->findById( $recipeId, true );
+
+				$newComment = $commentModel->create( [ ...$_POST, 'recipeId' => $recipe['id'], 'profileId' => $this->profile['id'] ] );
+				redirect( "recipes/$recipeId#comment-" . $newComment['id'] );
+				break;
+			}
+			case 'edit': {
+				show( 'edit' );
+				break;
+			}
+			case 'delete': {
+
+			}
+			default: {
+				redirect( 'recipes' );
+			}
+		}
 	}
 }
