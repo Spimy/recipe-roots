@@ -49,7 +49,7 @@
 					<div>
 						<div class="card__head">
 							<div class="card__head__title">
-								<h2><?= $recipe['title'] ?></h2>
+								<h2><?= escape( $recipe['title'] ) ?></h2>
 							</div>
 							<div class="card__head__info">
 								<?php for ( $i = 0; $i < min( escape( $recipe['rating'] ), 5 ); $i++ ) : ?>
