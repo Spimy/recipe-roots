@@ -377,8 +377,12 @@ input[type='file']::file-selector-button {
 }
 
 .paginator > div:nth-of-type(2) {
-	grid-template-columns: 1fr 1fr 1fr;
+	display: flex;
 	grid-area: pages;
+}
+
+.paginator > div:nth-of-type(2) > * {
+	flex: 1;
 }
 
 .paginator > div:nth-of-type(3) {
