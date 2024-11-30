@@ -33,7 +33,7 @@
 
 			<div class="auth__input">
 				<label for="email">Email</label>
-				<input type="email" name="email" id="email" required>
+				<input type="email" name="email" id="email" value="<?= escape( $_POST['email'] ?? '' ) ?>" required>
 			</div>
 
 			<div class="auth__input">
@@ -44,7 +44,7 @@
 			<div class="auth__input">
 				<div class="auth__input--options">
 					<label for="remember">
-						<input type="checkbox" name="rememberMe" id="remember">
+						<input type="checkbox" name="rememberMe" id="remember" <?= isset( $_POST['rememberMe'] ) ? 'checked' : '' ?>>
 						Remember me for 30 days
 					</label>
 

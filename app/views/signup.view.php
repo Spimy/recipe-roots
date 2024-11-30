@@ -30,19 +30,25 @@
 				<label>You are a</label>
 
 				<div class="auth__input--radio auth__input--type">
-					<label for="user"><input type="radio" name="accountType" id="user" value="user" required>User</label>
-					<label for="farmer"><input type="radio" name="accountType" id="farmer" value="farmer">Farmer</label>
+					<label for="user">
+						<input type="radio" name="accountType" id="user" value="user" <?= ( $_POST['accountType'] ?? '' ) === 'user' ? 'checked' : '' ?> required>
+						User
+					</label>
+					<label for="farmer">
+						<input type="radio" name="accountType" id="farmer" value="farmer" <?= ( $_POST['accountType'] ?? '' ) === 'farmer' ? 'checked' : '' ?>>
+						Farmer
+					</label>
 				</div>
 			</div>
 
 			<div class="auth__input">
 				<label for="email">Email</label>
-				<input type="email" name="email" id="email" required>
+				<input type="email" name="email" id="email" value="<?= escape( $_POST['email'] ?? '' ) ?>" required>
 			</div>
 
 			<div class="auth__input">
 				<label for="username">Username</label>
-				<input type="text" name="username" id="username" required>
+				<input type="text" name="username" id="username" value="<?= escape( $_POST['username'] ?? '' ) ?>" required>
 			</div>
 
 			<div class="auth__input">
@@ -59,13 +65,22 @@
 				<label>Dietary Type</label>
 
 				<div class="auth__input--radio">
-					<label for="none"><input type="radio" name="dietaryType" id="none" value="none" required>None</label>
+					<label for="none">
+						<input type="radio" name="dietaryType" id="none" value="none" <?= ( $_POST['dietaryType'] ?? '' ) === 'none' ? 'checked' : '' ?> required>
+						None
+					</label>
 					<label for="vegetarian">
-						<input type="radio" name="dietaryType" id="vegetarian" value="vegetarian">
+						<input type="radio" name="dietaryType" id="vegetarian" value="vegetarian" <?= ( $_POST['dietaryType'] ?? '' ) === 'vegetarian' ? 'checked' : '' ?>>
 						Vegetarian
 					</label>
-					<label for="vegan"><input type="radio" name="dietaryType" id="vegan" value="vegan">Vegan</label>
-					<label for="halal"><input type="radio" name="dietaryType" id="halal" value="halal">Halal</label>
+					<label for="vegan">
+						<input type="radio" name="dietaryType" id="vegan" value="vegan" <?= ( $_POST['dietaryType'] ?? '' ) === 'vegan' ? 'checked' : '' ?>>
+						Vegan
+					</label>
+					<label for="halal">
+						<input type="radio" name="dietaryType" id="halal" value="halal" <?= ( $_POST['dietaryType'] ?? '' ) === 'halal' ? 'checked' : '' ?>>
+						Halal
+					</label>
 				</div>
 			</div>
 
