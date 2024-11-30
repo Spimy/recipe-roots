@@ -21,6 +21,10 @@ class Comment extends Model {
 			$errors['recipeId'] = 'No recipe id has been provided';
 		}
 
+		if ( ! is_numeric( $data['recipeId'] ) ) {
+			$errors['recipeId'] = 'Invalid recipe id provided';
+		}
+
 		if ( empty( $data['content'] ) ) {
 			$errors['content'] = 'Your comment has no content';
 		}
