@@ -56,6 +56,7 @@ class ForgotPassword {
 					unset( $data['message'] );
 
 					// We instead need to display an error message
+					http_response_code( 500 );
 					$data['error'] = 'Something went wrong while sending the email. Please try again in a few minutes.';
 				}
 			}
@@ -71,6 +72,7 @@ class ForgotPassword {
 		// Check if a token has been provided
 		$token = $method == 'POST' ? $_POST['token'] ?? null : $_GET['token'] ?? null;
 		if ( empty( $token ) ) {
+			http_response_code( 400 );
 			$data['error'] = 'No reset password token provided';
 			$data['show'] = false;
 			return $this->view( 'reset-password/reset', $data );
@@ -84,6 +86,7 @@ class ForgotPassword {
 
 		// If the token is not found then it must be invalid
 		if ( empty( $resetToken ) ) {
+			http_response_code( 400 );
 			$data['error'] = 'Invalid reset password token';
 			$data['show'] = false;
 			return $this->view( 'reset-password/reset', $data );
@@ -91,6 +94,7 @@ class ForgotPassword {
 
 		// If the expiry time is less than the current time, then it has expired
 		if ( strtotime( $resetToken['expiresAt'] ) <= time() ) {
+			http_response_code( 400 );
 			$data['error'] = 'Reset password token expired';
 			$data['show'] = false;
 			return $this->view( 'reset-password/reset', $data );
@@ -107,6 +111,7 @@ class ForgotPassword {
 				$confirmPassword = $_POST['confirmPassword'];
 
 				if ( $password != $confirmPassword ) {
+					http_response_code( 400 );
 					$data['error'] = 'Passwords do not match';
 					break;
 				}
@@ -119,6 +124,7 @@ class ForgotPassword {
 				);
 
 				if ( ! $success ) {
+					http_response_code( 500 );
 					$data['error'] = 'Something went wrong while resetting your password. Please try again later.';
 					break;
 				}

@@ -37,6 +37,7 @@ class Signin {
 				redirect( $_GET['next'] ?? '' );
 			}
 
+			http_response_code( 401 );
 			$data['error'] = 'Invalid email or password';
 		}
 
