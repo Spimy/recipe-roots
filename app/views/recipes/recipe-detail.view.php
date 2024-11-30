@@ -15,7 +15,7 @@
 	<main>
 		<header>
 			<div class="heading">
-				<h1><?= $recipe['title'] ?></h1>
+				<h1><?= escape( $recipe['title'] ) ?></h1>
 				<div class="heading__dropdown">
 					<label for="more"><img src="<?= ROOT ?>/assets/icons/more.svg" alt="more"></label>
 					<input type="checkbox" name="more" id="more">
