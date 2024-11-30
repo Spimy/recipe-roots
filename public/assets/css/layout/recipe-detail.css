@@ -98,8 +98,7 @@ h1 {
 	font-weight: bold;
 	font-size: 2rem;
 	width: 100%;
-	min-height: 10rem;
-	max-height: 25rem;
+	height: 30rem;
 	object-fit: cover;
 	object-position: center;
 	display: grid;
