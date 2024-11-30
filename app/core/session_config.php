@@ -15,6 +15,9 @@ session_start();
 
 session_regenerate_id( true );
 
+// Enable CORS for the domain only so other websites cannot make AJAX request to the server
+header( 'Access-Control-Allow-Origin: ' . ROOT );
+
 // Generate a token to prevent CSRF attacks
 $_SESSION['csrfToken'] ??= bin2hex( random_bytes( 32 ) );
 
