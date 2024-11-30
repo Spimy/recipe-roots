@@ -72,22 +72,28 @@
 		</section>
 
 		<section class="paginator">
-			<a class="btn"
-				href="<?= isset( $_GET['filter'] ) ? '?filter=' . escape( $_GET['filter'] ) . '&' : '?' ?>page=1">«</a>
-			<a class="btn"
-				href="<?= isset( $_GET['filter'] ) ? '?filter=' . escape( $_GET['filter'] ) . '&' : '?' ?>page=<?= $currentPage == 1 ? $currentPage : $currentPage - 1 ?>">
-				←
-			</a>
-			<?php foreach ( getPaginatorPages( $currentPage, $totalPages ) as $page ) : ?>
-				<a href="<?= isset( $_GET['filter'] ) ? '?filter=' . escape( $_GET['filter'] ) . '&' : '?' ?>page=<?= escape( $page ) ?>"
-					class="btn <?= $page == $currentPage ? 'selected' : '' ?>"><?= escape( $page ) ?></a>
-			<?php endforeach; ?>
-			<a class="btn"
-				href="<?= isset( $_GET['filter'] ) ? '?filter=' . escape( $_GET['filter'] ) . '&' : '?' ?>page=<?= $currentPage == $totalPages ? $totalPages : $currentPage + 1 ?>">
-				→
-			</a>
-			<a class="btn"
-				href="<?= isset( $_GET['filter'] ) ? '?filter=' . escape( $_GET['filter'] ) . '&' : '?' ?>page=<?= $totalPages ?>">»</a>
+			<div>
+				<a class="btn"
+					href="<?= isset( $_GET['filter'] ) ? '?filter=' . escape( $_GET['filter'] ) . '&' : '?' ?>page=1">«</a>
+				<a class="btn"
+					href="<?= isset( $_GET['filter'] ) ? '?filter=' . escape( $_GET['filter'] ) . '&' : '?' ?>page=<?= $currentPage == 1 ? $currentPage : $currentPage - 1 ?>">
+					←
+				</a>
+			</div>
+			<div>
+				<?php foreach ( getPaginatorPages( $currentPage, $totalPages ) as $page ) : ?>
+					<a href="<?= isset( $_GET['filter'] ) ? '?filter=' . escape( $_GET['filter'] ) . '&' : '?' ?>page=<?= escape( $page ) ?>"
+						class="btn <?= $page == $currentPage ? 'selected' : '' ?>"><?= escape( $page ) ?></a>
+				<?php endforeach; ?>
+			</div>
+			<div>
+				<a class="btn"
+					href="<?= isset( $_GET['filter'] ) ? '?filter=' . escape( $_GET['filter'] ) . '&' : '?' ?>page=<?= $currentPage == $totalPages ? $totalPages : $currentPage + 1 ?>">
+					→
+				</a>
+				<a class="btn"
+					href="<?= isset( $_GET['filter'] ) ? '?filter=' . escape( $_GET['filter'] ) . '&' : '?' ?>page=<?= $totalPages ?>">»</a>
+			</div>
 		</section>
 	</main>
 

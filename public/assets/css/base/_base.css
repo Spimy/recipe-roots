@@ -359,10 +359,38 @@ input[type='file']::file-selector-button {
 }
 
 .paginator {
-	display: flex;
-	justify-content: center;
-	gap: 0.5rem;
 	margin-block: 1rem;
+	grid-template-areas:
+		'pages pages'
+		'arrows-left arrows-right';
+}
+
+.paginator,
+.paginator > div {
+	display: grid;
+	gap: 0.5rem;
+}
+
+.paginator > div:nth-of-type(1) {
+	grid-template-columns: 1fr 1fr;
+	grid-area: arrows-left;
+}
+
+.paginator > div:nth-of-type(2) {
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-area: pages;
+}
+
+.paginator > div:nth-of-type(3) {
+	grid-template-columns: 1fr 1fr;
+	grid-area: arrows-right;
+}
+
+@media screen and (min-width: 40em) {
+	.paginator {
+		display: flex;
+		justify-content: center;
+	}
 }
 
 .paginator .selected {
