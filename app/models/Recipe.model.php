@@ -37,14 +37,14 @@ class Recipe extends Model {
 			}
 		}
 
-		if ( isset( $data['prepTime'] ) && ! is_numeric( $data['prepTime'] ) ) {
+		if ( ! empty( $data['prepTime'] ) && ! is_numeric( $data['prepTime'] ) ) {
 			$errors['prepTime'] = 'Preparation time must be a number in minutes';
 		}
-		if ( isset( $data['waitingTime'] ) && ! is_numeric( $data['waitingTime'] ) ) {
+		if ( ! empty( $data['waitingTime'] ) && ! is_numeric( $data['waitingTime'] ) ) {
 			$errors['waitingTime'] = 'Waiting time must be a number in minutes';
 		}
 
-		if ( isset( $data['servings'] ) && ! is_numeric( $data['servings'] ) ) {
+		if ( ! empty( $data['servings'] ) && ! is_numeric( $data['servings'] ) ) {
 			$errors['servings'] = 'Servings must be a number';
 		}
 

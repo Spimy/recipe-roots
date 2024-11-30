@@ -142,9 +142,9 @@ class Recipes {
 			$newRecipe = [ 
 				'profileId' => $this->profile['id'],
 				'title' => $_POST['title'],
-				'prepTime' => $_POST['prepTime'] ?? null,
-				'waitingTime' => $_POST['waitingTime'] ?? null,
-				'servings' => $_POST['servings'] ?? null,
+				'prepTime' => empty( $_POST['prepTime'] ) ? null : $_POST['prepTime'],
+				'waitingTime' => empty( $_POST['waitingTime'] ) ? null : $_POST['waitingTime'],
+				'servings' => empty( $_POST['servings'] ) ? null : $_POST['servings'],
 				'public' => $_POST['public'] == 'yes' ? 1 : 0,
 				'instructions' => $_POST['instructions'],
 			];
