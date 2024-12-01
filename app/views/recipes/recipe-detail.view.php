@@ -44,6 +44,14 @@
 				</div>
 			</div>
 
+			<?php if ( ! empty( $recipeErrors ) ) : ?>
+				<ul class="errors">
+					<?php foreach ( $recipeErrors as $error ) : ?>
+						<li class="errors__message"><?= escape( $error ) ?></li>
+					<?php endforeach ?>
+				</ul>
+			<?php endif ?>
+
 			<div class="metadata">
 				<?php if ( $recipe['prepTime'] > 0 ) : ?>
 					<div class="metadata__info">
@@ -124,9 +132,9 @@
 			<section class="details__comments">
 				<h2 id="comments">Comments</h2>
 
-				<?php if ( ! empty( $errors ) ) : ?>
+				<?php if ( ! empty( $recipeErrors ) ) : ?>
 					<ul class="errors">
-						<?php foreach ( $errors as $error ) : ?>
+						<?php foreach ( $recipeErrors as $error ) : ?>
 							<li class="errors__message"><?= escape( $error ) ?></li>
 						<?php endforeach ?>
 					</ul>

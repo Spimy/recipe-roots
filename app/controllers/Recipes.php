@@ -92,10 +92,12 @@ class Recipes {
 			[ 
 				'recipe' => $recipe,
 				'comments' => $comments,
-				'errors' => array_merge( $_SESSION['comment_errors'] ?? [], $_SESSION['recipe_errors'] ?? [] )
+				'commentErrors' => $_SESSION['comment_errors'] ?? [],
+				'recipeErrors' => $_SESSION['recipe_errors'] ?? []
 			]
 		);
 		unset( $_SESSION['comment_errors'] );
+		unset( $_SESSION['recipe_errors'] );
 	}
 
 	public function browse() {
@@ -257,9 +259,9 @@ class Recipes {
 
 			$recipeData = [ 
 				'title' => $_POST['title'],
-				'prepTime' => $_POST['prepTime'] ?? null,
-				'waitingTime' => $_POST['waitingTime'] ?? null,
-				'servings' => $_POST['servings'] ?? null,
+				'prepTime' => empty( $_POST['prepTime'] ) ? null : $_POST['prepTime'],
+				'waitingTime' => empty( $_POST['waitingTime'] ) ? null : $_POST['waitingTime'],
+				'servings' => empty( $_POST['servings'] ) ? null : $_POST['servings'],
 				'public' => $_POST['public'] == 'yes' ? 1 : 0,
 				'instructions' => $_POST['instructions'],
 			];
@@ -277,7 +279,12 @@ class Recipes {
 				$recipeData['thumbnail'] = '';
 			}
 
-			$recipeModel->update( $id, $recipeData );
+			$success = $recipeModel->update( $id, $recipeData );
+			if ( ! $success ) {
+				http_response_code( 500 );
+				$_SESSION['recipe_errors'] = [ 'Something went wrong updating the recipe and could not be saved' ];
+			}
+
 			redirect( "recipes/$id" );
 		}
 
