@@ -61,6 +61,7 @@ class Recipes {
 			return $this->view(
 				'recipes/recipes',
 				[ 
+					'browse' => false,
 					'recipes' => $recipes,
 					'currentPage' => $currentPage,
 					'totalPages' => $totalPages,
@@ -144,6 +145,7 @@ class Recipes {
 		return $this->view(
 			'recipes/recipes',
 			[ 
+				'browse' => true,
 				'recipes' => $recipes,
 				'currentPage' => $currentPage,
 				'totalPages' => $totalPages,

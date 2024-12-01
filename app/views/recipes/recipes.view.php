@@ -15,7 +15,7 @@
 	<main>
 		<header>
 			<div class="heading">
-				<h1>Your Recipes</h1>
+				<h1><?= $browse ? 'Browse' : 'Your' ?> Recipes</h1>
 				<a href="<?= ROOT ?>/recipes/create" class="btn btn--add">Create</a>
 			</div>
 
