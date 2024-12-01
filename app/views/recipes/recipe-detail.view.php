@@ -54,6 +54,22 @@
 			<?php endif ?>
 
 			<div class="metadata">
+				<div class="metadata__info">
+					<?php if ( ! $recipe['dietaryType'] ) : ?>
+						<img src="<?= ROOT ?>/assets/icons/dietary/none.svg" alt="diet">
+					<?php elseif ( $recipe['dietaryType'] === 'vegetarian' ) : ?>
+						<img src="<?= ROOT ?>/assets/icons/dietary/vegetarian.svg" alt="diet">
+					<?php elseif ( $recipe['dietaryType'] === 'vegan' ) : ?>
+						<img src="<?= ROOT ?>/assets/icons/dietary/vegan.svg" alt="diet">
+					<?php elseif ( $recipe['dietaryType'] === 'halal' ) : ?>
+						<img src="<?= ROOT ?>/assets/icons/dietary/halal.svg" alt="diet">
+					<?php endif; ?>
+					<div>
+						<p>Dietary Type</p>
+						<p><?= ucfirst( escape( $recipe['dietaryType'] ?? 'None' ) ) ?></p>
+					</div>
+				</div>
+
 				<?php if ( $recipe['prepTime'] > 0 ) : ?>
 					<div class="metadata__info">
 						<img src="<?= ROOT ?>/assets/icons/clock.svg" alt="clock">
@@ -66,7 +82,7 @@
 
 				<?php if ( $recipe['waitingTime'] > 0 ) : ?>
 					<div class="metadata__info">
-						<img src="<?= ROOT ?>/assets/icons/watch.svg" alt="watch">
+						<img class="watch" src="<?= ROOT ?>/assets/icons/watch.svg" alt="watch">
 						<div>
 							<p>Waiting</p>
 							<p><?= escape( convertToHoursMins( $recipe['waitingTime'] ) ) ?></p>
