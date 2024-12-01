@@ -98,6 +98,55 @@ class Recipes {
 		unset( $_SESSION['comment_errors'] );
 	}
 
+	public function browse() {
+		$recipeModel = new Recipe();
+
+		$recipeParams = [];
+
+		if ( isset( $_GET['filter'] ) && $_GET['filter'] !== '' ) {
+			$recipeParams = [ 
+				"title" => "%" . $_GET['filter'] . "%",
+				"ingredients" => "%" . $_GET['filter'] . "%",
+				"instructions" => "%" . $_GET['filter'] . "%"
+			];
+		}
+
+		$itemsPerPage = 1;
+		$currentPage = isset( $_GET['page'] ) && is_numeric( $_GET['page'] ) ? (int) $_GET['page'] : 1;
+		$offset = ( $currentPage - 1 ) * $itemsPerPage;
+
+		$totalRecipes = count( $recipeModel->findAll( [ 'public' => 1 ], contain: $recipeParams ) );
+		$totalPages = floor( $totalRecipes / $itemsPerPage );
+		$totalPages = $totalPages == 0 ? 1 : $totalPages;
+
+		$recipes = $recipeModel->findAll(
+			[ 'public' => 1 ],
+			contain: $recipeParams,
+			join: true,
+			limit: $itemsPerPage,
+			offset: $offset
+		);
+
+		$recipes = array_map(
+			function ($recipe) {
+				$commentModel = new Comment();
+				$comments = $commentModel->findAll( [ 'recipeId' => $recipe['id'] ] );
+				$numComments = count( $comments ) > 0 ? count( $comments ) : 1;
+				$averageRating = array_reduce( $comments, fn( $carry, $comment ) => $carry + $comment['rating'], 0 ) / $numComments;
+				return [ ...$recipe, "rating" => round( $averageRating, 0 ) ];
+			},
+			$recipes );
+
+		return $this->view(
+			'recipes/recipes',
+			[ 
+				'recipes' => $recipes,
+				'currentPage' => $currentPage,
+				'totalPages' => $totalPages,
+			]
+		);
+	}
+
 	private function formatIngredients( $amounts, $units, $ingredients ) {
 		$ingredientList = [];
 
