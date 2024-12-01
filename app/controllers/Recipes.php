@@ -143,9 +143,9 @@ class Recipes {
 	 */
 	public function create() {
 		if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
-			$recipe = new Recipe();
+			$recipeModel = new Recipe();
 
-			$errors = $recipe->validate( array_merge( $_POST, $_FILES ) );
+			$errors = $recipeModel->validate( array_merge( $_POST, $_FILES ) );
 			$this->handleErrors( $errors, 'Create' );
 
 			$newRecipe = [ 
@@ -167,8 +167,8 @@ class Recipes {
 			$ingredientList = $this->formatIngredients( $_POST['amounts'], $_POST['units'], $_POST['ingredients'] );
 			$newRecipe['ingredients'] = json_encode( $ingredientList );
 
-			$recipe->create( $newRecipe );
-			redirect( 'recipes' );
+			$recipe = $recipeModel->create( $newRecipe );
+			redirect( 'recipes/' . $recipe['id'] );
 		}
 
 		$this->view( 'recipes/recipe-editor', [ 'action' => 'Create' ] );
