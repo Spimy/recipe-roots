@@ -35,12 +35,13 @@ class Recipes {
 			$currentPage = isset( $_GET['page'] ) && is_numeric( $_GET['page'] ) ? (int) $_GET['page'] : 1;
 			$offset = ( $currentPage - 1 ) * $itemsPerPage;
 
-			$totalRecipes = count( $recipeModel->findAll( [ 'profileId' => $this->profile['id'] ], contain: $recipeParams ) );
+			$recipeConditions = [ 'profileId' => $this->profile['id'] ];
+			$totalRecipes = count( $recipeModel->findAll( $recipeConditions, contain: $recipeParams ) );
 			$totalPages = floor( $totalRecipes / $itemsPerPage );
 			$totalPages = $totalPages == 0 ? 1 : $totalPages;
 
 			$recipes = $recipeModel->findAll(
-				[ 'profileId' => $this->profile['id'] ],
+				data: $recipeConditions,
 				contain: $recipeParams,
 				join: true,
 				limit: $itemsPerPage,
@@ -117,12 +118,13 @@ class Recipes {
 		$currentPage = isset( $_GET['page'] ) && is_numeric( $_GET['page'] ) ? (int) $_GET['page'] : 1;
 		$offset = ( $currentPage - 1 ) * $itemsPerPage;
 
-		$totalRecipes = count( $recipeModel->findAll( [ 'public' => 1 ], contain: $recipeParams ) );
+		$recipeConditions = [ 'public' => 1 ];
+		$totalRecipes = count( $recipeModel->findAll( $recipeConditions, contain: $recipeParams ) );
 		$totalPages = floor( $totalRecipes / $itemsPerPage );
 		$totalPages = $totalPages == 0 ? 1 : $totalPages;
 
 		$recipes = $recipeModel->findAll(
-			[ 'public' => 1 ],
+			data: $recipeConditions,
 			contain: $recipeParams,
 			join: true,
 			limit: $itemsPerPage,
