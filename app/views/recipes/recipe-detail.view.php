@@ -22,8 +22,25 @@
 
 					<!-- TODO: add drop down -->
 					<menu class="heading__dropdown__menu">
-						<a href="<?= ROOT ?>/recipes/edit/<?= $recipe['id'] ?>">Edit</a>
+						<a href="<?= ROOT ?>/recipes/edit/<?= escape( $recipe['id'] ) ?>">Edit</a>
+						<button popovertarget="delete-confirm">Delete</button>
 					</menu>
+
+					<!-- Pop up for confirm delete -->
+					<form popover open role="dialog" id="delete-confirm" method="post" action="<?= ROOT ?>/recipes/delete">
+						<?php injectCsrfToken() ?>
+						<input type="hidden" name="recipeId" value="<?= escape( $recipe['id'] ) ?>">
+
+						<div>
+							<h3>Confirm Delete</h3>
+							<p>Are you sure you want to delete <strong><?= escape( $recipe['title'] ) ?></strong>?</p>
+						</div>
+
+						<div>
+							<button type="button" class="btn btn--invert" popovertarget="delete-confirm">Cancel</button>
+							<button class="btn btn--error">Delete</button>
+						</div>
+					</form>
 				</div>
 			</div>
 

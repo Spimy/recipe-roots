@@ -13,6 +13,10 @@ h1 {
 	flex-grow: 9999;
 }
 
+.btn {
+	padding: 0.3em 1.5em;
+}
+
 .heading {
 	display: flex;
 	justify-content: space-between;
@@ -35,8 +39,13 @@ h1 {
 	cursor: pointer;
 }
 
-.heading__dropdown input {
-	display: none;
+.heading__dropdown:has(input:focus-visible) {
+	outline: 0.2rem solid var(--primary-clr);
+}
+
+.heading__dropdown > input {
+	position: absolute;
+	opacity: 0;
 }
 
 .heading__dropdown__menu {
@@ -55,6 +64,47 @@ h1 {
 
 .heading__dropdown input:checked + .heading__dropdown__menu {
 	clip: rect(auto, auto, 10rem, auto);
+}
+
+.heading__dropdown__menu * {
+	border: none;
+	text-align: left;
+	background-color: transparent;
+	padding: 0;
+	color: var(--primary-clr);
+	cursor: pointer;
+}
+
+.heading__dropdown__menu *:hover {
+	text-decoration: underline;
+}
+
+.heading__dropdown__menu input[type='submit'] {
+	cursor: pointer;
+	background: transparent;
+	border: none;
+	padding: 0;
+	text-align: left;
+	color: var(--primary-clr);
+}
+
+#delete-confirm:popover-open {
+	display: grid;
+	gap: 1rem;
+	padding: 1rem;
+	border: none;
+	border-radius: 0.5rem;
+	max-width: 30rem;
+}
+
+#delete-confirm::backdrop {
+	backdrop-filter: blur(3px);
+}
+
+#delete-confirm:popover-open > div:nth-of-type(2) {
+	display: flex;
+	justify-content: end;
+	gap: 0.5rem;
 }
 
 .metadata {
@@ -188,10 +238,6 @@ h1 {
 	justify-content: space-between;
 	gap: 1rem;
 	margin-block-start: 1rem;
-}
-
-.details__comments__editor__footer .btn {
-	padding: 0.3em 1.5em;
 }
 
 .rating-input:hover > input + label:hover:after,

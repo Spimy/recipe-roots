@@ -89,7 +89,11 @@ class Recipes {
 		$comments = $commentModel->findAll( [ 'recipeId' => $recipe['id'] ], join: true );
 		$this->view(
 			'recipes/recipe-detail',
-			[ 'recipe' => $recipe, 'comments' => $comments, 'errors' => $_SESSION['comment_errors'] ?? [] ]
+			[ 
+				'recipe' => $recipe,
+				'comments' => $comments,
+				'errors' => array_merge( $_SESSION['comment_errors'] ?? [], $_SESSION['recipe_errors'] ?? [] )
+			]
 		);
 		unset( $_SESSION['comment_errors'] );
 	}
@@ -237,6 +241,29 @@ class Recipes {
 				'data' => $recipe
 			]
 		);
+	}
+
+	public function delete() {
+		if ( $_SERVER['REQUEST_METHOD'] == 'GET' ) {
+			redirect( 'recipes' );
+		}
+
+		if ( empty( $_POST['recipeId'] ) || ! is_numeric( $_POST['recipeId'] ) ) {
+			http_response_code( 400 );
+			redirect( 'recipes' );
+		}
+
+		$recipeModel = new Recipe();
+		$recipeId = $_POST['recipeId'];
+		$success = $recipeModel->delete( $recipeId );
+
+		if ( $success ) {
+			redirect( 'recipes' );
+		}
+
+		http_response_code( 500 );
+		$_SESSION['recipe_errors'] = [ 'Recipe could not be deleted' ];
+		redirect( "recipes/$recipeId" );
 	}
 
 	public function comment( string $method = null ) {
