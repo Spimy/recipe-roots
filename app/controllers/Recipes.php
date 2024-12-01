@@ -398,6 +398,17 @@ class Recipes {
 					redirect( "recipes/$recipeId#comment-$commentId" );
 				}
 
+				$comment = $commentModel->findById( $commentId );
+				if ( ! $comment ) {
+					http_response_code( 404 );
+					redirect( '404' );
+				}
+
+				if ( $comment['profileId'] !== $this->profile['id'] ) {
+					http_response_code( 403 );
+					return $this->view( '403', [ 'message' => 'You cannot edit a comment that you did not make' ] );
+				}
+
 				$commentModel->update( $commentId, $_POST );
 				redirect( "recipes/$recipeId#comment-$commentId" );
 				break;
@@ -419,6 +430,17 @@ class Recipes {
 
 				$recipeId = $_POST['recipeId'];
 				$commentId = $_POST['commentId'];
+
+				$comment = $commentModel->findById( $commentId );
+				if ( ! $comment ) {
+					http_response_code( 404 );
+					redirect( '404' );
+				}
+
+				if ( $comment['profileId'] !== $this->profile['id'] ) {
+					http_response_code( 403 );
+					return $this->view( '403', [ 'message' => 'You cannot delete a comment that you did not make' ] );
+				}
 
 				$commentModel->delete( $commentId );
 				redirect( "recipes/$recipeId" );
