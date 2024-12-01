@@ -19,7 +19,7 @@ class Signin {
 			$user = $userModel->verifyLogin( $_POST );
 
 			if ( ! empty( $user ) ) {
-				$profile = $profileModel->findOne( [ 'userId' => $user['id'] ] );
+				$profile = $profileModel->findOne( [ 'userId' => $user['id'] ], join: true );
 				$profile['dietaryType'] = $user['dietaryType'];
 				$_SESSION['profile'] = $profile;
 
