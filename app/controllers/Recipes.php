@@ -79,6 +79,11 @@ class Recipes {
 			return $this->view( '404' );
 		}
 
+		if ( ! $recipe['public'] && $recipe['profileId'] !== $this->profile['id'] ) {
+			http_response_code( 403 );
+			return $this->view( '403', [ 'message' => 'This recipe is private and cannot be accessed' ] );
+		}
+
 		$commentModel = new Comment();
 
 		$comments = $commentModel->findAll( [ 'recipeId' => $recipe['id'] ], join: true );
