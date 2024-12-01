@@ -183,13 +183,14 @@ abstract class Model {
 		}
 
 		if ( ! empty( $keysContain ) ) {
-			$query .= " && ";
+			$query .= " && (";
 
 			foreach ( $keysContain as $key ) {
 				$query .= "$key LIKE :$key || ";
 			}
 
 			$query = trim( $query, " || " );
+			$query .= ')';
 		}
 
 		if ( $limit ) {
