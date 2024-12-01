@@ -27,7 +27,8 @@
 					</menu>
 
 					<!-- Pop up for confirm delete -->
-					<form popover role="dialog" id="delete-confirm" method="post" action="<?= ROOT ?>/recipes/delete">
+					<form popover role="dialog" id="delete-confirm" class="modal" method="post"
+						action="<?= ROOT ?>/recipes/delete">
 						<?php injectCsrfToken() ?>
 						<input type="hidden" name="recipeId" value="<?= escape( $recipe['id'] ) ?>">
 
@@ -160,9 +161,78 @@
 										</p>
 									</div>
 								</div>
+
+								<?php if ( $comment['profileId'] === $_SESSION['profile']['id'] ) : ?>
+									<div class="details__comments__comment__header__btns">
+										<button popovertarget="edit-comment-<?= escape( $comment['id'] ) ?>">Edit</button>
+										<button popovertarget="delete-comment-<?= escape( $comment['id'] ) ?>">Delete</button>
+									</div>
+								<?php endif; ?>
 							</div>
 							<p><?= escape( $comment['content'] ) ?></p>
 						</article>
+
+						<?php if ( $comment['profileId'] === $_SESSION['profile']['id'] ) : ?>
+							<!-- Dialog box for editing comment (avoid need for JavaScript) -->
+							<form popover role="dialog" id="edit-comment-<?= escape( $comment['id'] ) ?>" class="modal" method="post"
+								action="<?= ROOT ?>/recipes/comment/edit">
+								<?php injectCsrfToken() ?>
+								<input type="hidden" name="commentId" value="<?= escape( $comment['id'] ) ?>">
+
+								<div>
+									<h3>Edit Comment</h3>
+
+									<div class="details__comments__editor">
+										<textarea name="content" id="comment" placeholder="Write a comment..."
+											required><?= escape( $comment['content'] ) ?></textarea>
+
+									</div>
+								</div>
+
+								<div>
+									<fieldset class="rating-input">
+										<input type="radio" value="5" id="stars-star5" name="rating" required <?= $comment['rating'] === 5 ? 'checked' : '' ?>>
+										<label for="stars-star5" title="5 Stars"></label>
+										<input type="radio" value="4" id="stars-star4" name="rating" <?= $comment['rating'] === 4 ? 'checked' : '' ?>>
+										<label for="stars-star4" title="4 Stars"></label>
+										<input type="radio" value="3" id="stars-star3" name="rating" <?= $comment['rating'] === 3 ? 'checked' : '' ?>>
+										<label for="stars-star3" title="3 Stars"></label>
+										<input type="radio" value="2" id="stars-star2" name="rating" <?= $comment['rating'] === 2 ? 'checked' : '' ?>>
+										<label for="stars-star2" title="2 Stars"></label>
+										<input type="radio" value="1" id="stars-star1" name="rating" <?= $comment['rating'] === 1 ? 'checked' : '' ?>>
+										<label for="stars-star1" title="1 Stars"></label>
+									</fieldset>
+
+									<div>
+										<button type="button" class="btn btn--invert"
+											popovertarget="edit-comment-<?= escape( $comment['id'] ) ?>">
+											Cancel
+										</button>
+										<button class="btn">Edit</button>
+									</div>
+								</div>
+							</form>
+
+							<!-- Dialog box for confirm delete command -->
+							<form popover role="dialog" id="delete-comment-<?= escape( $comment['id'] ) ?>" class="modal" method="post"
+								action="<?= ROOT ?>/recipes/comment/delete">
+								<?php injectCsrfToken() ?>
+								<input type="hidden" name="commentId" value="<?= escape( $comment['id'] ) ?>">
+
+								<div>
+									<h3>Confirm Delete</h3>
+									<p>Are you sure you want to delete this comment?</p>
+								</div>
+
+								<div>
+									<button type="button" class="btn btn--invert"
+										popovertarget="delete-comment-<?= escape( $comment['id'] ) ?>">
+										Cancel
+									</button>
+									<button class="btn btn--error">Delete</button>
+								</div>
+							</form>
+						<?php endif; ?>
 					<?php endforeach; ?>
 
 					<form class="details__comments__editor" action="<?= ROOT ?>/recipes/comment/add" method="post">
