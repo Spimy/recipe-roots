@@ -92,7 +92,7 @@
 				<?php foreach ( getPaginatorPages( $currentPage, $totalPages ) as $page ) : ?>
 					<a href="
 							?
-							<?= ! empty( $_GET['filter'] ) ? 'filter=' . escape( $_GET['filter'] ) . '&' : '?' ?>
+							<?= ! empty( $_GET['filter'] ) ? 'filter=' . escape( $_GET['filter'] ) . '&' : '' ?>
 							<?= ! empty( $_GET['dietary'] ) ? 'dietary=' . escape( $_GET['dietary'] ) . '&' : '' ?>
 							page=<?= escape( $page ) ?>" class="btn <?= $page == $currentPage ? 'selected' : '' ?>">
 						<?= escape( $page ) ?>
