@@ -27,7 +27,7 @@
 					</menu>
 
 					<!-- Pop up for confirm delete -->
-					<form popover open role="dialog" id="delete-confirm" method="post" action="<?= ROOT ?>/recipes/delete">
+					<form popover role="dialog" id="delete-confirm" method="post" action="<?= ROOT ?>/recipes/delete">
 						<?php injectCsrfToken() ?>
 						<input type="hidden" name="recipeId" value="<?= escape( $recipe['id'] ) ?>">
 
