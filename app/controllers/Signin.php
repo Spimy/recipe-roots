@@ -25,7 +25,15 @@ class Signin {
 
 				$rememberMe = isset( $_POST['rememberMe'] ) && $_POST['rememberMe'] == true;
 				if ( $rememberMe ) {
-					setcookie( 'profile', base64_encode( json_encode( $profile ) ), [ 
+					$hash = password_hash( json_encode( $profile ), PASSWORD_DEFAULT );
+
+					$sessionModel = new Session();
+					$sessionModel->create( [ 
+						'sessionId' => $hash,
+						'profileId' => $profile['id']
+					] );
+
+					setcookie( 'profile', $hash, [ 
 						'expires' => time() + 30 * 24 * 60 * 60, // 30 days in seconds
 						'path' => '/',
 						'domain' => DOMAIN,
