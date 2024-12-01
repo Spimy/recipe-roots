@@ -133,9 +133,9 @@
 			<section class="details__comments">
 				<h2 id="comments">Comments</h2>
 
-				<?php if ( ! empty( $recipeErrors ) ) : ?>
+				<?php if ( ! empty( $commentErrors ) ) : ?>
 					<ul class="errors">
-						<?php foreach ( $recipeErrors as $error ) : ?>
+						<?php foreach ( $commentErrors as $error ) : ?>
 							<li class="errors__message"><?= escape( $error ) ?></li>
 						<?php endforeach ?>
 					</ul>
@@ -177,6 +177,7 @@
 							<form popover role="dialog" id="edit-comment-<?= escape( $comment['id'] ) ?>" class="modal" method="post"
 								action="<?= ROOT ?>/recipes/comment/edit">
 								<?php injectCsrfToken() ?>
+								<input type="hidden" name="recipeId" value="<?= escape( $recipe['id'] ) ?>">
 								<input type="hidden" name="commentId" value="<?= escape( $comment['id'] ) ?>">
 
 								<div>
@@ -217,6 +218,7 @@
 							<form popover role="dialog" id="delete-comment-<?= escape( $comment['id'] ) ?>" class="modal" method="post"
 								action="<?= ROOT ?>/recipes/comment/delete">
 								<?php injectCsrfToken() ?>
+								<input type="hidden" name="recipeId" value="<?= escape( $recipe['id'] ) ?>">
 								<input type="hidden" name="commentId" value="<?= escape( $comment['id'] ) ?>">
 
 								<div>
