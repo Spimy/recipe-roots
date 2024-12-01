@@ -61,7 +61,7 @@
 								<p>Refer to file name below instead.</p>
 							</noscript>
 						</label>
-						<input type="file" name="thumbnail" id="thumbnail" accept="image/*">
+						<input type="file" name="thumbnail" id="thumbnail" accept=".png, .gif, .jpeg, .jpg">
 					</div>
 				</div>
 

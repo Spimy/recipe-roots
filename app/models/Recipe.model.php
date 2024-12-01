@@ -35,6 +35,27 @@ class Recipe extends Model {
 			if ( $data['thumbnail']['error'] == UPLOAD_ERR_INI_SIZE ) {
 				$errors['thumbnail'] = 'Thumbnail is too large, it should not exceed 2MB';
 			}
+
+			$fileTmpPath = $_FILES['thumbnail']['tmp_name'];
+			$fileName = $data['thumbnail']['name'];
+
+			$allowedExtensions = [ 'jpg', 'jpeg', 'png', 'gif' ];
+			$allowedMimeTypes = [ 'image/jpeg', 'image/png', 'image/gif' ];
+
+			$fileExtension = strtolower( pathinfo( $fileName, PATHINFO_EXTENSION ) );
+			if ( ! in_array( $fileExtension, $allowedExtensions ) ) {
+				$errors['thumbnailExt'] = 'Invalid file extension for thumbnail. Allowed extensions are: ' . implode( ', ', $allowedExtensions );
+			}
+
+			$fileMimeType = mime_content_type( $fileTmpPath );
+			if ( ! in_array( $fileMimeType, $allowedMimeTypes ) ) {
+				$errors['thumbnailMime'] = 'Invalid MIME type for thumbnail. Allowed types are: ' . implode( ', ', $allowedMimeTypes );
+			}
+
+			$imageSize = @getimagesize( $fileTmpPath );
+			if ( $imageSize === false ) {
+				$errors['thumbnailImg'] = "The thumbnail is not a valid image";
+			}
 		}
 
 		if ( ! empty( $data['prepTime'] ) && ! is_numeric( $data['prepTime'] ) ) {
