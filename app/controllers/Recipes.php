@@ -373,7 +373,33 @@ class Recipes {
 				break;
 			}
 			case 'edit': {
-				show( 'edit' );
+				$commentModel = new Comment();
+				$errors = $commentModel->hasProvidedId( $_POST );
+
+				if ( count( $errors ) > 0 ) {
+					http_response_code( 400 );
+
+					if ( isset( $errors['recipeId'] ) ) {
+						redirect( 'recipes' );
+					}
+
+
+					$_SESSION['comment_errors'] = $errors;
+					redirect( 'recipes/' . $_POST['recipeId'] . '#comments' );
+				}
+
+				$recipeId = $_POST['recipeId'];
+				$commentId = $_POST['commentId'];
+
+				$errors = $commentModel->hasProvidedContent( $_POST );
+				if ( count( $errors ) > 0 ) {
+					http_response_code( 400 );
+					$_SESSION['comment_errors'] = $errors;
+					redirect( "recipes/$recipeId#comment-$commentId" );
+				}
+
+				$commentModel->update( $commentId, $_POST );
+				redirect( "recipes/$recipeId#comment-$commentId" );
 				break;
 			}
 			case 'delete': {
