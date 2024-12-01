@@ -29,11 +29,11 @@
 
 				<div class="filter__input">
 					<select class="btn btn--invert" name="dietary" id="dietary">
-						<option value="none" selected disabled>Dietary</option>
-						<option value="none">None</option>
-						<option value="vegetarian">Vegetarian</option>
-						<option value="vegan">Vegan</option>
-						<option value="halal">Halal</option>
+						<option value="none" selected disabled>Dietary Type</option>
+						<option value="none" <?= ( ! $dietaryType || $dietaryType === 'none' ) ? 'selected' : '' ?>>None</option>
+						<option value="vegetarian" <?= $dietaryType === 'vegetarian' ? 'selected' : '' ?>>Vegetarian</option>
+						<option value="vegan" <?= $dietaryType === 'vegan' ? 'selected' : '' ?>>Vegan</option>
+						<option value="halal" <?= $dietaryType === 'halal' ? 'selected' : '' ?>>Halal</option>
 					</select>
 
 					<a class="btn btn--invert btn--error" href="?page=1">Reset</a>
@@ -73,26 +73,47 @@
 
 		<section class="paginator">
 			<div>
-				<a class="btn"
-					href="<?= isset( $_GET['filter'] ) ? '?filter=' . escape( $_GET['filter'] ) . '&' : '?' ?>page=1">«</a>
-				<a class="btn"
-					href="<?= isset( $_GET['filter'] ) ? '?filter=' . escape( $_GET['filter'] ) . '&' : '?' ?>page=<?= $currentPage == 1 ? $currentPage : $currentPage - 1 ?>">
+				<a class="btn" href="
+						?
+						<?= ! empty( $_GET['filter'] ) ? 'filter=' . escape( $_GET['filter'] ) . '&' : '' ?>
+						<?= ! empty( $_GET['dietary'] ) ? 'dietary=' . escape( $_GET['dietary'] ) . '&' : '' ?>
+						page=1">
+					«
+				</a>
+				<a class="btn" href="
+						?
+						<?= ! empty( $_GET['filter'] ) ? 'filter=' . escape( $_GET['filter'] ) . '&' : '' ?>
+						<?= ! empty( $_GET['dietary'] ) ? 'dietary=' . escape( $_GET['dietary'] ) . '&' : '' ?>
+						page=<?= $currentPage == 1 ? $currentPage : $currentPage - 1 ?>">
 					←
 				</a>
 			</div>
 			<div>
 				<?php foreach ( getPaginatorPages( $currentPage, $totalPages ) as $page ) : ?>
-					<a href="<?= isset( $_GET['filter'] ) ? '?filter=' . escape( $_GET['filter'] ) . '&' : '?' ?>page=<?= escape( $page ) ?>"
-						class="btn <?= $page == $currentPage ? 'selected' : '' ?>"><?= escape( $page ) ?></a>
+					<a href="
+							?
+							<?= ! empty( $_GET['filter'] ) ? 'filter=' . escape( $_GET['filter'] ) . '&' : '?' ?>
+							<?= ! empty( $_GET['dietary'] ) ? 'dietary=' . escape( $_GET['dietary'] ) . '&' : '' ?>
+							page=<?= escape( $page ) ?>" class="btn <?= $page == $currentPage ? 'selected' : '' ?>">
+						<?= escape( $page ) ?>
+					</a>
 				<?php endforeach; ?>
 			</div>
 			<div>
-				<a class="btn"
-					href="<?= isset( $_GET['filter'] ) ? '?filter=' . escape( $_GET['filter'] ) . '&' : '?' ?>page=<?= $currentPage == $totalPages ? $totalPages : $currentPage + 1 ?>">
+				<a class="btn" href="
+						?
+						<?= ! empty( $_GET['filter'] ) ? 'filter=' . escape( $_GET['filter'] ) . '&' : '' ?>
+						<?= ! empty( $_GET['dietary'] ) ? 'dietary=' . escape( $_GET['dietary'] ) . '&' : '' ?>
+						page=<?= $currentPage == $totalPages ? $totalPages : $currentPage + 1 ?>">
 					→
 				</a>
-				<a class="btn"
-					href="<?= isset( $_GET['filter'] ) ? '?filter=' . escape( $_GET['filter'] ) . '&' : '?' ?>page=<?= $totalPages ?>">»</a>
+				<a class="btn" href="
+						?
+						<?= ! empty( $_GET['filter'] ) ? 'filter=' . escape( $_GET['filter'] ) . '&' : '' ?>
+						<?= ! empty( $_GET['dietary'] ) ? 'dietary=' . escape( $_GET['dietary'] ) . '&' : '' ?>
+						page=<?= $totalPages ?>">
+					»
+				</a>
 			</div>
 		</section>
 	</main>
