@@ -305,11 +305,16 @@ abstract class Model {
 	 * Deletes a record from the table by its ID.
 	 *
 	 * @param int $id The ID of the record to delete.
-	 * @return void
+	 * @return bool
 	 */
 	public function delete( int $id ) {
 		$query = "DELETE FROM $this->table WHERE id = ?";
-		$this->query( $query, [ $id ] );
+		try {
+			$this->query( $query, [ $id ] );
+			return true;
+		} catch (PDOException) {
+			return false;
+		}
 	}
 
 }
