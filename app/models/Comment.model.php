@@ -15,6 +15,10 @@ class Comment extends Model {
 	}
 
 	public function validate( $data ) {
+		return array_merge( $this->hasProvidedRecipeId( $data ), $this->hasProvidedContent( $data ) );
+	}
+
+	public function hasProvidedRecipeId( $data ) {
 		$errors = [];
 
 		if ( empty( $data['recipeId'] ) ) {
@@ -24,6 +28,26 @@ class Comment extends Model {
 		if ( ! is_numeric( $data['recipeId'] ) ) {
 			$errors['recipeId'] = 'Invalid recipe id provided';
 		}
+
+		return $errors;
+	}
+
+	public function hasProvidedId( $data ) {
+		$errors = [];
+
+		if ( empty( $data['commentId'] ) ) {
+			$errors['commentId'] = 'No comment id has been provided';
+		}
+
+		if ( ! is_numeric( $data['commentId'] ) ) {
+			$errors['commentId'] = 'Invalid comment id provided';
+		}
+
+		return array_merge( $errors, $this->hasProvidedRecipeId( $data ) );
+	}
+
+	public function hasProvidedContent( $data ) {
+		$errors = [];
 
 		if ( empty( $data['content'] ) ) {
 			$errors['content'] = 'Your comment has no content';
