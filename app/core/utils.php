@@ -35,6 +35,16 @@ function uploadFile( string $folder, string $tempfile, string $filename ) {
 		mkdir( $folderpath );
 	}
 
+	$name = pathinfo( $filename, PATHINFO_FILENAME );
+	$extension = pathinfo( $filename, PATHINFO_EXTENSION );
+
+	$increment = 0;
+	$filename = "$name.$extension";
+	while ( is_file( "$folderpath/$filename" ) ) {
+		$increment++;
+		$filename = "$name ($increment).$extension";
+	}
+
 	move_uploaded_file( $tempfile, "$folderpath/$filename" );
 	return ROOT . "/uploads/$folder/$filename";
 }
