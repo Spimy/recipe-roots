@@ -315,6 +315,18 @@ class Recipes {
 
 		$recipeModel = new Recipe();
 		$recipeId = $_POST['recipeId'];
+
+		$recipe = $recipeModel->findById( $recipeId );
+		if ( ! $recipe ) {
+			http_response_code( 404 );
+			redirect( '404' );
+		}
+
+		if ( $recipe['profileId'] !== $this->profile['id'] ) {
+			http_response_code( 403 );
+			return $this->view( '403', [ 'message' => 'You cannot delete a recipe that you do not own' ] );
+		}
+
 		$success = $recipeModel->delete( $recipeId );
 
 		if ( $success ) {
