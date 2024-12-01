@@ -33,8 +33,8 @@ class Recipe extends Model {
 			$errors['title'] = 'Title is required';
 		}
 
-		if ( isset( $data['thumbnail'] ) ) {
-			if ( $data['thumbnail']['error'] == UPLOAD_ERR_INI_SIZE ) {
+		if ( $data['thumbnail']['error'] !== UPLOAD_ERR_NO_FILE ) {
+			if ( $data['thumbnail']['error'] === UPLOAD_ERR_INI_SIZE ) {
 				$errors['thumbnail'] = 'Thumbnail is too large, it should not exceed 2MB';
 			}
 
