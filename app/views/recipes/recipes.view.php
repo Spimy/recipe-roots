@@ -36,7 +36,7 @@
 						<option value="halal">Halal</option>
 					</select>
 
-					<button class="btn btn--invert btn--error" type="reset">Clear</button>
+					<a class="btn btn--invert btn--error" href="?page=1">Reset</a>
 				</div>
 			</form>
 		</header>
