@@ -132,6 +132,11 @@ input[type='file']::file-selector-button {
 	display: none;
 }
 
+.input__file {
+	height: 100%;
+	min-height: 15rem;
+}
+
 .input__file label {
 	display: flex;
 	flex-direction: column;
