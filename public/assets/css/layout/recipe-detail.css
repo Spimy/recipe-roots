@@ -154,14 +154,17 @@ h1 {
 }
 
 .metadata__info {
-	display: grid;
-	grid-template-columns: max-content 1fr;
-	place-items: center;
+	display: flex;
+	align-items: center;
 	gap: 0.25rem;
 }
 
 .metadata__info img {
 	width: 3.25rem;
+}
+
+.metadata__info img.watch {
+	width: 2rem;
 }
 
 .metadata__info:nth-of-type(2) img {
