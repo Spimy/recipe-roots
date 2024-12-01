@@ -8,6 +8,7 @@ class Recipe extends Model {
 	protected $waitingTime;
 	protected $servings;
 	protected $public;
+	protected $dietaryType;
 	protected $ingredients;
 	protected $instructions;
 
@@ -19,6 +20,7 @@ class Recipe extends Model {
 		$this->waitingTime = $this->integerField( true );
 		$this->servings = $this->integerField( true );
 		$this->public = $this->booleanField( false );
+		$this->dietaryType = $this->charField( 10, true, false );
 		$this->ingredients = $this->jsonField();
 		$this->instructions = $this->textField( false );
 		parent::__construct();

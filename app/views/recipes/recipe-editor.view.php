@@ -84,11 +84,36 @@
 							value="<?= escape( $data['servings'] ?? '' ) ?? null ?>">
 					</div>
 
-					<div class="editor__input">
-						<label>Public</label>
-						<div class="editor__input--radio">
-							<label for="no"><input type="radio" name="public" id="no" value="no" required <?= empty( $data['public'] ) ? 'checked' : ( $data['public'] == 'no' ? 'checked' : '' ) ?>>No</label>
-							<label for="yes"><input type="radio" name="public" id="yes" value="yes" <?= empty( $data['public'] ) ? '' : ( $data['public'] == 'yes' ? 'checked' : '' ) ?>>Yes</label>
+					<div class="editor__column">
+						<div class="editor__input">
+							<label>Dietary Type</label>
+
+							<div class="editor__input--radio">
+								<label for="none">
+									<input type="radio" name="dietaryType" id="none" value="none" checked required>
+									None
+								</label>
+								<label for="vegetarian">
+									<input type="radio" name="dietaryType" id="vegetarian" value="vegetarian" <?= ( $data['dietaryType'] ?? '' ) === 'vegetarian' ? 'checked' : '' ?>>
+									Vegetarian
+								</label>
+								<label for="vegan">
+									<input type="radio" name="dietaryType" id="vegan" value="vegan" <?= ( $data['dietaryType'] ?? '' ) === 'vegan' ? 'checked' : '' ?>>
+									Vegan
+								</label>
+								<label for="halal">
+									<input type="radio" name="dietaryType" id="halal" value="halal" <?= ( $data['dietaryType'] ?? '' ) === 'halal' ? 'checked' : '' ?>>
+									Halal
+								</label>
+							</div>
+						</div>
+
+						<div class="editor__input">
+							<label>Public</label>
+							<div class="editor__input--radio">
+								<label for="no"><input type="radio" name="public" id="no" value="no" required <?= empty( $data['public'] ) ? 'checked' : ( $data['public'] == 'no' ? 'checked' : '' ) ?>>No</label>
+								<label for="yes"><input type="radio" name="public" id="yes" value="yes" <?= empty( $data['public'] ) ? '' : ( $data['public'] == 'yes' ? 'checked' : '' ) ?>>Yes</label>
+							</div>
 						</div>
 					</div>
 				</div>

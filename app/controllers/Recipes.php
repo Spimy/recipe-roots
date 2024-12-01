@@ -210,6 +210,7 @@ class Recipes {
 				'waitingTime' => empty( $_POST['waitingTime'] ) ? null : $_POST['waitingTime'],
 				'servings' => empty( $_POST['servings'] ) ? null : $_POST['servings'],
 				'public' => $_POST['public'] == 'yes' ? 1 : 0,
+				'dietaryType' => $_POST['dietaryType'] == 'none' ? null : $_POST['dietaryType'],
 				'instructions' => $_POST['instructions'],
 			];
 
@@ -267,6 +268,7 @@ class Recipes {
 				'waitingTime' => empty( $_POST['waitingTime'] ) ? null : $_POST['waitingTime'],
 				'servings' => empty( $_POST['servings'] ) ? null : $_POST['servings'],
 				'public' => $_POST['public'] == 'yes' ? 1 : 0,
+				'dietaryType' => $_POST['dietaryType'] == 'none' ? null : $_POST['dietaryType'],
 				'instructions' => $_POST['instructions'],
 			];
 

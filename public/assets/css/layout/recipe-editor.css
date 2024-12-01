@@ -34,6 +34,13 @@ noscript.ingredient-count .btn {
 	gap: 1rem;
 }
 
+.editor__column {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	gap: 1rem;
+}
+
 .editor__input {
 	display: flex;
 	flex-direction: column;
@@ -42,6 +49,7 @@ noscript.ingredient-count .btn {
 
 .editor__input--radio {
 	display: flex;
+	justify-content: space-between;
 	flex-wrap: wrap;
 	gap: 1rem;
 }
