@@ -49,11 +49,8 @@ h1 {
 }
 
 .heading__dropdown__menu {
-	display: grid;
+	display: none;
 	gap: 0.5rem;
-	overflow: hidden;
-	clip: rect(auto, auto, 0, auto);
-	transition: clip 0.5s;
 	padding: 1rem;
 	border-radius: 0.25rem;
 	background-color: var(--silver);
@@ -63,7 +60,7 @@ h1 {
 }
 
 .heading__dropdown input:checked + .heading__dropdown__menu {
-	clip: rect(auto, auto, 10rem, auto);
+	display: grid;
 }
 
 .heading__dropdown__menu * {
