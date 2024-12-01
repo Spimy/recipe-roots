@@ -403,7 +403,26 @@ class Recipes {
 				break;
 			}
 			case 'delete': {
+				$commentModel = new Comment();
+				$errors = $commentModel->hasProvidedId( $_POST );
 
+				if ( count( $errors ) > 0 ) {
+					http_response_code( 400 );
+
+					if ( isset( $errors['recipeId'] ) ) {
+						redirect( 'recipes' );
+					}
+
+					$_SESSION['comment_errors'] = $errors;
+					redirect( 'recipes/' . $_POST['recipeId'] . '#comments' );
+				}
+
+				$recipeId = $_POST['recipeId'];
+				$commentId = $_POST['commentId'];
+
+				$commentModel->delete( $commentId );
+				redirect( "recipes/$recipeId" );
+				break;
 			}
 			default: {
 				redirect( 'recipes' );
