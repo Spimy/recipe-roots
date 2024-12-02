@@ -5,7 +5,7 @@ class Home {
 
 	public function index() {
 		if ( isAuthenticated() ) {
-			redirect( 'recipes' );
+			redirect( $_SESSION['profile']['type'] === PROFILE_TYPES['user'] ? 'recipes' : 'dashboard' );
 		}
 
 		$this->view( 'home' );
