@@ -23,7 +23,11 @@ class Profile extends Model {
 		}
 
 		if ( $this->findOne( [ 'username' => $data['username'] ] ) ) {
-			$errors['username'] = 'This username is taken';
+			$errors['usernameTaken'] = 'This username is taken';
+		}
+
+		if ( isset( $data['avatar'] ) ) {
+			$errors = array_merge( $errors, validateUpload( $data['avatar'] ) );
 		}
 
 		return $errors;
