@@ -170,6 +170,8 @@ class Settings {
 
 			// Sign the user out after the account is deleted
 			redirect( 'signout?delete=success' );
+		} else {
+			redirect( 'settings' );
 		}
 	}
 }
