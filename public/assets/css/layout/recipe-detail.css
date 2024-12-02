@@ -17,43 +17,6 @@ h1 {
 	padding: 0.3em 1.5em;
 }
 
-.modal:popover-open {
-	display: block;
-	padding: 1rem;
-	border: none;
-	border-radius: 0.5rem;
-	max-width: 30rem;
-}
-
-.modal::backdrop {
-	backdrop-filter: blur(3px) brightness(90%);
-}
-
-.modal:popover-open p {
-	overflow-y: auto;
-	max-height: 15rem;
-}
-
-.modal:popover-open > div:nth-of-type(2) {
-	display: flex;
-	justify-content: end;
-	gap: 0.5rem;
-	margin-block-start: 1rem;
-}
-
-.modal:popover-open:has(fieldset) {
-	width: 30rem;
-}
-
-.modal:popover-open > div:nth-of-type(2):has(fieldset) {
-	justify-content: space-between;
-}
-
-.modal:popover-open > div:nth-of-type(2):has(fieldset) > div {
-	display: flex;
-	gap: 0.5rem;
-}
-
 .heading {
 	display: flex;
 	justify-content: space-between;
