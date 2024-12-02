@@ -19,6 +19,11 @@ class Settings {
 		if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 			$errors = [];
 
+			if ( isset( $_SESSION['accountDeleteError'] ) ) {
+				http_response_code( $_SESSION['accountDeleteError']['status'] );
+				$errors['accountDeleteError'] = $_SESSION['accountDeleteError']['message'];
+			}
+
 			$currentPassword = $_POST['currentPassword'] ?? null;
 			if ( ! $currentPassword ) {
 				http_response_code( 400 );
@@ -116,5 +121,55 @@ class Settings {
 	// Handle profile settings
 	public function profiles() {
 		$this->view( 'settings/profile', [ 'profile' => $this->profile ] );
+	}
+
+	// Handle delete account
+	public function delete() {
+		if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
+			$errors = [];
+
+			$currentPassword = $_POST['currentPassword'] ?? null;
+			if ( ! $currentPassword ) {
+				http_response_code( 400 );
+				$errors['currentPassword'] = 'Current password is required';
+
+				return $this->view(
+					'settings/account',
+					[ 
+						'account' => $this->profile['user'],
+						'errors' => $errors
+					]
+				);
+			}
+
+			$userModel = new User();
+			$user = $userModel->findById( $this->profile['user']['id'] );
+
+			if ( ! password_verify( $currentPassword, $user['password'] ) ) {
+				http_response_code( 403 );
+				$errors['currentPassword'] = 'The password you provided is incorrect';
+				return $this->view(
+					'settings/account',
+					[ 
+						'account' => $this->profile['user'],
+						'errors' => $errors
+					]
+				);
+			}
+
+			// Also deletes profiles associated as they cascade once user is deleted
+			$success = $userModel->delete( $user['id'] );
+			if ( ! $success ) {
+				http_response_code( 500 );
+				$_SESSION['accountDeleteError'] = [ 
+					'status' => 500,
+					'message' => 'Something went wrong when deleting your account, please try again'
+				];
+				redirect( 'settings' );
+			}
+
+			// Sign the user out after the account is deleted
+			redirect( 'signout' );
+		}
 	}
 }
