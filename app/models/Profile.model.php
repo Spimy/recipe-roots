@@ -1,10 +1,5 @@
 <?php
 
-const PROFILE_TYPES = [ 
-	'user' => false,
-	'farmer' => true
-];
-
 class Profile extends Model {
 	protected $userId;
 	protected $username;

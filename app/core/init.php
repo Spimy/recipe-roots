@@ -1,5 +1,10 @@
 <?php
 
+const PROFILE_TYPES = [ 
+	'user' => 0,
+	'farmer' => 1
+];
+
 spl_autoload_register( function ($classname) {
 	require $filename = "../app/models/" . ucfirst( $classname ) . ".model.php";
 } );
