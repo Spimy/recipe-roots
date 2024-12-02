@@ -25,6 +25,39 @@ function handleUnauthenticated( string $next ) {
 	redirect( "signin?next=$next" );
 }
 
+function validateUpload( $file ) {
+	$errors = [];
+
+	if ( $file['error'] !== UPLOAD_ERR_NO_FILE ) {
+		if ( $file['error'] === UPLOAD_ERR_INI_SIZE ) {
+			$errors['file'] = 'File is too large, it should not exceed 2MB';
+		}
+
+		$fileTmpPath = $file['tmp_name'];
+		$fileName = $file['name'];
+
+		$allowedExtensions = [ 'jpg', 'jpeg', 'png', 'gif' ];
+		$allowedMimeTypes = [ 'image/jpeg', 'image/png', 'image/gif' ];
+
+		$fileExtension = strtolower( pathinfo( $fileName, PATHINFO_EXTENSION ) );
+		if ( ! in_array( $fileExtension, $allowedExtensions ) ) {
+			$errors['ext'] = 'Invalid file extension. Allowed extensions are: ' . implode( ', ', $allowedExtensions );
+		}
+
+		$fileMimeType = mime_content_type( $fileTmpPath );
+		if ( ! in_array( $fileMimeType, $allowedMimeTypes ) ) {
+			$errors['mime'] = 'Invalid MIME type. Allowed types are: ' . implode( ', ', $allowedMimeTypes );
+		}
+
+		$imageSize = @getimagesize( $fileTmpPath );
+		if ( $imageSize === false ) {
+			$errors['img'] = "The file is not a valid image";
+		}
+	}
+
+	return $errors;
+}
+
 function uploadFile( string $folder, string $tempfile, string $filename ) {
 	if ( ! is_dir( '../public/uploads' ) ) {
 		mkdir( '../public/uploads' );
