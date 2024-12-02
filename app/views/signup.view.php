@@ -66,7 +66,7 @@
 
 				<div class="auth__input--radio">
 					<label for="none">
-						<input type="radio" name="dietaryType" id="none" value="none" <?= ( $_POST['dietaryType'] ?? '' ) === 'none' ? 'checked' : '' ?> required>
+						<input type="radio" name="dietaryType" id="none" value="none" checked required>
 						None
 					</label>
 					<label for="vegetarian">

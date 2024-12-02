@@ -22,7 +22,7 @@ class Signup {
 				$profile->create( [ 
 					'userId' => $newUser['id'],
 					'username' => $_POST['username'],
-					'accountType' => $_POST['accountType'] == 'user' ? PROFILE_TYPES['user'] : PROFILE_TYPES['farmer']
+					'type' => PROFILE_TYPES[ $_POST['accountType'] ?? 'user' ]
 				] );
 
 				$_SESSION['signup'] = 'Successfully signed up. Proceed by signing in.';
