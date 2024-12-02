@@ -28,7 +28,7 @@
 				</div>
 
 				<div class="filter__input">
-					<select class="btn btn--invert" name="dietary" id="dietary">
+					<select class="btn btn--invert" name="dietary" id="dietary" onchange="this.form.submit()">
 						<option value="none" selected disabled>Dietary Type</option>
 						<option value="none" <?= ( ! $dietaryType || $dietaryType === 'none' ) ? 'selected' : '' ?>>None</option>
 						<option value="vegetarian" <?= $dietaryType === 'vegetarian' ? 'selected' : '' ?>>Vegetarian</option>
