@@ -12,7 +12,10 @@ class Recipes {
 		}
 		$this->profile = $_SESSION['profile'];
 
-		// TODO: If profile is not a 'user' profile but a 'farmer' profile, ask to create a new profile
+		if ( $this->profile['type'] !== PROFILE_TYPES['recipe'] ) {
+			http_response_code( 403 );
+			redirect( "settings/profiles?next=" . $_GET['url'] );
+		}
 
 		handleInvalidCsrfToken( $this );
 	}
