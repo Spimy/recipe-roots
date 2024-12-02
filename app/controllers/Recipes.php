@@ -12,7 +12,7 @@ class Recipes {
 		}
 		$this->profile = $_SESSION['profile'];
 
-		if ( $this->profile['type'] !== PROFILE_TYPES['recipe'] ) {
+		if ( $this->profile['type'] !== PROFILE_TYPES['user'] ) {
 			http_response_code( 403 );
 			redirect( "settings/profiles?next=" . $_GET['url'] );
 		}
