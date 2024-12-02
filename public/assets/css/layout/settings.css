@@ -1,3 +1,9 @@
+hr {
+	width: 100%;
+	color: var(--grey-blue);
+	border-color: var(--grey-blue);
+}
+
 .settings {
 	display: flex;
 	flex-wrap: wrap;
@@ -81,6 +87,37 @@
 
 .settings__editor .btn {
 	padding: 0.35em;
+}
+
+.settings__editor__fields {
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+	gap: 2rem;
+	margin-block-end: 2rem;
+}
+
+.input__file,
+.input__file--preview,
+.input__file label,
+.settings__editor__fields > div:nth-child(1) {
+	aspect-ratio: 1/1;
+	border-radius: 100%;
+}
+
+.input__file input {
+	text-align: center;
+	width: 100%;
+}
+
+.settings__editor__fields > div {
+	flex: 1;
+}
+
+.settings__editor__fields > div:nth-child(2) {
+	flex-basis: 50%;
+	display: grid;
+	gap: 1rem;
 }
 
 .settings__editor__input {

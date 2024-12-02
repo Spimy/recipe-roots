@@ -119,8 +119,102 @@ class Settings {
 	}
 
 	// Handle profile settings
-	public function profiles() {
-		$this->view( 'settings/profile', [ 'profile' => $this->profile ] );
+	public function profiles( string $method = '' ) {
+		$profileModel = new Profile();
+		$profiles = $profileModel->findAll( [ 'userId' => $this->profile['user']['id'] ] );
+
+		if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
+			$errors = [];
+
+			$currentPassword = $_POST['currentPassword'] ?? null;
+			if ( ! $currentPassword ) {
+				http_response_code( 400 );
+				$errors['currentPassword'] = 'Current password is required';
+
+				return $this->view(
+					'settings/account',
+					[ 
+						'account' => $this->profile['user'],
+						'errors' => $errors
+					]
+				);
+			}
+
+			$userModel = new User();
+			$user = $userModel->findById( $this->profile['user']['id'] );
+
+			if ( ! password_verify( $currentPassword, $user['password'] ) ) {
+				http_response_code( 403 );
+				$errors['currentPassword'] = 'The password you provided is incorrect';
+				return $this->view(
+					'settings/account',
+					[ 
+						'account' => $this->profile['user'],
+						'errors' => $errors
+					]
+				);
+			}
+
+			$errors = array_merge( $errors, $profileModel->validate( array_merge( $_POST, $_FILES ) ) );
+
+			$profileDetails = [ 'username' => $_POST['username'] ];
+			if ( $_FILES['avatar']['error'] == UPLOAD_ERR_OK ) {
+				$tmp_name = $_FILES['avatar']['tmp_name'];
+				$name = basename( $_FILES['avatar']['name'] );
+				$profileDetails['avatar'] = uploadFile( 'avatars', $tmp_name, $name );
+			}
+
+			switch ( strtolower( $method ) ) {
+				case 'update': {
+					if ( empty( $_POST['profileId'] ) ) {
+						$errors['profileId'] = 'No profile id has been provided';
+					}
+
+					if ( ! is_numeric( $_POST['profileId'] ) ) {
+						$errors['profileId'] = 'Invalid or non-exising profile id provided';
+					}
+
+					$profileId = $_POST['profileId'];
+					$profile = current( array_filter( $profiles, fn( $p ) => $p['id'] == $_POST['profileId'] ) ) ?? null;
+					if ( ! $profile ) {
+						$errors['profileId'] = 'Invalid or non-exising profile id provided';
+					}
+
+					if ( isset( $errors['usernameTaken'] ) ) {
+						if ( $_POST['profileId'] == $profile['id'] ) {
+							unset( $errors['usernameTaken'] );
+						}
+					}
+
+					if ( count( $errors ) > 0 ) {
+						http_response_code( 400 );
+						return $this->view( 'settings/profile', [ 'profiles' => $profiles, 'errors' => $errors ] );
+					}
+
+					$_SESSION['profileMessage'] = 'Successfully updated your profile';
+					$profileModel->update( $profileId, $profileDetails );
+					redirect( 'settings/profiles' );
+					break;
+				}
+				case 'create': {
+					if ( count( $errors ) > 0 ) {
+						http_response_code( 400 );
+						return $this->view( 'settings/profile', [ 'profiles' => $profiles, 'errors' => $errors ] );
+					}
+
+					$_SESSION['profileMessage'] = 'Successfully created your profile';
+					$profileModel->create( array_merge( $profileDetails, [ 'userId' => $user['id'] ] ) );
+					redirect( 'settings/profiles' );
+					break;
+				}
+				default: {
+					redirect( 'settings/profiles' );
+				}
+			}
+		}
+
+		$this->view( 'settings/profile', [ 'profiles' => $profiles, 'message' => $_SESSION['profileMessage'] ?? null ] );
+		unset( $_SESSION['profileMessage'] );
 	}
 
 	// Handle delete account
