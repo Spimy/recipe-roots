@@ -103,12 +103,12 @@ class Recipes {
 			[ 
 				'recipe' => $recipe,
 				'comments' => $comments,
-				'commentErrors' => $_SESSION['comment_errors'] ?? [],
-				'recipeErrors' => $_SESSION['recipe_errors'] ?? []
+				'commentErrors' => $_SESSION['commentErrors'] ?? [],
+				'recipeErrors' => $_SESSION['recipeErrors'] ?? []
 			]
 		);
-		unset( $_SESSION['comment_errors'] );
-		unset( $_SESSION['recipe_errors'] );
+		unset( $_SESSION['commentErrors'] );
+		unset( $_SESSION['recipeErrors'] );
 	}
 
 	public function browse() {
@@ -302,7 +302,7 @@ class Recipes {
 			$success = $recipeModel->update( $id, $recipeData );
 			if ( ! $success ) {
 				http_response_code( 500 );
-				$_SESSION['recipe_errors'] = [ 'Something went wrong updating the recipe and could not be saved' ];
+				$_SESSION['recipeErrors'] = [ 'Something went wrong updating the recipe and could not be saved' ];
 			}
 
 			redirect( "recipes/$id" );
@@ -350,7 +350,7 @@ class Recipes {
 		}
 
 		http_response_code( 500 );
-		$_SESSION['recipe_errors'] = [ 'Recipe could not be deleted' ];
+		$_SESSION['recipeErrors'] = [ 'Recipe could not be deleted' ];
 		redirect( "recipes/$recipeId" );
 	}
 
@@ -371,7 +371,7 @@ class Recipes {
 						redirect( 'recipes' );
 					}
 
-					$_SESSION['comment_errors'] = $errors;
+					$_SESSION['commentErrors'] = $errors;
 					redirect( 'recipes/' . $_POST['recipeId'] . '#comments' );
 				}
 
@@ -400,7 +400,7 @@ class Recipes {
 					}
 
 
-					$_SESSION['comment_errors'] = $errors;
+					$_SESSION['commentErrors'] = $errors;
 					redirect( 'recipes/' . $_POST['recipeId'] . '#comments' );
 				}
 
@@ -410,7 +410,7 @@ class Recipes {
 				$errors = $commentModel->hasProvidedContent( $_POST );
 				if ( count( $errors ) > 0 ) {
 					http_response_code( 400 );
-					$_SESSION['comment_errors'] = $errors;
+					$_SESSION['commentErrors'] = $errors;
 					redirect( "recipes/$recipeId#comment-$commentId" );
 				}
 
@@ -440,7 +440,7 @@ class Recipes {
 						redirect( 'recipes' );
 					}
 
-					$_SESSION['comment_errors'] = $errors;
+					$_SESSION['commentErrors'] = $errors;
 					redirect( 'recipes/' . $_POST['recipeId'] . '#comments' );
 				}
 
