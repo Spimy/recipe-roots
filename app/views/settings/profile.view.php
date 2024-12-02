@@ -90,7 +90,10 @@
 								</div>
 
 								<?php if ( $profile['id'] !== $_SESSION['profile']['id'] ) : ?>
-									<button type="button" class="btn btn--invert">Switch</button>
+									<a href="<?= ROOT ?>/settings/profiles/switch<?= isset( $_GET['next'] ) ? '?next=' . escape( $_GET['next'] ) : '' ?>"
+										class="btn btn--invert">
+										Switch
+									</a>
 								<?php endif; ?>
 								<button type="submit" class="btn">Save</button>
 							</div>

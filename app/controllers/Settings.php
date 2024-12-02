@@ -121,7 +121,7 @@ class Settings {
 	// Handle profile settings
 	public function profiles( string $method = '' ) {
 		$profileModel = new Profile();
-		$profiles = $profileModel->findAll( [ 'userId' => $this->profile['user']['id'] ] );
+		$profiles = $profileModel->findAll( [ 'userId' => $this->profile['user']['id'] ], join: true );
 
 		if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 			$errors = [];
@@ -220,8 +220,25 @@ class Settings {
 			}
 		}
 
-		$this->view( 'settings/profile', [ 'profiles' => $profiles, 'message' => $_SESSION['profileMessage'] ?? null ] );
-		unset( $_SESSION['profileMessage'] );
+		if ( $method === 'switch' ) {
+			$swapProfile = current( array_filter( $profiles, fn( $p ) => $p['id'] != $this->profile['id'] ) ) ?? null;
+			if ( $swapProfile ) {
+				$sessionModel = new Session();
+				$session = $sessionModel->findOne( [ 'sessionId' => $_COOKIE['profile'] ] );
+				$sessionModel->update( $session['id'], [ 'profileId' => $swapProfile['id'] ] );
+
+				$_SESSION['profile'] = $swapProfile;
+				if ( ! isset( $_GET['next'] ) ) {
+					$_SESSION['profileMessage'] = 'You have been swapped to your ' . ( $swapProfile['type'] === PROFILE_TYPES['user'] ? 'User' : 'Farmer' ) . ' profile';
+				}
+			}
+
+			redirect( isset( $_GET['next'] ) ? $_GET['next'] : 'settings/profiles' );
+		} else {
+			$this->view( 'settings/profile', [ 'profiles' => $profiles, 'message' => $_SESSION['profileMessage'] ?? null ] );
+			unset( $_SESSION['profileMessage'] );
+		}
+
 	}
 
 	// Handle delete account
