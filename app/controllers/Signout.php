@@ -15,6 +15,6 @@ class Signout {
 			'httponly' => true
 		] );
 
-		redirect( '' );
+		redirect( '' . isset( $_GET['delete'] ) ? '?delete=' . $_GET['delete'] : '' );
 	}
 }

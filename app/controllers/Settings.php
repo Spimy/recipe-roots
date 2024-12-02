@@ -169,7 +169,7 @@ class Settings {
 			}
 
 			// Sign the user out after the account is deleted
-			redirect( 'signout' );
+			redirect( 'signout?delete=success' );
 		}
 	}
 }

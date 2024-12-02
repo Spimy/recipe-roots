@@ -122,3 +122,9 @@ main {
 	color: var(--grey);
 	font-size: 0.8rem;
 }
+
+p.success {
+	position: absolute;
+	top: 15%;
+	color: var(--success);
+}

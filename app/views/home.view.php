@@ -14,6 +14,10 @@
 
 	<main>
 		<section class="hero">
+			<?php if ( isset( $_GET['delete'] ) && $_GET['delete'] === 'success' ) : ?>
+				<p class="success"><?= 'Your account has been deleted successfully' ?></p>
+			<?php endif; ?>
+
 			<h1 class="hero__content__title">Your Kitchen Assistant</h1>
 			<p class="hero__content__subtitle">
 				Create and share your recipes with fellow enthusiasts with easy access
