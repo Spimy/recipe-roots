@@ -157,13 +157,6 @@ class Settings {
 
 			$errors = array_merge( $errors, $profileModel->validate( array_merge( $_POST, $_FILES ) ) );
 
-			$profileDetails = [ 'username' => $_POST['username'] ];
-			if ( $_FILES['avatar']['error'] == UPLOAD_ERR_OK ) {
-				$tmp_name = $_FILES['avatar']['tmp_name'];
-				$name = basename( $_FILES['avatar']['name'] );
-				$profileDetails['avatar'] = uploadFile( 'avatars', $tmp_name, $name );
-			}
-
 			switch ( strtolower( $method ) ) {
 				case 'update': {
 					if ( empty( $_POST['profileId'] ) ) {
@@ -191,6 +184,13 @@ class Settings {
 						return $this->view( 'settings/profile', [ 'profiles' => $profiles, 'errors' => $errors ] );
 					}
 
+					$profileDetails = [ 'username' => $_POST['username'] ];
+					if ( $_FILES['avatar']['error'] == UPLOAD_ERR_OK ) {
+						$tmp_name = $_FILES['avatar']['tmp_name'];
+						$name = basename( $_FILES['avatar']['name'] );
+						$profileDetails['avatar'] = uploadFile( 'avatars', $tmp_name, $name );
+					}
+
 					$_SESSION['profileMessage'] = 'Successfully updated your profile';
 					$profileModel->update( $profileId, $profileDetails );
 					redirect( 'settings/profiles' );
@@ -200,6 +200,13 @@ class Settings {
 					if ( count( $errors ) > 0 ) {
 						http_response_code( 400 );
 						return $this->view( 'settings/profile', [ 'profiles' => $profiles, 'errors' => $errors ] );
+					}
+
+					$profileDetails = [ 'username' => $_POST['username'] ];
+					if ( $_FILES['avatar']['error'] == UPLOAD_ERR_OK ) {
+						$tmp_name = $_FILES['avatar']['tmp_name'];
+						$name = basename( $_FILES['avatar']['name'] );
+						$profileDetails['avatar'] = uploadFile( 'avatars', $tmp_name, $name );
 					}
 
 					$_SESSION['profileMessage'] = 'Successfully created your profile';
