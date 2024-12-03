@@ -100,8 +100,9 @@ class Dashboard {
 				$newIngredient['thumbnail'] = uploadFile( 'thumbnails', $tmp_name, $name );
 			}
 
-			$ingredientModel->create( $newIngredient );
-			redirect( 'dashboard' );
+			$ingredient = $ingredientModel->create( $newIngredient );
+			$_SESSION['produceAddMessage'] = 'Successfully added new produce';
+			redirect( 'dashboard/produce/' . $ingredient['id'] );
 		}
 		$this->view( 'farmer/produce-editor', [ 'action' => 'Add' ] );
 	}
@@ -122,7 +123,7 @@ class Dashboard {
 
 		if ( $ingredient['farmerId'] != $this->profile['id'] ) {
 			http_response_code( 403 );
-			return $this->view( '403', [ 'message' => 'You do not have permissions to edit this produce' ] );
+			return $this->view( '403', [ 'message' => 'You do not have permissions to edit this produce', 'data' => $ingredient ] );
 		}
 
 		if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
@@ -130,7 +131,7 @@ class Dashboard {
 
 			if ( count( $errors ) > 0 ) {
 				http_response_code( 400 );
-				return $this->view( 'farmer/produce-editor', [ 'action' => 'Add', 'errors' => $errors ] );
+				return $this->view( 'farmer/produce-editor', [ 'action' => 'Edit', 'errors' => $errors, 'data' => $ingredient ] );
 			}
 
 			$ingredientData = [ 
@@ -152,9 +153,12 @@ class Dashboard {
 				$_SESSION['recipeErrors'] = [ 'Something went wrong updating the recipe and could not be saved' ];
 			}
 
-			redirect( "dashboard" );
+			$ingredient = $ingredientModel->findById( $id, true );
+			$message = 'Successfully edited your produce';
 		}
 
-		$this->view( 'farmer/produce-editor', [ 'action' => 'Edit', 'data' => $ingredient ] );
+		$message ??= $_SESSION['produceAddMessage'] ?? null;
+		$this->view( 'farmer/produce-editor', [ 'action' => 'Edit', 'data' => $ingredient, 'message' => $message ] );
+		unset( $_SESSION['produceAddMessage'] );
 	}
 }

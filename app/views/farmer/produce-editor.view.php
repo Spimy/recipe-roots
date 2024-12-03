@@ -16,6 +16,10 @@
 	<main>
 		<h1><?= $action ?> Produce</h1>
 
+		<?php if ( isset( $message ) ) : ?>
+			<p class="success"><?= escape( $message ) ?></p>
+		<?php endif; ?>
+
 		<?php if ( ! empty( $errors ) ) : ?>
 			<ul class="errors">
 				<?php foreach ( $errors as $error ) : ?>
