@@ -31,7 +31,10 @@ class Dashboard {
 		// 	[ 'y' => 200, 'label' => 'Nov 2024' ],
 		// 	[ 'y' => 120, 'label' => 'Dec 2024' ],
 		// ];
-		$this->view( 'farmer/dashboard', [ 'dataPoints' => $dataPoints ] );
+
+		$ingredientModel = new Ingredient();
+		$ingredients = $ingredientModel->findAll( [ 'farmerId' => $this->profile['id'] ], join: true );
+		$this->view( 'farmer/dashboard', [ 'dataPoints' => $dataPoints, 'ingredients' => $ingredients ] );
 	}
 
 	public function produce( string $method = null, int $id = null ) {

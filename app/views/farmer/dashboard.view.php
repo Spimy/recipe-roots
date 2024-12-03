@@ -27,7 +27,31 @@
 				</header>
 
 				<section class="grid">
-
+					<?php foreach ( $ingredients as $produce ) : ?>
+						<article class="card">
+							<img class="card__thumbnail" src="<?= escape( $produce['thumbnail'] ) ?>"
+								alt="<?= extractTitleLetters( escape( $produce['ingredient'] ) ) ?>">
+							<div>
+								<div class="card__head">
+									<div class="card__head__title">
+										<h2><?= escape( $produce['ingredient'] ) ?></h2>
+									</div>
+									<div class="card__head__info">
+										<p><?= escape( $produce['price'] ) ?>/<?= escape( $produce['unit'] ) ?></p>
+									</div>
+								</div>
+								<div class="card__body">
+									<div class="card__body__author">
+										<p><?= escape( $produce['profile']['username'] ) ?></p>
+									</div>
+									<a href="<?= ROOT ?>/dashboard/produce/edit/<?= escape( $produce['id'] ) ?>"
+										class="btn btn--invert btn--next">
+										Edit
+									</a>
+								</div>
+							</div>
+						</article>
+					<?php endforeach; ?>
 				</section>
 		</div>
 		</article>
