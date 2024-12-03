@@ -33,4 +33,46 @@ class Dashboard {
 		// ];
 		$this->view( 'farmer/dashboard', [ 'dataPoints' => $dataPoints ] );
 	}
+
+	public function produce( string $method = null, int $id = null ) {
+		if ( ! $method ) {
+			redirect( 'dashboard' );
+		}
+
+		switch ( $method ) {
+			case 'add': {
+				$this->addProduce();
+				break;
+			}
+		}
+	}
+
+	protected function addProduce() {
+		if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
+			$ingredientModel = new Ingredient();
+			$errors = $ingredientModel->validate( array_merge( $_POST, $_FILES ) );
+
+			if ( count( $errors ) > 0 ) {
+				http_response_code( 400 );
+				return $this->view( 'farmer/produce-editor', [ 'action' => 'Add', 'errors' => $errors ] );
+			}
+
+			$newIngredient = [ 
+				'farmerId' => $this->profile['id'],
+				'ingredient' => $_POST['ingredient'],
+				'price' => number_format( $_POST['price'], 2, '.', '' ),
+				'unit' => $_POST['unit'],
+			];
+
+			if ( $_FILES['thumbnail']['error'] == UPLOAD_ERR_OK ) {
+				$tmp_name = $_FILES['thumbnail']['tmp_name'];
+				$name = basename( $_FILES['thumbnail']['name'] );
+				$newIngredient['thumbnail'] = uploadFile( 'thumbnails', $tmp_name, $name );
+			}
+
+			$ingredientModel->create( $newIngredient );
+			redirect( 'dashboard' );
+		}
+		$this->view( 'farmer/produce-editor', [ 'action' => 'Add' ] );
+	}
 }
