@@ -20,6 +20,17 @@ class Dashboard {
 	}
 
 	public function index() {
+		$purchaseModel = new Purchase();
+		$sales = $purchaseModel->findAll( [ 'farmerId' => $this->profile['id'] ] );
+		$groupedSales = $purchaseModel->groupSalesByDate( $sales );
+		$dataPoints = $purchaseModel->createDataPoints( $groupedSales );
 
+		// $dataPoints = [ 
+		// 	[ 'y' => 320, 'label' => 'Oct 2024' ],
+		// 	[ 'y' => 560, 'label' => 'Nov 2024' ],
+		// 	[ 'y' => 200, 'label' => 'Nov 2024' ],
+		// 	[ 'y' => 120, 'label' => 'Dec 2024' ],
+		// ];
+		$this->view( 'farmer/dashboard', [ 'dataPoints' => $dataPoints ] );
 	}
 }
