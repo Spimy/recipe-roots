@@ -192,7 +192,11 @@ abstract class Model {
 		}
 
 		if ( ! empty( $keysContain ) ) {
-			$query .= " && (";
+			if ( ! empty( $keys ) || ! empty( $keysNot ) ) {
+				$query .= " && (";
+			} else {
+				$query .= " WHERE (";
+			}
 
 			foreach ( $keysContain as $key ) {
 				$query .= "$key LIKE :$key || ";
