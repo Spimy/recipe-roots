@@ -23,7 +23,7 @@
 			<article class="dashboard__produce">
 				<header>
 					<h2>Your Produce</h2>
-					<button class="btn btn--add">Add</button>
+					<a href="<?= ROOT ?>/dashboard/produce/add" class="btn btn--add">Add</a>
 				</header>
 
 				<section class="grid">
