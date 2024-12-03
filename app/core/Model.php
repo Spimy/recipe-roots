@@ -88,6 +88,15 @@ abstract class Model {
 		];
 	}
 
+	protected function decimalField( int $size = 3, int $precision = 2, bool $nullable = false, bool $unique = false, int $default = 0 ) {
+		return [ 
+			'type' => "DECIMAL($size,$precision)",
+			'unique' => $unique,
+			'nullable' => $nullable,
+			'default' => is_numeric( $default ) ? $default : 0,
+		];
+	}
+
 	protected function booleanField( bool $default = false ) {
 		return [ 
 			'type' => "BOOLEAN",
