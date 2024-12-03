@@ -108,7 +108,7 @@ function convertToHoursMins( $mins ) {
 	return $hours > 0 ? sprintf( $format, $hours, $minutes ) : sprintf( $format, $minutes );
 }
 
-function getPaginationData( Model $model, int $itemsPerPage, array $conditions, array $contains = [] ) {
+function getPaginationData( Model $model, int $itemsPerPage, array $conditions = [], array $contains = [] ) {
 	$currentPage = isset( $_GET['page'] ) && is_numeric( $_GET['page'] ) ? (int) $_GET['page'] : 1;
 	$offset = ( $currentPage - 1 ) * $itemsPerPage;
 
