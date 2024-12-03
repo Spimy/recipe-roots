@@ -75,8 +75,7 @@
 						<a class="btn" href="?page=<?= $totalPages ?>">»</a>
 					</div>
 				</section>
-		</div>
-
+			</article>
 	</main>
 
 	<?php include '../app/views/layout/footer.php' ?>
