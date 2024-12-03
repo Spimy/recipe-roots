@@ -29,7 +29,7 @@ class Ingredient extends Model {
 			if ( ! is_numeric( $data['price'] ) ) {
 				$errors['price'] = 'Unit price should be a number';
 			} else {
-				if ( $data['price'] > 999 ) {
+				if ( $data['price'] >= 1000 ) {
 					$errors['price'] = 'Unit price is too high';
 				}
 			}
