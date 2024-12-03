@@ -15,6 +15,10 @@
 	<main>
 		<h1>Dashboard</h1>
 
+		<?php if ( isset( $message ) ) : ?>
+			<p class="success"><?= escape( $message ) ?></p>
+		<?php endif; ?>
+
 		<div class="dashboard">
 			<?php if ( count( $dataPoints ) > 0 ) : ?>
 				<div id="chartContainer" class="chart"></div>

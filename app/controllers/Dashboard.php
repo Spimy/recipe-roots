@@ -56,8 +56,10 @@ class Dashboard {
 				'ingredients' => $ingredients,
 				'currentPage' => $currentPage,
 				'totalPages' => $totalPages,
+				'message' => $_SESSION['produceDeleteMessage'] ?? null
 			]
 		);
+		unset( $_SESSION['produceDeleteMessage'] );
 	}
 
 	public function produce( string $method = null, int $id = null ) {
@@ -72,6 +74,10 @@ class Dashboard {
 			}
 			case 'edit': {
 				$this->editProduce( $id );
+				break;
+			}
+			case 'delete': {
+				$this->deleteProduce();
 				break;
 			}
 		}
@@ -107,7 +113,7 @@ class Dashboard {
 		$this->view( 'farmer/produce-editor', [ 'action' => 'Add' ] );
 	}
 
-	public function editProduce( int $id ) {
+	protected function editProduce( int $id ) {
 		if ( ! $id || ! is_numeric( $id ) ) {
 			http_response_code( 400 );
 			redirect( 'dashboard' );
@@ -160,5 +166,34 @@ class Dashboard {
 		$message ??= $_SESSION['produceAddMessage'] ?? null;
 		$this->view( 'farmer/produce-editor', [ 'action' => 'Edit', 'data' => $ingredient, 'message' => $message ] );
 		unset( $_SESSION['produceAddMessage'] );
+	}
+
+	protected function deleteProduce() {
+		if ( $_SERVER['REQUEST_METHOD'] !== 'POST' ) {
+			redirect( 'dashboard' );
+		}
+
+		$ingredientId = $_POST['ingredientId'] ?? null;
+		if ( ! $ingredientId || ! is_numeric( $ingredientId ) ) {
+			http_response_code( 400 );
+			redirect( 'dashboard' );
+		}
+
+		$ingredientModel = new Ingredient();
+		$ingredient = $ingredientModel->findById( $ingredientId, true );
+
+		if ( ! $ingredient ) {
+			http_response_code( 404 );
+			return $this->view( '404' );
+		}
+
+		if ( $ingredient['farmerId'] != $this->profile['id'] ) {
+			http_response_code( 403 );
+			return $this->view( '403', [ 'message' => 'You do not have permissions to delete this produce', 'data' => $ingredient ] );
+		}
+
+		$ingredientModel->delete( $ingredientId );
+		$_SESSION['produceDeleteMessage'] = 'Successfully deleted produce';
+		redirect( 'dashboard' );
 	}
 }

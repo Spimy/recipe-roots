@@ -84,6 +84,14 @@
 						<img src="<?= ROOT ?>/assets/icons/save.svg" alt="save icon">
 						Save
 					</button>
+
+					<?php if ( $action === 'Edit' ) : ?>
+						<button popovertarget="delete-confirm" type="button" class="btn btn--error">
+							<img src="<?= ROOT ?>/assets/icons/trash.svg" alt="delete icon">
+							Delete
+						</button>
+					<?php endif; ?>
+
 					<a class="btn btn--error"
 						href="<?= ROOT ?>/dashboard/<?= $action == 'Edit' ? escape( $data['id'] ?? '' ) : '' ?>">
 						Cancel
@@ -91,6 +99,25 @@
 				</div>
 			</div>
 		</form>
+
+		<!-- Pop up for confirm delete -->
+		<?php if ( $action === 'Edit' ) : ?>
+			<form popover role="dialog" id="delete-confirm" class="modal" method="post"
+				action="<?= ROOT ?>/dashboard/produce/delete">
+				<?php injectCsrfToken() ?>
+				<input type="hidden" name="ingredientId" value="<?= escape( $data['id'] ) ?>">
+
+				<div>
+					<h3>Confirm Delete</h3>
+					<p>Are you sure you want to delete <strong><?= escape( $data['ingredient'] ) ?></strong>?</p>
+				</div>
+
+				<div>
+					<button type="button" class="btn btn--invert" popovertarget="delete-confirm">Cancel</button>
+					<button class="btn btn--error">Delete</button>
+				</div>
+			</form>
+		<?php endif; ?>
 	</main>
 
 	<?php include '../app/views/layout/footer.php' ?>

@@ -41,3 +41,7 @@ h1 {
 	flex-direction: column;
 	margin-bottom: 1rem;
 }
+
+.btn img {
+	filter: brightness(0) invert(1);
+}
