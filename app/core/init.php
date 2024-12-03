@@ -5,6 +5,8 @@ const PROFILE_TYPES = [
 	'farmer' => 1
 ];
 
+const INGREDIENT_UNITS = [ 'kg', 'g', 'lb', 'oz', 'L', 'mL', 'gallon', 'quart', 'item', 'dozen' ];
+
 spl_autoload_register( function ($classname) {
 	require $filename = "../app/models/" . ucfirst( $classname ) . ".model.php";
 } );
