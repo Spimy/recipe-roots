@@ -21,7 +21,7 @@ class Dashboard {
 
 	public function index() {
 		$purchaseModel = new Purchase();
-		$sales = $purchaseModel->findAll( [ 'farmerId' => $this->profile['id'] ] );
+		$sales = $purchaseModel->findAll( [ 'farmerId' => $this->profile['id'] ], join: true );
 		$groupedSales = $purchaseModel->groupSalesByDate( $sales );
 		$dataPoints = $purchaseModel->createDataPoints( $groupedSales );
 
