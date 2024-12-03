@@ -44,7 +44,8 @@ class Recipes {
 			[ $currentPage, $totalPages, $offset ] = getPaginationData(
 				$recipeModel,
 				$this->itemsPerPage,
-				$recipeConditions
+				$recipeConditions,
+				$recipeParams
 			);
 
 			$recipes = $recipeModel->findAll(
@@ -132,7 +133,8 @@ class Recipes {
 		[ $currentPage, $totalPages, $offset ] = getPaginationData(
 			$recipeModel,
 			$this->itemsPerPage,
-			$recipeConditions
+			$recipeConditions,
+			$recipeParams
 		);
 
 		$recipes = $recipeModel->findAll(
