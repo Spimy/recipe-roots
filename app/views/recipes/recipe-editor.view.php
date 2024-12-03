@@ -221,7 +221,7 @@
 			<a class="btn btn--error" href="<?= ROOT ?>/recipes/<?= $action == 'Edit' ? escape( $data['id'] ?? '' ) : '' ?>">
 				Cancel
 			</a>
-			<pm>
+		</form>
 	</main>
 
 	<?php include '../app/views/layout/footer.php' ?>
