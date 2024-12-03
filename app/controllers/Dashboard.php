@@ -33,14 +33,14 @@ class Dashboard {
 		// ];
 
 		$itemsPerPage = 6;
-		$currentPage = isset( $_GET['page'] ) && is_numeric( $_GET['page'] ) ? (int) $_GET['page'] : 1;
-		$offset = ( $currentPage - 1 ) * $itemsPerPage;
+		$ingredientModel = new Ingredient();
 		$ingredientConditions = [ 'farmerId' => $this->profile['id'] ];
 
-		$ingredientModel = new Ingredient();
-		$totalRecipes = count( $ingredientModel->findAll( $ingredientConditions ) );
-		$totalPages = ceil( $totalRecipes / $itemsPerPage );
-		$totalPages = $totalPages == 0 ? 1 : $totalPages;
+		[ $currentPage, $totalPages, $offset ] = getPaginationData(
+			$ingredientModel,
+			$itemsPerPage,
+			$ingredientConditions
+		);
 
 		$ingredients = $ingredientModel->findAll(
 			data: $ingredientConditions,

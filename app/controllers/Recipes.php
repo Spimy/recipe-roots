@@ -35,18 +35,17 @@ class Recipes {
 				];
 			}
 
-			$currentPage = isset( $_GET['page'] ) && is_numeric( $_GET['page'] ) ? (int) $_GET['page'] : 1;
-			$offset = ( $currentPage - 1 ) * $this->itemsPerPage;
-
 			$recipeConditions = [ 'profileId' => $this->profile['id'] ];
 			$dietaryType = ( $_GET['dietary'] ?? '' ) == 'none' ? null : $_GET['dietary'] ?? $this->profile['user']['dietaryType'];
 			if ( $dietaryType ) {
 				$recipeConditions = [ ...$recipeConditions, 'dietaryType' => $dietaryType ];
 			}
 
-			$totalRecipes = count( $recipeModel->findAll( $recipeConditions, contain: $recipeParams ) );
-			$totalPages = ceil( $totalRecipes / $this->itemsPerPage );
-			$totalPages = $totalPages == 0 ? 1 : $totalPages;
+			[ $currentPage, $totalPages, $offset ] = getPaginationData(
+				$recipeModel,
+				$this->itemsPerPage,
+				$recipeConditions
+			);
 
 			$recipes = $recipeModel->findAll(
 				data: $recipeConditions,
@@ -124,18 +123,17 @@ class Recipes {
 			];
 		}
 
-		$currentPage = isset( $_GET['page'] ) && is_numeric( $_GET['page'] ) ? (int) $_GET['page'] : 1;
-		$offset = ( $currentPage - 1 ) * $this->itemsPerPage;
-
 		$recipeConditions = [ 'public' => 1 ];
 		$dietaryType = ( $_GET['dietary'] ?? '' ) == 'none' ? null : $_GET['dietary'] ?? $this->profile['user']['dietaryType'];
 		if ( $dietaryType ) {
 			$recipeConditions = [ ...$recipeConditions, 'dietaryType' => $dietaryType ];
 		}
 
-		$totalRecipes = count( $recipeModel->findAll( $recipeConditions, contain: $recipeParams ) );
-		$totalPages = ceil( $totalRecipes / $this->itemsPerPage );
-		$totalPages = $totalPages == 0 ? 1 : $totalPages;
+		[ $currentPage, $totalPages, $offset ] = getPaginationData(
+			$recipeModel,
+			$this->itemsPerPage,
+			$recipeConditions
+		);
 
 		$recipes = $recipeModel->findAll(
 			data: $recipeConditions,

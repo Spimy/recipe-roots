@@ -108,6 +108,17 @@ function convertToHoursMins( $mins ) {
 	return $hours > 0 ? sprintf( $format, $hours, $minutes ) : sprintf( $format, $minutes );
 }
 
+function getPaginationData( Model $model, int $itemsPerPage, array $conditions, array $contains = [] ) {
+	$currentPage = isset( $_GET['page'] ) && is_numeric( $_GET['page'] ) ? (int) $_GET['page'] : 1;
+	$offset = ( $currentPage - 1 ) * $itemsPerPage;
+
+	$totalData = count( $model->findAll( $conditions, contain: $contains ) );
+	$totalPages = ceil( $totalData / $itemsPerPage );
+	$totalPages = $totalPages == 0 ? 1 : $totalPages;
+
+	return [ $currentPage, $totalPages, $offset ];
+}
+
 function getPaginatorPages( $currentPage, $totalPages ) {
 	// Handle edge cases where total pages are less than or equal to 3
 	if ( $totalPages <= 3 ) {
