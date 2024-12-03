@@ -32,9 +32,32 @@ class Dashboard {
 		// 	[ 'y' => 120, 'label' => 'Dec 2024' ],
 		// ];
 
+		$itemsPerPage = 6;
+		$currentPage = isset( $_GET['page'] ) && is_numeric( $_GET['page'] ) ? (int) $_GET['page'] : 1;
+		$offset = ( $currentPage - 1 ) * $itemsPerPage;
+		$ingredientConditions = [ 'farmerId' => $this->profile['id'] ];
+
 		$ingredientModel = new Ingredient();
-		$ingredients = $ingredientModel->findAll( [ 'farmerId' => $this->profile['id'] ], join: true );
-		$this->view( 'farmer/dashboard', [ 'dataPoints' => $dataPoints, 'ingredients' => $ingredients ] );
+		$totalRecipes = count( $ingredientModel->findAll( $ingredientConditions ) );
+		$totalPages = ceil( $totalRecipes / $itemsPerPage );
+		$totalPages = $totalPages == 0 ? 1 : $totalPages;
+
+		$ingredients = $ingredientModel->findAll(
+			data: $ingredientConditions,
+			join: true,
+			limit: $itemsPerPage,
+			offset: $offset
+		);
+
+		$this->view(
+			'farmer/dashboard',
+			[ 
+				'dataPoints' => $dataPoints,
+				'ingredients' => $ingredients,
+				'currentPage' => $currentPage,
+				'totalPages' => $totalPages,
+			]
+		);
 	}
 
 	public function produce( string $method = null, int $id = null ) {
