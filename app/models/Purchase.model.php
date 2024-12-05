@@ -1,13 +1,11 @@
 <?php
 
 class Purchase extends Model {
-	protected $userProfileId;
 	protected $farmerId;
 	protected $ingredientId;
 	protected $amount;
 
 	public function __construct() {
-		$this->userProfileId = $this->foreignKey( new Profile, true );
 		$this->farmerId = $this->foreignKey( new Profile, true );
 		$this->ingredientId = $this->foreignKey( new Ingredient, true );
 		$this->amount = $this->integerField();
