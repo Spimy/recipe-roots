@@ -61,7 +61,7 @@
 
 					<div class="editor__column">
 						<div class="editor__input">
-							<label for="price">Price</label>
+							<label for="price">Price (RM)</label>
 							<input type="text" inputmode="numeric" name="price" id="price"
 								value="<?= escape( $data['price'] ?? '' ) ?? null ?>" required>
 						</div>
