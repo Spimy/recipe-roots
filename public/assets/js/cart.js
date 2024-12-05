@@ -55,6 +55,8 @@ function registerInputs() {
 
 					const section = document.querySelector('section.grid');
 					const newGrid = doc.querySelector('section.grid');
+					const review = document.getElementById('review');
+					const newReview = doc.getElementById('review');
 
 					if (!newGrid) {
 						section.classList.add('empty');
@@ -62,6 +64,14 @@ function registerInputs() {
 						section.innerHTML = doc.querySelector('section.empty').innerHTML;
 					} else {
 						section.innerHTML = doc.querySelector('section.grid').innerHTML;
+					}
+
+					if (review && newReview) {
+						review.innerHTML = newReview.innerHTML;
+					}
+
+					if (review && !newReview) {
+						review.remove();
 					}
 
 					registerInputs();
