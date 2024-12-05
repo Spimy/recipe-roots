@@ -4,7 +4,7 @@
 
 .dashboard {
 	display: grid;
-	grid-template-rows: 10fr 1fr;
+	grid-template-rows: 1fr 1fr;
 	gap: 2rem;
 	margin-bottom: 2rem;
 }
