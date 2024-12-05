@@ -126,25 +126,24 @@
 					<h2>Review Order</h2>
 					<dl>
 						<dt>Your items</dt>
-						<dd>RM<?= number_format( escape( $subtotal ), 2 ) ?></dd>
+						<dd>RM<?= $pricing['subtotal'] ?></dd>
 
 						<dt>Shipping</dt>
 						<dd>Free</dd>
 
 						<dt>Tax (6%)</dt>
-						<dd>RM<?= number_format( escape( $subtotal * 0.06 ), 2 ) ?></dd>
+						<dd>RM<?= $pricing['tax'] ?></dd>
 					</dl>
 
 					<hr>
 
-					<?php $total = number_format( escape( $subtotal ), 2 ) + number_format( escape( $subtotal * 0.06 ), 2 ) ?>
 					<dl>
 						<dt>Estimated total</dt>
-						<dd>RM<?= $total ?></dd>
+						<dd>RM<?= $pricing['total'] ?></dd>
 					</dl>
 
 					<form action="">
-						<input type="hidden" name="total" value="<?= $total ?>">
+						<input type="hidden" name="total" value="<?= $pricing['total'] ?>">
 						<button class="btn">Checkout</button>
 					</form>
 				</aside>

@@ -105,7 +105,20 @@ class Ingredients {
 			$populatedCart[ $ingredientId ] = array_merge( $ingredient, [ 'amount' => $amount ] );
 		}
 
-		$subtotal = array_reduce( $populatedCart, fn( $c, $i ) => $c + $i['amount'] * $i['price'], 0 );
-		return $this->view( 'cart', [ 'cart' => $populatedCart, 'subtotal' => $subtotal ] );
+		$subtotal = number_format( array_reduce( $populatedCart, fn( $c, $i ) => $c + $i['amount'] * $i['price'], 0 ), 2 );
+		$tax = number_format( $subtotal * 0.06, 2 );
+		$total = number_format( $subtotal + $tax, 2 );
+
+		return $this->view(
+			'cart',
+			[ 
+				'cart' => $populatedCart,
+				'pricing' => [ 
+					'subtotal' => $subtotal,
+					'tax' => $tax,
+					'total' => $total
+				]
+			]
+		);
 	}
 }
