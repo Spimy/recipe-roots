@@ -128,13 +128,37 @@ class Ingredients {
 
 		$invoiceModel = new Invoice();
 		$invoice = $invoiceModel->create( [ 
-			'invoiceId' => 'rr_' . $this->profile['id'] . '_' . date( 'Ymd', time() ),
+			'invoiceId' => 'rr_' . $this->profile['id'] . '_' . time(),
 			'profileId' => $this->profile['id'],
 			'purchaseIds' => json_encode( array_map( fn( $p ) => $p['id'], $purchases ) )
 		] );
 
 		setcookie( 'cart', '' );
 		redirect( 'ingredients/invoices/' . $invoice['invoiceId'] );
+	}
+
+	public function invoices( string $invoiceId = null ) {
+		$invoiceModel = new Invoice();
+
+		if ( $invoiceId ) {
+			$invoice = $invoiceModel->findOne( [ 'invoiceId' => $invoiceId, 'profileId' => $this->profile['id'] ], join: true );
+
+			// Return 404 so that people cannot crawl for valid invoices if it is owned by someone else
+			if ( ! $invoice ) {
+				http_response_code( 404 );
+				return $this->view( '404' );
+			}
+
+			$purchaseModel = new Purchase();
+			$invoice['purchases'] = array_map( fn( $id ) => $purchaseModel->findById( $id, true ), json_decode( $invoice['purchaseIds'] ) );
+
+			$subtotal = number_format( array_reduce( $invoice['purchases'], fn( $c, $i ) => $c + $i['amount'] * $i['ingredient']['price'], 0 ), 2 );
+			$total = number_format( $subtotal + ( $subtotal * $this->taxPercentage ), 2 );
+			return $this->view( 'invoices/invoice-detail', [ 'invoice' => $invoice, 'total' => $total ] );
+		}
+
+		$invoices = $invoiceModel->findAll( [ 'profileId' => $this->profile['id'] ], join: true );
+		$this->view( 'invoices/invoices', [ 'invoices' => $invoices ] );
 	}
 
 	protected function getPopulatedCart() {

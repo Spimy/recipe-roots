@@ -6,7 +6,7 @@ class Invoice extends Model {
 	protected $purchaseIds;
 
 	public function __construct() {
-		$this->invoiceId = $this->charField( 20 );
+		$this->invoiceId = $this->charField( 32 );
 		$this->profileId = $this->foreignKey( new Profile, true );
 		$this->purchaseIds = $this->jsonField();
 		parent::__construct();
