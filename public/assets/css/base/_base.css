@@ -363,6 +363,36 @@ input[type='file']::file-selector-button {
 	padding: 0.05em 1em;
 }
 
+.card__body__num {
+	display: flex;
+	gap: 0.5rem;
+	width: 7.2rem;
+}
+
+.card__body__num .btn {
+	border-width: 0.15em;
+	padding: 0.1em 0.5em;
+}
+
+.card__body__num input.btn {
+	cursor: auto;
+	border-radius: 0.5rem;
+	color: var(--secondary-clr);
+	appearance: textfield;
+	text-align: center;
+	width: 100%;
+}
+
+@media (scripting: none) {
+	.card__body__num {
+		width: auto;
+	}
+
+	.card__body__num > *:not(noscript) {
+		display: none;
+	}
+}
+
 .modal .btn {
 	padding: 0.3em 1.5em;
 }
