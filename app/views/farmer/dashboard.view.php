@@ -41,7 +41,7 @@
 										<h2><?= escape( $produce['ingredient'] ) ?></h2>
 									</div>
 									<div class="card__head__info">
-										<p><?= escape( $produce['price'] ) ?>/<?= escape( $produce['unit'] ) ?></p>
+										<p>RM<?= escape( $produce['price'] ) ?>/<?= escape( $produce['unit'] ) ?></p>
 									</div>
 								</div>
 								<div class="card__body">
