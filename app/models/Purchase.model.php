@@ -16,8 +16,8 @@ class Purchase extends Model {
 		$groupedSales = [];
 
 		foreach ( $sales as $sale ) {
-			$month = ucfirst( strtotime( 'M', $sale['createdAt'] ) );
-			$year = strtotime( 'YY', $sale['createdAt'] );
+			$month = ucfirst( date( 'M', strtotime( $sale['createdAt'] ) ) );
+			$year = date( 'Y', strtotime( $sale['createdAt'] ) );
 			$group = "$month $year";
 
 			if ( ! isset( $groupedSales[ $group ] ) ) {
