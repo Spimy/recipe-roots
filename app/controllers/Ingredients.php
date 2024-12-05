@@ -66,7 +66,7 @@ class Ingredients {
 				$errors[] = 'Ingredient id is required';
 			}
 
-			if ( empty( $_POST['amount'] ) || ! is_numeric( $_POST['amount'] ) ) {
+			if ( ( empty( $_POST['amount'] ) || ! is_numeric( $_POST['amount'] ) ) && (int) $_POST['amount'] !== 0 ) {
 				http_response_code( 400 );
 				$errors[] = 'Amount is required and must be numeric';
 			}
@@ -79,7 +79,7 @@ class Ingredients {
 			if ( count( $errors ) > 0 ) {
 				$_SESSION['cartErrors'] = $errors;
 				unset( $_GET['url'] );
-				redirect( 'ingredients?' . http_build_query( $_GET ?? [] ) );
+				redirect( $_POST['from'] ?? 'ingredients' . http_build_query( $_GET ?? [] ) );
 			}
 
 			if ( (int) $_POST['amount'] === 0 ) {
@@ -90,9 +90,21 @@ class Ingredients {
 
 			setcookie( 'cart', count( $cart ) > 0 ? json_encode( $cart ) : '' );
 			unset( $_GET['url'] );
-			redirect( 'ingredients?' . http_build_query( $_GET ?? [] ) );
+			redirect( $_POST['from'] ?? 'ingredients' . '?' . http_build_query( $_GET ?? [] ) );
 		}
 
-		return $this->index();
+		$populatedCart = [];
+		$ingredientModel = new Ingredient();
+		foreach ( $cart as $ingredientId => $amount ) {
+			$ingredient = $ingredientModel->findById( $ingredientId, join: true );
+
+			if ( ! $ingredient ) {
+				continue;
+			}
+
+			$populatedCart[ $ingredientId ] = array_merge( $ingredient, [ 'amount' => $amount ] );
+		}
+
+		return $this->view( 'cart', [ 'cart' => $populatedCart ] );
 	}
 }
