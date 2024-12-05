@@ -1,4 +1,4 @@
-const ingredientAmountInputs = document.querySelectorAll('input[id^=amount]');
+const from = document.querySelector('input[name="from"]');
 
 function stepDown(inputId) {
 	const input = document.getElementById(inputId);
@@ -25,21 +25,49 @@ function triggerChange(input) {
 	input.dispatchEvent(event);
 }
 
-ingredientAmountInputs.forEach(async (amountInput) => {
-	amountInput.addEventListener('change', async () => {
-		const formData = new FormData();
-		formData.append('ingredientId', amountInput.id.split('amount').pop());
-		formData.append('amount', amountInput.value);
-		formData.append('csrfToken', csrfToken);
+function registerInputs() {
+	const ingredientAmountInputs = document.querySelectorAll('input[id^=amount]');
 
-		await fetch(`${root}/ingredients/cart`, {
-			method: 'POST',
-			credentials: 'include',
-			body: formData,
-		}).then((res) =>
-			console.log(
-				res.statusText === 'OK' ? 'Updated Cart' : 'Could not update cart'
-			)
-		);
+	ingredientAmountInputs.forEach(async (amountInput) => {
+		amountInput.addEventListener('change', async () => {
+			const formData = new FormData();
+			formData.append('ingredientId', amountInput.id.split('amount').pop());
+			formData.append('amount', amountInput.value);
+			formData.append('csrfToken', csrfToken);
+			formData.append('from', from.value);
+
+			await fetch(`${root}/ingredients/cart`, {
+				method: 'POST',
+				credentials: 'include',
+				body: formData,
+			})
+				.then(async (response) => {
+					console.log(
+						response.statusText === 'OK'
+							? 'Updated Cart'
+							: 'Could not update cart'
+					);
+					return await response.text();
+				})
+				.then(async (html) => {
+					const parser = new DOMParser();
+					const doc = parser.parseFromString(html, 'text/html');
+
+					const section = document.querySelector('section.grid');
+					const newGrid = doc.querySelector('section.grid');
+
+					if (!newGrid) {
+						section.classList.add('empty');
+						section.classList.remove('grid');
+						section.innerHTML = doc.querySelector('section.empty').innerHTML;
+					} else {
+						section.innerHTML = doc.querySelector('section.grid').innerHTML;
+					}
+
+					registerInputs();
+				});
+		});
 	});
-});
+}
+
+registerInputs();
