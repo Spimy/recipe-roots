@@ -5,6 +5,7 @@ class Ingredients {
 
 	private $profile;
 	private $itemsPerPage = 6;
+	private $taxPercentage = 0.06;
 
 	public function __construct() {
 		if ( ! isAuthenticated() ) {
@@ -56,9 +57,8 @@ class Ingredients {
 	}
 
 	public function cart() {
-		$cart = json_decode( $_COOKIE['cart'] ?? '[]', true );
-
 		if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
+			$cart = json_decode( $_COOKIE['cart'] ?? '[]', true );
 			$errors = [];
 
 			if ( empty( $_POST['ingredientId'] ) ) {
@@ -93,21 +93,8 @@ class Ingredients {
 			redirect( $_POST['from'] ?? 'ingredients' . '?' . http_build_query( $_GET ?? [] ) );
 		}
 
-		$populatedCart = [];
-		$ingredientModel = new Ingredient();
-		foreach ( $cart as $ingredientId => $amount ) {
-			$ingredient = $ingredientModel->findById( $ingredientId, join: true );
-
-			if ( ! $ingredient ) {
-				continue;
-			}
-
-			$populatedCart[ $ingredientId ] = array_merge( $ingredient, [ 'amount' => $amount ] );
-		}
-
-		$subtotal = number_format( array_reduce( $populatedCart, fn( $c, $i ) => $c + $i['amount'] * $i['price'], 0 ), 2 );
-		$tax = number_format( $subtotal * 0.06, 2 );
-		$total = number_format( $subtotal + $tax, 2 );
+		$populatedCart = $this->getPopulatedCart();
+		[ $subtotal, $tax, $total ] = $this->getPricingData( $populatedCart );
 
 		return $this->view(
 			'cart',
@@ -120,5 +107,58 @@ class Ingredients {
 				]
 			]
 		);
+	}
+
+	public function checkout() {
+		if ( $_SERVER['REQUEST_METHOD'] === 'GET' ) {
+			redirect( 'ingredients/cart' );
+		}
+
+		$populatedCart = $this->getPopulatedCart();
+		$purchases = [];
+		$purchaseModel = new Purchase();
+
+		foreach ( $populatedCart as $ingredient ) {
+			$purchases[] = $purchaseModel->create( [ 
+				'farmerId' => $ingredient['farmerId'],
+				'ingredientId' => $ingredient['id'],
+				'amount' => $ingredient['amount']
+			] );
+		}
+
+		$invoiceModel = new Invoice();
+		$invoice = $invoiceModel->create( [ 
+			'invoiceId' => 'rr_' . $this->profile['id'] . '_' . date( 'Ymd', time() ),
+			'profileId' => $this->profile['id'],
+			'purchaseIds' => json_encode( array_map( fn( $p ) => $p['id'], $purchases ) )
+		] );
+
+		setcookie( 'cart', '' );
+		redirect( 'ingredients/invoices/' . $invoice['invoiceId'] );
+	}
+
+	protected function getPopulatedCart() {
+		$cart = json_decode( $_COOKIE['cart'] ?? '[]', true );
+		$populatedCart = [];
+
+		$ingredientModel = new Ingredient();
+		foreach ( $cart as $ingredientId => $amount ) {
+			$ingredient = $ingredientModel->findById( $ingredientId, join: true );
+
+			if ( ! $ingredient ) {
+				continue;
+			}
+
+			$populatedCart[ $ingredientId ] = array_merge( $ingredient, [ 'amount' => $amount ] );
+		}
+
+		return $populatedCart;
+	}
+
+	protected function getPricingData( array $populatedCart ) {
+		$subtotal = number_format( array_reduce( $populatedCart, fn( $c, $i ) => $c + $i['amount'] * $i['price'], 0 ), 2 );
+		$tax = number_format( $subtotal * $this->taxPercentage, 2 );
+		$total = number_format( $subtotal + $tax, 2 );
+		return [ $subtotal, $tax, $total ];
 	}
 }

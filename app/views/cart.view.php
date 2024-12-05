@@ -142,8 +142,8 @@
 						<dd>RM<?= $pricing['total'] ?></dd>
 					</dl>
 
-					<form action="">
-						<input type="hidden" name="total" value="<?= $pricing['total'] ?>">
+					<form action="<?= ROOT ?>/ingredients/checkout" method="post">
+						<?= injectCsrfToken() ?>
 						<button class="btn">Checkout</button>
 					</form>
 				</aside>
