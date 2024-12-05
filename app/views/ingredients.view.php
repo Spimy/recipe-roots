@@ -41,6 +41,7 @@
 		</header>
 
 		<section class="grid">
+			<input type="hidden" name="from" value="ingredients">
 			<?php foreach ( $ingredients as $ingredient ) : ?>
 				<article class="card">
 					<img class="card__thumbnail" src="<?= escape( $ingredient['thumbnail'] ?? '' ) ?>"
@@ -89,7 +90,6 @@
 										method="post" action="<?= ROOT ?>/ingredients/cart?<?= http_build_query( $_GET ) ?>">
 										<?php injectCsrfToken() ?>
 										<input type="hidden" name="ingredientId" value="<?= escape( $ingredient['id'] ) ?>">
-										<input type="hidden" name="from" value="ingredients">
 
 										<div>
 											<h3>Confirm Amount</h3>
