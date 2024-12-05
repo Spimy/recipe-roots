@@ -27,7 +27,7 @@ class Purchase extends Model {
 			$groupedSales[ $group ] += $sale['amount'] * $sale['ingredient']['price'];
 		}
 
-		return $groupedSales;
+		return array_map( fn( $a ) => number_format( $a, 2 ), $groupedSales );
 	}
 
 	public function createDataPoints( array $groupedSales ) {
