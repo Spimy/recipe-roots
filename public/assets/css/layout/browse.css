@@ -47,6 +47,13 @@
 	right: 1rem;
 }
 
-.grid {
+.grid,
+.empty {
 	margin-block: 1rem;
+}
+
+.empty .btn {
+	padding: 0.75em 2em;
+	width: 100%;
+	max-width: 30ch;
 }
