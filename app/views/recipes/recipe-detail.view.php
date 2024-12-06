@@ -208,16 +208,21 @@
 
 								<div>
 									<fieldset class="rating-input">
-										<input type="radio" value="5" id="stars-star5" name="rating" required <?= $comment['rating'] === 5 ? 'checked' : '' ?>>
-										<label for="stars-star5" title="5 Stars"></label>
-										<input type="radio" value="4" id="stars-star4" name="rating" <?= $comment['rating'] === 4 ? 'checked' : '' ?>>
-										<label for="stars-star4" title="4 Stars"></label>
-										<input type="radio" value="3" id="stars-star3" name="rating" <?= $comment['rating'] === 3 ? 'checked' : '' ?>>
-										<label for="stars-star3" title="3 Stars"></label>
-										<input type="radio" value="2" id="stars-star2" name="rating" <?= $comment['rating'] === 2 ? 'checked' : '' ?>>
-										<label for="stars-star2" title="2 Stars"></label>
-										<input type="radio" value="1" id="stars-star1" name="rating" <?= $comment['rating'] === 1 ? 'checked' : '' ?>>
-										<label for="stars-star1" title="1 Stars"></label>
+										<input type="radio" value="5" id="stars-star5-<?= escape( $comment['id'] ) ?>" name="rating" required
+											<?= $comment['rating'] === 5 ? 'checked' : '' ?>>
+										<label for="stars-star5-<?= escape( $comment['id'] ) ?>" title="5 Stars"></label>
+										<input type="radio" value="4" id="stars-star4-<?= escape( $comment['id'] ) ?>" name="rating"
+											<?= $comment['rating'] === 4 ? 'checked' : '' ?>>
+										<label for="stars-star4-<?= escape( $comment['id'] ) ?>" title="4 Stars"></label>
+										<input type="radio" value="3" id="stars-star3-<?= escape( $comment['id'] ) ?>" name="rating"
+											<?= $comment['rating'] === 3 ? 'checked' : '' ?>>
+										<label for="stars-star3-<?= escape( $comment['id'] ) ?>" title="3 Stars"></label>
+										<input type="radio" value="2" id="stars-star2-<?= escape( $comment['id'] ) ?>" name="rating"
+											<?= $comment['rating'] === 2 ? 'checked' : '' ?>>
+										<label for="stars-star2-<?= escape( $comment['id'] ) ?>" title="2 Stars"></label>
+										<input type="radio" value="1" id="stars-star1-<?= escape( $comment['id'] ) ?>" name="rating"
+											<?= $comment['rating'] === 1 ? 'checked' : '' ?>>
+										<label for="stars-star1-<?= escape( $comment['id'] ) ?>" title="1 Stars"></label>
 									</fieldset>
 
 									<div>
