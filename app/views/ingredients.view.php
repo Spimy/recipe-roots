@@ -66,7 +66,7 @@
 									-
 								</button>
 
-								<input class="btn btn--invert" type="number" min="0" max="99"
+								<input class="btn btn--invert" type="number" inputmode="numeric" min="0" max="99"
 									value="<?= isset( $_COOKIE['cart'] ) ? json_decode( $_COOKIE['cart'], true )[ $ingredient['id'] ] ?? '0' : '0' ?>"
 									name="amount" id="amount<?= $ingredient['id'] ?>" disabled>
 
