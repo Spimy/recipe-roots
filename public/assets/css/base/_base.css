@@ -378,9 +378,20 @@ input[type='file']::file-selector-button {
 	cursor: auto;
 	border-radius: 0.5rem;
 	color: var(--secondary-clr);
-	appearance: textfield;
 	text-align: center;
 	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.card__body__num input.btn::-webkit-outer-spin-button,
+.card__body__num input.btn::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+.card__body__num input.btn[type='number'] {
+	appearance: textfield;
 }
 
 @media (scripting: none) {
