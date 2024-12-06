@@ -227,9 +227,11 @@ class Settings {
 		if ( $method === 'switch' ) {
 			$swapProfile = current( array_filter( $profiles, fn( $p ) => $p['id'] != $this->profile['id'] ) ) ?? null;
 			if ( $swapProfile ) {
-				$sessionModel = new Session();
-				$session = $sessionModel->findOne( [ 'sessionId' => $_COOKIE['profile'] ] );
-				$sessionModel->update( $session['id'], [ 'profileId' => $swapProfile['id'] ] );
+				if ( isset( $_COOKIE['profile'] ) ) {
+					$sessionModel = new Session();
+					$session = $sessionModel->findOne( [ 'sessionId' => $_COOKIE['profile'] ] );
+					$sessionModel->update( $session['id'], [ 'profileId' => $swapProfile['id'] ] );
+				}
 
 				$_SESSION['profile'] = $swapProfile;
 				if ( ! isset( $_GET['next'] ) ) {
