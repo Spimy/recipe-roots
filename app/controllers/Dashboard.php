@@ -80,6 +80,8 @@ class Dashboard {
 				$this->deleteProduce();
 				break;
 			}
+			default:
+				redirect( 'dashboard' );
 		}
 	}
 
@@ -108,7 +110,7 @@ class Dashboard {
 
 			$ingredient = $ingredientModel->create( $newIngredient );
 			$_SESSION['produceAddMessage'] = 'Successfully added new produce';
-			redirect( 'dashboard/produce/' . $ingredient['id'] );
+			redirect( 'dashboard/produce/edit' . $ingredient['id'] );
 		}
 		$this->view( 'farmer/produce-editor', [ 'action' => 'Add' ] );
 	}
