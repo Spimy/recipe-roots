@@ -202,7 +202,11 @@ class Settings {
 						return $this->view( 'settings/profile', [ 'profiles' => $profiles, 'errors' => $errors ] );
 					}
 
-					$profileDetails = [ 'username' => $_POST['username'] ];
+					$profileDetails = [ 
+						'username' => $_POST['username'],
+						'type' => $this->profile['type'] === PROFILE_TYPES['user'] ? PROFILE_TYPES['farmer'] : PROFILE_TYPES['user']
+					];
+
 					if ( $_FILES['avatar']['error'] == UPLOAD_ERR_OK ) {
 						$tmp_name = $_FILES['avatar']['tmp_name'];
 						$name = basename( $_FILES['avatar']['name'] );
