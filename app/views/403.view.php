@@ -18,6 +18,8 @@
 		<?php if ( isset( $message ) ) : ?>
 			<p class="errors"><?= escape( $message ) ?></p>
 		<?php endif; ?>
+
+		<a href="<?= ROOT ?>" class="btn">Back to Home</a>
 	</main>
 
 	<?php include 'layout/footer.php' ?>

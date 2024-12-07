@@ -14,6 +14,7 @@
 
 	<main>
 		<h1>404 Page Not Found</h1>
+		<a href="<?= ROOT ?>" class="btn">Back to Home</a>
 	</main>
 
 	<?php include 'layout/footer.php' ?>
