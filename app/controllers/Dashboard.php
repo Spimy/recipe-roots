@@ -139,7 +139,6 @@ class Dashboard {
 			}
 
 			$ingredientData = [ 
-				'farmerId' => $this->profile['id'],
 				'ingredient' => $_POST['ingredient'],
 				'price' => number_format( $_POST['price'], 2, '.', '' ),
 				'unit' => $_POST['unit'],
