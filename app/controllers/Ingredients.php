@@ -144,6 +144,7 @@ class Ingredients {
 
 			$purchaseModel = new Purchase();
 			$invoice['purchases'] = array_map( fn( $id ) => $purchaseModel->findById( $id, true ), json_decode( $invoice['purchaseIds'] ) );
+			$invoice['purchases'] = array_filter( $invoice['purchases'], fn( $i ) => $i !== null );
 
 			$subtotal = number_format( array_reduce( $invoice['purchases'], fn( $c, $i ) => $c + $i['amount'] * $i['ingredient']['price'], 0 ), 2 );
 			$tax = $subtotal * $this->taxPercentage;
