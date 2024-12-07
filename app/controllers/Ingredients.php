@@ -168,8 +168,18 @@ class Ingredients {
 			);
 		}
 
-		$invoices = $invoiceModel->findAll( [ 'profileId' => $this->profile['id'] ], join: true );
-		$this->view( 'invoices/invoices', [ 'invoices' => $invoices ] );
+		$invoiceConditions = [ 'profileId' => $this->profile['id'] ];
+		$itemsPerPage = 2;
+		[ $currentPage, $totalPages, $offset ] = getPaginationData( $invoiceModel, $itemsPerPage, $invoiceConditions );
+
+		$invoices = $invoiceModel->findAll(
+			data: $invoiceConditions,
+			join: true,
+			limit: $itemsPerPage,
+			offset: $offset
+		);
+
+		$this->view( 'invoices/invoices', [ 'invoices' => $invoices, 'currentPage' => $currentPage, 'totalPages' => $totalPages ] );
 	}
 
 	protected function getPopulatedCart() {
