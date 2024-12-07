@@ -487,3 +487,7 @@ input[type='file']::file-selector-button {
 .paginator .selected {
 	background-color: var(--shade-2);
 }
+
+.paginator .btn {
+	padding: 0.3em 1.5em;
+}
