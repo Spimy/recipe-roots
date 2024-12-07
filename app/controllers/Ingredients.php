@@ -153,8 +153,19 @@ class Ingredients {
 			$invoice['purchases'] = array_map( fn( $id ) => $purchaseModel->findById( $id, true ), json_decode( $invoice['purchaseIds'] ) );
 
 			$subtotal = number_format( array_reduce( $invoice['purchases'], fn( $c, $i ) => $c + $i['amount'] * $i['ingredient']['price'], 0 ), 2 );
-			$total = number_format( $subtotal + ( $subtotal * $this->taxPercentage ), 2 );
-			return $this->view( 'invoices/invoice-detail', [ 'invoice' => $invoice, 'total' => $total ] );
+			$tax = $subtotal * $this->taxPercentage;
+			$total = number_format( $subtotal + $tax, 2 );
+			return $this->view(
+				'invoices/invoice-detail',
+				[ 
+					'invoice' => $invoice,
+					'pricing' => [ 
+						'subtotal' => $subtotal,
+						'tax' => $tax,
+						'total' => $total
+					]
+				]
+			);
 		}
 
 		$invoices = $invoiceModel->findAll( [ 'profileId' => $this->profile['id'] ], join: true );
