@@ -100,7 +100,8 @@
 				</form>
 
 				<!-- Pop up for confirm delete -->
-				<form popover role="dialog" id="delete-account" class="modal" method="post" action="<?= ROOT ?>/admin/delete">
+				<form popover role="dialog" id="delete-account" class="modal" method="post"
+					action="<?= ROOT ?>/admin/delete/<?= escape( $user['id'] ) ?>">
 					<?php injectCsrfToken() ?>
 					<div>
 						<h3>Confirm Delete</h3>

@@ -22,7 +22,16 @@ class Admin {
 
 	public function index() {
 		[ $currentPage, $totalPages, $users ] = getPaginationData( new User, 6 );
-		$this->view( 'admin/users', [ 'users' => $users, 'currentPage' => $currentPage, 'totalPages' => $totalPages ] );
+		$this->view(
+			'admin/users',
+			[ 
+				'users' => $users,
+				'currentPage' => $currentPage,
+				'totalPages' => $totalPages,
+				'message' => $_SESSION['accountDeleteSuccess'] ?? null
+			]
+		);
+		unset( $_SESSION['accountDeleteSuccess'] );
 	}
 
 	public function edit( $type = null, $id = null ) {
@@ -48,6 +57,62 @@ class Admin {
 				return redirect( 'admin' );
 			}
 		}
+	}
+
+	public function delete( $id ) {
+		if ( $_SERVER['REQUEST_METHOD'] !== 'POST' ) {
+			redirect( 'admin' );
+		}
+
+		if ( ! $id || ! is_numeric( $id ) ) {
+			redirect( 'admin' );
+		}
+
+		$userModel = new User();
+		$user = $userModel->findById( $id );
+
+		if ( ! $user ) {
+			redirect( 'admin' );
+		}
+
+		$currentPassword = $_POST['currentPassword'] ?? null;
+		if ( ! $currentPassword ) {
+			http_response_code( 400 );
+			$_SESSION['accountDeleteError'] = [ 
+				'status' => 403,
+				'message' => 'Current password is required'
+			];
+			redirect( 'admin/edit/account/' . $user['id'] );
+		}
+
+		$admin = $userModel->findById( $this->profile['userId'] );
+		if ( ! password_verify( $currentPassword, $admin['password'] ) ) {
+			http_response_code( 403 );
+			$_SESSION['accountDeleteError'] = [ 
+				'status' => 403,
+				'message' => 'The password you provided is incorrect'
+			];
+			redirect( 'admin/edit/account/' . $user['id'] );
+		}
+
+		// Also deletes profiles associated as they cascade once user is deleted
+		$success = $userModel->delete( $user['id'] );
+		if ( ! $success ) {
+			http_response_code( 500 );
+			$_SESSION['accountDeleteError'] = [ 
+				'status' => 500,
+				'message' => 'Something went wrong when deleting your account, please try again'
+			];
+			redirect( 'admin/edit/account/' . $user['id'] );
+		}
+
+		// Log the user out if the admin deleted their own account
+		if ( $user['id'] === $this->profile['userId'] ) {
+			redirect( 'signout?delete=success' );
+		}
+
+		$_SESSION['accountDeleteSuccess'] = 'Successfully deleted user';
+		redirect( 'admin' );
 	}
 
 	private function editUser( $user ) {
@@ -138,7 +203,13 @@ class Admin {
 			$message = 'Updated user successfully';
 		}
 
-		$this->view( 'admin/edit-user', [ 'user' => $user, 'message' => $message ?? null ] );
+		if ( isset( $_SESSION['accountDeleteError'] ) ) {
+			http_response_code( $_SESSION['accountDeleteError']['status'] );
+			$errors['accountDeleteError'] = $_SESSION['accountDeleteError']['message'];
+		}
+
+		$this->view( 'admin/edit-user', [ 'user' => $user, 'message' => $message ?? null, 'errors' => $errors ?? null ] );
+		unset( $_SESSION['accountDeleteError'] );
 	}
 
 	private function editProfile( $user ) {
