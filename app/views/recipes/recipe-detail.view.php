@@ -16,33 +16,35 @@
 		<header>
 			<div class="heading">
 				<h1><?= escape( $recipe['title'] ) ?></h1>
-				<div class="heading__dropdown">
-					<label for="more"><img src="<?= ROOT ?>/assets/icons/more.svg" alt="more"></label>
-					<input type="checkbox" name="more" id="more">
 
-					<!-- TODO: add drop down -->
-					<menu class="heading__dropdown__menu">
-						<a href="<?= ROOT ?>/recipes/edit/<?= escape( $recipe['id'] ) ?>">Edit</a>
-						<button popovertarget="delete-confirm">Delete</button>
-					</menu>
+				<?php if ( $recipe['profileId'] === $profile['user'] || $profile['user']['isAdmin'] ) : ?>
+					<div class="heading__dropdown">
+						<label for="more"><img src="<?= ROOT ?>/assets/icons/more.svg" alt="more"></label>
+						<input type="checkbox" name="more" id="more">
 
-					<!-- Pop up for confirm delete -->
-					<form popover role="dialog" id="delete-confirm" class="modal" method="post"
-						action="<?= ROOT ?>/recipes/delete">
-						<?php injectCsrfToken() ?>
-						<input type="hidden" name="recipeId" value="<?= escape( $recipe['id'] ) ?>">
+						<menu class="heading__dropdown__menu">
+							<a href="<?= ROOT ?>/recipes/edit/<?= escape( $recipe['id'] ) ?>">Edit</a>
+							<button popovertarget="delete-confirm">Delete</button>
+						</menu>
 
-						<div>
-							<h3>Confirm Delete</h3>
-							<p>Are you sure you want to delete <strong><?= escape( $recipe['title'] ) ?></strong>?</p>
-						</div>
+						<!-- Pop up for confirm delete -->
+						<form popover role="dialog" id="delete-confirm" class="modal" method="post"
+							action="<?= ROOT ?>/recipes/delete">
+							<?php injectCsrfToken() ?>
+							<input type="hidden" name="recipeId" value="<?= escape( $recipe['id'] ) ?>">
 
-						<div>
-							<button type="button" class="btn btn--invert" popovertarget="delete-confirm">Cancel</button>
-							<button class="btn btn--error">Delete</button>
-						</div>
-					</form>
-				</div>
+							<div>
+								<h3>Confirm Delete</h3>
+								<p>Are you sure you want to delete <strong><?= escape( $recipe['title'] ) ?></strong>?</p>
+							</div>
+
+							<div>
+								<button type="button" class="btn btn--invert" popovertarget="delete-confirm">Cancel</button>
+								<button class="btn btn--error">Delete</button>
+							</div>
+						</form>
+					</div>
+				<?php endif ?>
 			</div>
 
 			<?php if ( ! empty( $recipeErrors ) ) : ?>
@@ -178,7 +180,7 @@
 									</div>
 								</div>
 
-								<?php if ( $comment['profileId'] === $_SESSION['profile']['id'] ) : ?>
+								<?php if ( $comment['profileId'] === $profile['id'] || $profile['user']['isAdmin'] ) : ?>
 									<div class="details__comments__comment__header__btns">
 										<button popovertarget="edit-comment-<?= escape( $comment['id'] ) ?>">Edit</button>
 										<button popovertarget="delete-comment-<?= escape( $comment['id'] ) ?>">Delete</button>
@@ -188,7 +190,7 @@
 							<p><?= escape( $comment['content'] ) ?></p>
 						</article>
 
-						<?php if ( $comment['profileId'] === $_SESSION['profile']['id'] ) : ?>
+						<?php if ( $comment['profileId'] === $profile['id'] || $profile['user']['isAdmin'] ) : ?>
 							<!-- Dialog box for editing comment (avoid need for JavaScript) -->
 							<form popover role="dialog" id="edit-comment-<?= escape( $comment['id'] ) ?>" class="modal" method="post"
 								action="<?= ROOT ?>/recipes/comment/edit">

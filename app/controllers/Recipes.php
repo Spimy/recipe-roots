@@ -12,7 +12,7 @@ class Recipes {
 		}
 		$this->profile = $_SESSION['profile'];
 
-		if ( $this->profile['type'] !== PROFILE_TYPES['user'] ) {
+		if ( $this->profile['type'] !== PROFILE_TYPES['user'] && ! $this->profile['user']['isAdmin'] ) {
 			http_response_code( 403 );
 			redirect( "settings/profiles?next=" . $_GET['url'] );
 		}
@@ -25,6 +25,11 @@ class Recipes {
 
 		// List of all recipes for the authenticated user are controlled below
 		if ( $id === '' ) {
+			if ( $this->profile['user']['isAdmin'] && $this->profile['type'] !== PROFILE_TYPES['user'] ) {
+				http_response_code( 403 );
+				return $this->view( '403', [ 'message' => 'You can only browse your own recipes and create them on a user profile' ] );
+			}
+
 			$recipeParams = [];
 
 			if ( isset( $_GET['filter'] ) && $_GET['filter'] !== '' ) {
@@ -82,7 +87,7 @@ class Recipes {
 			return $this->view( '404' );
 		}
 
-		if ( ! $recipe['public'] && $recipe['profileId'] !== $this->profile['id'] ) {
+		if ( ! $recipe['public'] && $recipe['profileId'] !== $this->profile['id'] && ! $this->profile['user']['isAdmin'] ) {
 			http_response_code( 403 );
 			return $this->view( '403', [ 'message' => 'This recipe is private and cannot be accessed' ] );
 		}
@@ -96,7 +101,8 @@ class Recipes {
 				'recipe' => $recipe,
 				'comments' => $comments,
 				'commentErrors' => $_SESSION['commentErrors'] ?? [],
-				'recipeErrors' => $_SESSION['recipeErrors'] ?? []
+				'recipeErrors' => $_SESSION['recipeErrors'] ?? [],
+				'profile' => $this->profile
 			]
 		);
 		unset( $_SESSION['commentErrors'] );
@@ -116,7 +122,7 @@ class Recipes {
 			];
 		}
 
-		$recipeConditions = [ 'public' => 1 ];
+		$recipeConditions = $this->profile['user']['isAdmin'] ? [] : [ 'public' => 1 ];
 		$dietaryType = ( $_GET['dietary'] ?? '' ) == 'none' ? null : $_GET['dietary'] ?? $this->profile['user']['dietaryType'];
 		if ( $dietaryType ) {
 			$recipeConditions = [ ...$recipeConditions, 'dietaryType' => $dietaryType ];
@@ -195,6 +201,11 @@ class Recipes {
 	 * @return void
 	 */
 	public function create() {
+		if ( $this->profile['user']['isAdmin'] && $this->profile['type'] !== PROFILE_TYPES['user'] ) {
+			http_response_code( 403 );
+			return $this->view( '403', [ 'message' => 'You can only browse your own recipes and create them on a user profile' ] );
+		}
+
 		if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 			$recipeModel = new Recipe();
 
@@ -251,7 +262,7 @@ class Recipes {
 			return $this->view( '404' );
 		}
 
-		if ( $recipe['profileId'] != $this->profile['id'] ) {
+		if ( $recipe['profileId'] != $this->profile['id'] && ! $this->profile['user']['isAdmin'] ) {
 			http_response_code( 403 );
 			return $this->view( '403', [ 'message' => 'You do not have permissions to edit this recipe' ] );
 		}
@@ -322,7 +333,7 @@ class Recipes {
 			redirect( '404' );
 		}
 
-		if ( $recipe['profileId'] !== $this->profile['id'] ) {
+		if ( $recipe['profileId'] !== $this->profile['id'] && ! $this->profile['user']['isAdmin'] ) {
 			http_response_code( 403 );
 			return $this->view( '403', [ 'message' => 'You cannot delete a recipe that you do not own' ] );
 		}
@@ -404,7 +415,7 @@ class Recipes {
 					redirect( '404' );
 				}
 
-				if ( $comment['profileId'] !== $this->profile['id'] ) {
+				if ( $comment['profileId'] !== $this->profile['id'] && ! $this->profile['user']['isAdmin'] ) {
 					http_response_code( 403 );
 					return $this->view( '403', [ 'message' => 'You cannot edit a comment that you did not make' ] );
 				}
@@ -437,7 +448,7 @@ class Recipes {
 					redirect( '404' );
 				}
 
-				if ( $comment['profileId'] !== $this->profile['id'] ) {
+				if ( $comment['profileId'] !== $this->profile['id'] && ! $this->profile['user']['isAdmin'] ) {
 					http_response_code( 403 );
 					return $this->view( '403', [ 'message' => 'You cannot delete a comment that you did not make' ] );
 				}

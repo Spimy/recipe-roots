@@ -11,7 +11,7 @@ class Dashboard {
 		}
 		$this->profile = $_SESSION['profile'];
 
-		if ( $this->profile['type'] !== PROFILE_TYPES['farmer'] ) {
+		if ( $this->profile['type'] !== PROFILE_TYPES['farmer'] && ! $this->profile['user']['isAdmin'] ) {
 			http_response_code( 403 );
 			redirect( "settings/profiles?next=" . $_GET['url'] );
 		}
@@ -20,6 +20,11 @@ class Dashboard {
 	}
 
 	public function index() {
+		if ( $this->profile['user']['isAdmin'] && $this->profile['type'] !== PROFILE_TYPES['farmer'] ) {
+			http_response_code( 403 );
+			return $this->view( '403', [ 'message' => 'You can only view dashboard or add produce on a farmer profile' ] );
+		}
+
 		$purchaseModel = new Purchase();
 		$sales = $purchaseModel->findAll( [ 'farmerId' => $this->profile['id'] ], join: true );
 		$groupedSales = $purchaseModel->groupSalesByDate( $sales );
@@ -72,6 +77,11 @@ class Dashboard {
 	}
 
 	protected function addProduce() {
+		if ( $this->profile['user']['isAdmin'] && $this->profile['type'] !== PROFILE_TYPES['farmer'] ) {
+			http_response_code( 403 );
+			return $this->view( '403', [ 'message' => 'You can only view dashboard or add produce on a farmer profile' ] );
+		}
+
 		if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 			$ingredientModel = new Ingredient();
 			$errors = $ingredientModel->validate( array_merge( $_POST, $_FILES ) );
@@ -115,7 +125,7 @@ class Dashboard {
 			return $this->view( '404' );
 		}
 
-		if ( $ingredient['farmerId'] != $this->profile['id'] ) {
+		if ( $ingredient['farmerId'] != $this->profile['id'] && ! $this->profile['user']['isAdmin'] ) {
 			http_response_code( 403 );
 			return $this->view( '403', [ 'message' => 'You do not have permissions to edit this produce', 'data' => $ingredient ] );
 		}
@@ -175,7 +185,7 @@ class Dashboard {
 			return $this->view( '404' );
 		}
 
-		if ( $ingredient['farmerId'] != $this->profile['id'] ) {
+		if ( $ingredient['farmerId'] != $this->profile['id'] && ! $this->profile['user']['isAdmin'] ) {
 			http_response_code( 403 );
 			return $this->view( '403', [ 'message' => 'You do not have permissions to delete this produce', 'data' => $ingredient ] );
 		}
