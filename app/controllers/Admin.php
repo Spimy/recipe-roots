@@ -189,6 +189,7 @@ class Admin {
 			$userDetails = [ 
 				'email' => $email,
 				'dietaryType' => $_POST['dietaryType'] == 'none' ? null : $_POST['dietaryType'] ?? null,
+				'isAdmin' => $_POST['admin'] == 'no' ? 0 : ( $_POST['admin'] == 'yes' ? 1 : 0 )
 			];
 
 			if ( $newPassword ) {

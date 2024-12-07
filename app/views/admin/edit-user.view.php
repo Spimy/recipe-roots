@@ -68,26 +68,43 @@
 						<input type="password" name="confirmPassword" id="confirmPassword">
 					</div>
 
-					<div class="admin__editor__input">
-						<label>Dietary Type</label>
+					<div class="admin__column">
+						<div class="admin__editor__input">
+							<label>Dietary Type</label>
 
-						<div class="admin__editor__input--radio">
-							<label for="none">
-								<input type="radio" name="dietaryType" id="none" value="none" checked required>
-								None
-							</label>
-							<label for="vegetarian">
-								<input type="radio" name="dietaryType" id="vegetarian" value="vegetarian" <?= ( $user['dietaryType'] ?? '' ) === 'vegetarian' ? 'checked' : '' ?>>
-								Vegetarian
-							</label>
-							<label for="vegan">
-								<input type="radio" name="dietaryType" id="vegan" value="vegan" <?= ( $user['dietaryType'] ?? '' ) === 'vegan' ? 'checked' : '' ?>>
-								Vegan
-							</label>
-							<label for="halal">
-								<input type="radio" name="dietaryType" id="halal" value="halal" <?= ( $user['dietaryType'] ?? '' ) === 'halal' ? 'checked' : '' ?>>
-								Halal
-							</label>
+							<div class="admin__editor__input--radio">
+								<label for="none">
+									<input type="radio" name="dietaryType" id="none" value="none" checked required>
+									None
+								</label>
+								<label for="vegetarian">
+									<input type="radio" name="dietaryType" id="vegetarian" value="vegetarian" <?= ( $user['dietaryType'] ?? '' ) === 'vegetarian' ? 'checked' : '' ?>>
+									Vegetarian
+								</label>
+								<label for="vegan">
+									<input type="radio" name="dietaryType" id="vegan" value="vegan" <?= ( $user['dietaryType'] ?? '' ) === 'vegan' ? 'checked' : '' ?>>
+									Vegan
+								</label>
+								<label for="halal">
+									<input type="radio" name="dietaryType" id="halal" value="halal" <?= ( $user['dietaryType'] ?? '' ) === 'halal' ? 'checked' : '' ?>>
+									Halal
+								</label>
+							</div>
+						</div>
+
+						<div class="admin__editor__input">
+							<label>Admin</label>
+
+							<div class="admin__editor__input--radio">
+								<label for="no">
+									<input type="radio" name="admin" id="no" value="no" checked required>
+									No
+								</label>
+								<label for="yes">
+									<input type="radio" name="admin" id="yes" value="yes" <?= ( $user['isAdmin'] ?? 0 ) === 1 ? 'checked' : '' ?>>
+									Yes
+								</label>
+							</div>
 						</div>
 					</div>
 

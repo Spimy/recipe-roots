@@ -170,3 +170,10 @@ hr {
 .admin__editor__actions .btn {
 	flex: 1;
 }
+
+.admin__column {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	gap: 1rem;
+}
