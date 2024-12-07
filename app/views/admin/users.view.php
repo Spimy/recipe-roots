@@ -19,14 +19,6 @@
 			<p class="success"><?= escape( $message ) ?></p>
 		<?php endif; ?>
 
-		<?php if ( ! empty( $errors ) ) : ?>
-			<ul class="errors">
-				<?php foreach ( $errors as $error ) : ?>
-					<li class="errors__message"><?= escape( $error ) ?></li>
-				<?php endforeach ?>
-			</ul>
-		<?php endif ?>
-
 		<article class="admin">
 			<aside class="admin__nav">
 				<ul role="list" class="admin__nav__links">
@@ -51,10 +43,7 @@
 							<br>
 							Created: <?= escape( date( 'd M Y - H:i:s', strtotime( $user['createdAt'] ) ) ) ?>
 						</p>
-						<div>
-							<a href="<?= ROOT ?>/admin/edit/account/<?= escape( $user['id'] ) ?>" class="btn btn--invert">Edit</a>
-							<button type="button" class="btn btn--error">Delete</button>
-						</div>
+						<a href="<?= ROOT ?>/admin/edit/account/<?= escape( $user['id'] ) ?>" class="btn btn--invert">Edit</a>
 					</div>
 				<?php endforeach; ?>
 
