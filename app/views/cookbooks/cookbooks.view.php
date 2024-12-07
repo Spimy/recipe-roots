@@ -39,7 +39,8 @@
 		<section class="grid">
 			<?php foreach ( $cookbooks as $cookbook ) : ?>
 				<article class="cookbook">
-					<img class="cookbook__thumbnail" src="" alt="CC">
+					<img class="cookbook__thumbnail" src="<?= escape( $cookbook['thumbnail'] ) ?>"
+						alt="<?= extractTitleLetters( escape( $cookbook['title'] ) ) ?>">
 					<div class="cookbook__details">
 						<h2><?= escape( $cookbook['title'] ) ?></h2>
 						<p><?= escape( $cookbook['description'] ) ?></p>
