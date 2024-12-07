@@ -41,19 +41,11 @@ class Recipes {
 				$recipeConditions = [ ...$recipeConditions, 'dietaryType' => $dietaryType ];
 			}
 
-			[ $currentPage, $totalPages, $offset ] = getPaginationData(
+			[ $currentPage, $totalPages, $recipes ] = getPaginationData(
 				$recipeModel,
 				$this->itemsPerPage,
 				$recipeConditions,
 				$recipeParams
-			);
-
-			$recipes = $recipeModel->findAll(
-				data: $recipeConditions,
-				contain: $recipeParams,
-				join: true,
-				limit: $this->itemsPerPage,
-				offset: $offset
 			);
 
 			$recipes = array_map(
@@ -130,19 +122,11 @@ class Recipes {
 			$recipeConditions = [ ...$recipeConditions, 'dietaryType' => $dietaryType ];
 		}
 
-		[ $currentPage, $totalPages, $offset ] = getPaginationData(
+		[ $currentPage, $totalPages, $recipes ] = getPaginationData(
 			$recipeModel,
 			$this->itemsPerPage,
 			$recipeConditions,
 			$recipeParams
-		);
-
-		$recipes = $recipeModel->findAll(
-			data: $recipeConditions,
-			contain: $recipeParams,
-			join: true,
-			limit: $this->itemsPerPage,
-			offset: $offset
 		);
 
 		$recipes = array_map(

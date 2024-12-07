@@ -36,17 +36,10 @@ class Dashboard {
 		$ingredientModel = new Ingredient();
 		$ingredientConditions = [ 'farmerId' => $this->profile['id'] ];
 
-		[ $currentPage, $totalPages, $offset ] = getPaginationData(
+		[ $currentPage, $totalPages, $ingredients ] = getPaginationData(
 			$ingredientModel,
 			$itemsPerPage,
 			$ingredientConditions
-		);
-
-		$ingredients = $ingredientModel->findAll(
-			data: $ingredientConditions,
-			join: true,
-			limit: $itemsPerPage,
-			offset: $offset
 		);
 
 		$this->view(

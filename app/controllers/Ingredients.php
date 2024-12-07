@@ -31,17 +31,10 @@ class Ingredients {
 		$itemsPerPage = 6;
 		$ingredientModel = new Ingredient();
 
-		[ $currentPage, $totalPages, $offset ] = getPaginationData(
+		[ $currentPage, $totalPages, $ingredients ] = getPaginationData(
 			$ingredientModel,
 			$itemsPerPage,
 			$ingredientParams
-		);
-
-		$ingredients = $ingredientModel->findAll(
-			contain: $ingredientParams,
-			join: true,
-			limit: $itemsPerPage,
-			offset: $offset
 		);
 
 		$this->view(
@@ -169,15 +162,11 @@ class Ingredients {
 		}
 
 		$invoiceConditions = [ 'profileId' => $this->profile['id'] ];
-		[ $currentPage, $totalPages, $offset ] = getPaginationData( $invoiceModel, $this->itemsPerPage, $invoiceConditions );
-
-		$invoices = $invoiceModel->findAll(
-			data: $invoiceConditions,
-			join: true,
-			limit: $this->itemsPerPage,
-			offset: $offset
+		[ $currentPage, $totalPages, $invoices ] = getPaginationData(
+			$invoiceModel,
+			$this->itemsPerPage,
+			$invoiceConditions
 		);
-
 		$this->view( 'invoices/invoices', [ 'invoices' => $invoices, 'currentPage' => $currentPage, 'totalPages' => $totalPages ] );
 	}
 

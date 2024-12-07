@@ -116,7 +116,15 @@ function getPaginationData( Model $model, int $itemsPerPage, array $conditions =
 	$totalPages = ceil( $totalData / $itemsPerPage );
 	$totalPages = $totalPages == 0 ? 1 : $totalPages;
 
-	return [ $currentPage, $totalPages, $offset ];
+	$pageData = $model->findAll(
+		data: $conditions,
+		contain: $contains,
+		join: true,
+		limit: $itemsPerPage,
+		offset: $offset
+	);
+
+	return [ $currentPage, $totalPages, $pageData ];
 }
 
 function getPaginatorPages( $currentPage, $totalPages ) {
