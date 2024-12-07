@@ -25,13 +25,6 @@ class Dashboard {
 		$groupedSales = $purchaseModel->groupSalesByDate( $sales );
 		$dataPoints = $purchaseModel->createDataPoints( $groupedSales );
 
-		// $dataPoints = [ 
-		// 	[ 'y' => 320, 'label' => 'Oct 2024' ],
-		// 	[ 'y' => 560, 'label' => 'Nov 2024' ],
-		// 	[ 'y' => 200, 'label' => 'Nov 2024' ],
-		// 	[ 'y' => 120, 'label' => 'Dec 2024' ],
-		// ];
-
 		$itemsPerPage = 6;
 		$ingredientModel = new Ingredient();
 		$ingredientConditions = [ 'farmerId' => $this->profile['id'] ];
