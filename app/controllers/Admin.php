@@ -116,7 +116,7 @@ class Admin {
 	}
 
 	public function ingredients() {
-		[ $currentPage, $totalPages, $ingredients ] = getPaginationData( new Ingredient, 6 );
+		[ $currentPage, $totalPages, $ingredients ] = getPaginationData( new Ingredient, 6, [ 'unlisted' => 0 ] );
 		$this->view(
 			'admin/ingredients',
 			[ 

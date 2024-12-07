@@ -32,7 +32,7 @@ class Dashboard {
 
 		$itemsPerPage = 6;
 		$ingredientModel = new Ingredient();
-		$ingredientConditions = [ 'farmerId' => $this->profile['id'] ];
+		$ingredientConditions = [ 'farmerId' => $this->profile['id'], 'unlisted' => 0 ];
 
 		[ $currentPage, $totalPages, $ingredients ] = getPaginationData(
 			$ingredientModel,
@@ -189,7 +189,7 @@ class Dashboard {
 			return $this->view( '403', [ 'message' => 'You do not have permissions to delete this produce', 'data' => $ingredient ] );
 		}
 
-		$ingredientModel->delete( $ingredientId );
+		$ingredientModel->update( $ingredientId, [ 'unlisted' => 1 ] );
 		$_SESSION['produceDeleteMessage'] = 'Successfully deleted produce';
 
 		if ( isset( $_GET['from'] ) ) {

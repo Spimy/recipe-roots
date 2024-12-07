@@ -6,6 +6,7 @@ class Ingredient extends Model {
 	protected $price;
 	protected $unit;
 	protected $thumbnail;
+	protected $unlisted;
 
 	public function __construct() {
 		$this->farmerId = $this->foreignKey( new Profile, true );
@@ -13,6 +14,7 @@ class Ingredient extends Model {
 		$this->price = $this->decimalField( 5, 2 );
 		$this->unit = $this->charField( 4 );
 		$this->thumbnail = $this->charField( 255, true );
+		$this->unlisted = $this->booleanField();
 		parent::__construct();
 	}
 

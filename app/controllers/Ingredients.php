@@ -34,6 +34,7 @@ class Ingredients {
 		[ $currentPage, $totalPages, $ingredients ] = getPaginationData(
 			$ingredientModel,
 			$itemsPerPage,
+			[ 'unlisted' => 0 ],
 			$ingredientParams
 		);
 
