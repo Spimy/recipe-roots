@@ -171,8 +171,7 @@
 				avatarPreview.src = URL.createObjectURL(avatar);
 				label.append(avatarPreview);
 			});
-		})
-
+		});
 	</script>
 </body>
 
