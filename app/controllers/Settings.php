@@ -168,13 +168,13 @@ class Settings {
 					}
 
 					$profileId = $_POST['profileId'];
-					$profile = current( array_filter( $profiles, fn( $p ) => $p['id'] == $_POST['profileId'] ) ) ?? null;
+					$profile = current( array_filter( $profiles, fn( $p ) => $p['id'] == $profileId ) ) ?? null;
 					if ( ! $profile ) {
 						$errors['profileId'] = 'Invalid or non-exising profile id provided';
 					}
 
 					if ( isset( $errors['usernameTaken'] ) ) {
-						if ( $_POST['profileId'] == $profile['id'] ) {
+						if ( $profileId == $profile['id'] ) {
 							unset( $errors['usernameTaken'] );
 						}
 					}
