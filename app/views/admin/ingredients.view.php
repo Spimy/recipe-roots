@@ -55,7 +55,7 @@
 									<div class="card__body__author">
 										<p><?= escape( $produce['profile']['username'] ) ?></p>
 									</div>
-									<a href="<?= ROOT ?>/dashboard/produce/edit/<?= escape( $produce['id'] ) ?>"
+									<a href="<?= ROOT ?>/dashboard/produce/edit/<?= escape( $produce['id'] ) ?>?from=<?= escape( $_GET['url'] ) ?>"
 										class="btn btn--invert btn--next">
 										Edit
 									</a>

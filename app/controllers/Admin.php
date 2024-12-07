@@ -122,9 +122,11 @@ class Admin {
 			[ 
 				'ingredients' => $ingredients,
 				'currentPage' => $currentPage,
-				'totalPages' => $totalPages
+				'totalPages' => $totalPages,
+				'message' => $_SESSION['produceDeleteMessage'] ?? null
 			]
 		);
+		unset( $_SESSION['produceDeleteMessage'] );
 	}
 
 	private function editUser( $user ) {

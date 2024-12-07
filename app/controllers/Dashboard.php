@@ -192,6 +192,11 @@ class Dashboard {
 
 		$ingredientModel->delete( $ingredientId );
 		$_SESSION['produceDeleteMessage'] = 'Successfully deleted produce';
+
+		if ( isset( $_GET['from'] ) ) {
+			redirect( $_GET['from'] );
+		}
+
 		redirect( 'dashboard' );
 	}
 }

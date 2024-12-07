@@ -92,10 +92,16 @@
 						</button>
 					<?php endif; ?>
 
-					<a class="btn btn--error"
-						href="<?= ROOT ?>/dashboard/<?= $action == 'Edit' ? escape( $data['id'] ?? '' ) : '' ?>">
-						Cancel
-					</a>
+					<?php if ( isset( $_GET['from'] ) ) : ?>
+						<a class="btn btn--error" href="<?= ROOT ?>/<?= escape( $_GET['from'] ) ?>">
+							Cancel
+						</a>
+					<?php else : ?>
+						<a class="btn btn--error"
+							href="<?= ROOT ?>/dashboard/<?= $action == 'Edit' ? escape( $data['id'] ?? '' ) : '' ?>">
+							Cancel
+						</a>
+					<?php endif ?>
 				</div>
 			</div>
 		</form>
@@ -103,7 +109,7 @@
 		<!-- Pop up for confirm delete -->
 		<?php if ( $action === 'Edit' ) : ?>
 			<form popover role="dialog" id="delete-confirm" class="modal" method="post"
-				action="<?= ROOT ?>/dashboard/produce/delete">
+				action="<?= ROOT ?>/dashboard/produce/delete<?= isset( $_GET['from'] ) ? '?from=' . $_GET['from'] : '' ?>">
 				<?php injectCsrfToken() ?>
 				<input type="hidden" name="ingredientId" value="<?= escape( $data['id'] ) ?>">
 
