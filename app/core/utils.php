@@ -30,7 +30,8 @@ function validateUpload( $file ) {
 
 	if ( $file['error'] !== UPLOAD_ERR_NO_FILE ) {
 		if ( $file['error'] === UPLOAD_ERR_INI_SIZE ) {
-			$errors['file'] = 'File is too large, it should not exceed 2MB';
+			$errors['file'] = 'File is too large, it should not exceed ' . ini_get( 'upload_max_filesize' ) . 'B';
+			return $errors;
 		}
 
 		$fileTmpPath = $file['tmp_name'];
