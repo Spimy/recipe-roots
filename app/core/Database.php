@@ -7,6 +7,9 @@ trait Database {
 		$connection = new PDO( $connectionString, DBUSER, DBPASS );
 		$connection->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
+		$tz = ( new DateTime( 'now', new DateTimeZone( 'Asia/Kuala_Lumpur' ) ) )->format( 'P' );
+		$connection->exec( "SET time_zone='$tz';" );
+
 		$connection->query( "CREATE DATABASE IF NOT EXISTS `" . DBNAME . "`" );
 		$connection->query( "use " . DBNAME );
 
