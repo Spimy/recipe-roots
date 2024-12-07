@@ -5,6 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="<?= ROOT ?>/assets/css/styles.css">
+	<link rel="stylesheet" href="<?= ROOT ?>/assets/css/pages/invoice-detail.css">
 	<title>Recipe Roots - Invoice</title>
 </head>
 
@@ -19,16 +20,34 @@
 			<p>Date: <?= escape( date( 'd M Y - H:i:s', strtotime( $invoice['createdAt'] ) ) ) ?></p>
 		</header>
 
-		<section>
+		<section class="invoice">
 			<?php foreach ( $invoice['purchases'] as $purchase ) : ?>
-				<?= escape( $purchase['ingredient']['ingredient'] ) ?> x<?= escape( $purchase['amount'] ) ?> -
-				RM<?= number_format( $purchase['ingredient']['price'] * $purchase['amount'], 2 ) ?> from
-				<?= escape( $purchase['profile']['username'] ) ?>
-				<br>
+				<div class="invoice__purchase">
+					<img src="<?= $purchase['ingredient']['thumbnail'] ?>"
+						alt="<?= extractTitleLetters( escape( $purchase['ingredient']['ingredient'] ) ) ?>">
+					<div>
+						<strong>
+							<?= escape( $purchase['ingredient']['ingredient'] ) ?>
+							&times;<?= escape( $purchase['amount'] ) ?>
+						</strong>
+						<br>
+						RM<?= number_format( $purchase['ingredient']['price'] * $purchase['amount'], 2 ) ?> from
+						<?= escape( $purchase['profile']['username'] ) ?>
+					</div>
+				</div>
 			<?php endforeach ?>
+
+			<hr>
+
+			<div>
+				<p><strong>Subtotal:</strong> RM<?= number_format( escape( $pricing['subtotal'] ), 2 ) ?></p>
+				<p><strong>Tax (6%):</strong> RM<?= number_format( escape( $pricing['tax'] ), 2 ) ?></p>
+				<p><strong>Total:</strong> RM<?= escape( $pricing['total'] ) ?></p>
+			</div>
+
+			<a href="<?= ROOT ?>/ingredients/invoices" class="btn">Back</a>
 		</section>
 
-		<p>Total: RM<?= escape( $total ) ?></p>
 	</main>
 
 	<?php include '../app/views/layout/footer.php' ?>
