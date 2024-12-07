@@ -193,6 +193,12 @@ class Settings {
 
 					$_SESSION['profileMessage'] = 'Successfully updated your profile';
 					$profileModel->update( $profileId, $profileDetails );
+
+					// Update the session if the profile updated is the current active profile
+					if ( $this->profile['id'] === $profileId ) {
+						$_SESSION['profile'] = $profileModel->findById( $profileId, join: true );
+					}
+
 					redirect( 'settings/profiles' );
 					break;
 				}
