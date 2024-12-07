@@ -122,6 +122,7 @@
 						markerBorderColor: '#4cae4f',
 						markerBorderThickness: 2,
 						color: '#4cae4f',
+						toolTipContent: '{label}: RM{y}',
 						dataPoints: <?= json_encode( $dataPoints, JSON_NUMERIC_CHECK ); ?>
 					}]
 				});
