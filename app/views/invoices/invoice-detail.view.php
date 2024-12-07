@@ -29,7 +29,7 @@
 					<div>
 						<strong>
 							<?= escape( $purchase['ingredient']['ingredient'] ) ?>
-							&times;<?= escape( $purchase['amount'] ) ?>
+							&times;<?= escape( $purchase['amount'] ) ?> (<?= escape( $purchase['ingredient']['unit'] ) ?>)
 						</strong>
 						<br>
 						RM<?= number_format( $purchase['ingredient']['price'] * $purchase['amount'], 2 ) ?> from
