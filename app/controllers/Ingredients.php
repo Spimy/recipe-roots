@@ -169,13 +169,12 @@ class Ingredients {
 		}
 
 		$invoiceConditions = [ 'profileId' => $this->profile['id'] ];
-		$itemsPerPage = 2;
-		[ $currentPage, $totalPages, $offset ] = getPaginationData( $invoiceModel, $itemsPerPage, $invoiceConditions );
+		[ $currentPage, $totalPages, $offset ] = getPaginationData( $invoiceModel, $this->itemsPerPage, $invoiceConditions );
 
 		$invoices = $invoiceModel->findAll(
 			data: $invoiceConditions,
 			join: true,
-			limit: $itemsPerPage,
+			limit: $this->itemsPerPage,
 			offset: $offset
 		);
 
