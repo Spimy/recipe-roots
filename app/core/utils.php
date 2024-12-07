@@ -116,6 +116,10 @@ function getPaginationData( Model $model, int $itemsPerPage, array $conditions =
 	$totalPages = ceil( $totalData / $itemsPerPage );
 	$totalPages = $totalPages == 0 ? 1 : $totalPages;
 
+	if ( $currentPage > $totalPages ) {
+		redirect( $_GET['url'] . "?page=$totalPages" );
+	}
+
 	$pageData = $model->findAll(
 		data: $conditions,
 		contain: $contains,
