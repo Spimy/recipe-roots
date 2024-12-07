@@ -115,6 +115,18 @@ class Admin {
 		redirect( 'admin' );
 	}
 
+	public function ingredients() {
+		[ $currentPage, $totalPages, $ingredients ] = getPaginationData( new Ingredient, 6 );
+		$this->view(
+			'admin/ingredients',
+			[ 
+				'ingredients' => $ingredients,
+				'currentPage' => $currentPage,
+				'totalPages' => $totalPages
+			]
+		);
+	}
+
 	private function editUser( $user ) {
 		$userModel = new User();
 

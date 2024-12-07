@@ -74,6 +74,7 @@ hr {
 }
 
 .admin__users,
+.admin__ingredients,
 .admin__forms {
 	flex: 1;
 	flex-basis: 50%;
@@ -83,6 +84,10 @@ hr {
 
 .admin__users .btn {
 	padding: 0.3em 1.5em;
+}
+
+.admin__ingredients .grid {
+	--_grid-column-count: 2;
 }
 
 .admin__users__container {
