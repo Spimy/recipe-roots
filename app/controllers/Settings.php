@@ -16,14 +16,14 @@ class Settings {
 
 	// Handle user settings
 	public function index() {
+		$errors = [];
+
+		if ( isset( $_SESSION['accountDeleteError'] ) ) {
+			http_response_code( $_SESSION['accountDeleteError']['status'] );
+			$errors['accountDeleteError'] = $_SESSION['accountDeleteError']['message'];
+		}
+
 		if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
-			$errors = [];
-
-			if ( isset( $_SESSION['accountDeleteError'] ) ) {
-				http_response_code( $_SESSION['accountDeleteError']['status'] );
-				$errors['accountDeleteError'] = $_SESSION['accountDeleteError']['message'];
-			}
-
 			$currentPassword = $_POST['currentPassword'] ?? null;
 			if ( ! $currentPassword ) {
 				http_response_code( 400 );
@@ -115,7 +115,8 @@ class Settings {
 			);
 		}
 
-		$this->view( 'settings/account', [ 'account' => $this->profile['user'] ] );
+		$this->view( 'settings/account', [ 'account' => $this->profile['user'], 'errors' => $errors ] );
+		unset( $_SESSION['accountDeleteError'] );
 	}
 
 	// Handle profile settings
@@ -261,15 +262,11 @@ class Settings {
 			$currentPassword = $_POST['currentPassword'] ?? null;
 			if ( ! $currentPassword ) {
 				http_response_code( 400 );
-				$errors['currentPassword'] = 'Current password is required';
-
-				return $this->view(
-					'settings/account',
-					[ 
-						'account' => $this->profile['user'],
-						'errors' => $errors
-					]
-				);
+				$_SESSION['accountDeleteError'] = [ 
+					'status' => 403,
+					'message' => 'Current password is required'
+				];
+				redirect( 'settings' );
 			}
 
 			$userModel = new User();
@@ -277,14 +274,11 @@ class Settings {
 
 			if ( ! password_verify( $currentPassword, $user['password'] ) ) {
 				http_response_code( 403 );
-				$errors['currentPassword'] = 'The password you provided is incorrect';
-				return $this->view(
-					'settings/account',
-					[ 
-						'account' => $this->profile['user'],
-						'errors' => $errors
-					]
-				);
+				$_SESSION['accountDeleteError'] = [ 
+					'status' => 403,
+					'message' => 'The password you provided is incorrect'
+				];
+				redirect( 'settings' );
 			}
 
 			// Also deletes profiles associated as they cascade once user is deleted
