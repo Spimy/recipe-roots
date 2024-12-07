@@ -71,51 +71,53 @@
 			<?php endforeach; ?>
 		</section>
 
-		<section class="paginator">
-			<div>
-				<a class="btn" href="
+		<?php if ( $totalPages > 1 ) : ?>
+			<section class="paginator">
+				<div>
+					<a class="btn" href="
 						?
 						<?= ! empty( $_GET['filter'] ) ? 'filter=' . escape( $_GET['filter'] ) . '&' : '' ?>
 						<?= ! empty( $_GET['dietary'] ) ? 'dietary=' . escape( $_GET['dietary'] ) . '&' : '' ?>
 						page=1">
-					«
-				</a>
-				<a class="btn" href="
+						«
+					</a>
+					<a class="btn" href="
 						?
 						<?= ! empty( $_GET['filter'] ) ? 'filter=' . escape( $_GET['filter'] ) . '&' : '' ?>
 						<?= ! empty( $_GET['dietary'] ) ? 'dietary=' . escape( $_GET['dietary'] ) . '&' : '' ?>
 						page=<?= $currentPage == 1 ? $currentPage : $currentPage - 1 ?>">
-					←
-				</a>
-			</div>
-			<div>
-				<?php foreach ( getPaginatorPages( $currentPage, $totalPages ) as $page ) : ?>
-					<a href="
+						←
+					</a>
+				</div>
+				<div>
+					<?php foreach ( getPaginatorPages( $currentPage, $totalPages ) as $page ) : ?>
+						<a href="
 							?
 							<?= ! empty( $_GET['filter'] ) ? 'filter=' . escape( $_GET['filter'] ) . '&' : '' ?>
 							<?= ! empty( $_GET['dietary'] ) ? 'dietary=' . escape( $_GET['dietary'] ) . '&' : '' ?>
 							page=<?= escape( $page ) ?>" class="btn <?= $page == $currentPage ? 'selected' : '' ?>">
-						<?= escape( $page ) ?>
-					</a>
-				<?php endforeach; ?>
-			</div>
-			<div>
-				<a class="btn" href="
+							<?= escape( $page ) ?>
+						</a>
+					<?php endforeach; ?>
+				</div>
+				<div>
+					<a class="btn" href="
 						?
 						<?= ! empty( $_GET['filter'] ) ? 'filter=' . escape( $_GET['filter'] ) . '&' : '' ?>
 						<?= ! empty( $_GET['dietary'] ) ? 'dietary=' . escape( $_GET['dietary'] ) . '&' : '' ?>
 						page=<?= $currentPage == $totalPages ? $totalPages : $currentPage + 1 ?>">
-					→
-				</a>
-				<a class="btn" href="
+						→
+					</a>
+					<a class="btn" href="
 						?
 						<?= ! empty( $_GET['filter'] ) ? 'filter=' . escape( $_GET['filter'] ) . '&' : '' ?>
 						<?= ! empty( $_GET['dietary'] ) ? 'dietary=' . escape( $_GET['dietary'] ) . '&' : '' ?>
 						page=<?= $totalPages ?>">
-					»
-				</a>
-			</div>
-		</section>
+						»
+					</a>
+				</div>
+			</section>
+		<?php endif ?>
 	</main>
 
 	<?php include '../app/views/layout/footer.php' ?>

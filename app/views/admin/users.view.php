@@ -47,24 +47,26 @@
 					</div>
 				<?php endforeach; ?>
 
-				<div class="paginator">
-					<div>
-						<a class="btn" href="?page=1">«</a>
-						<a class="btn" href="?page=<?= $currentPage == 1 ? $currentPage : $currentPage - 1 ?>">←</a>
-					</div>
-					<div>
-						<?php foreach ( getPaginatorPages( $currentPage, $totalPages ) as $page ) : ?>
-							<a href="?page=<?= escape( $page ) ?>" class="btn <?= $page == $currentPage ? 'selected' : '' ?>">
-								<?= escape( $page ) ?>
-							</a>
-						<?php endforeach; ?>
-					</div>
-					<div>
-						<a class="btn" href="?page=<?= $currentPage == $totalPages ? $totalPages : $currentPage + 1 ?>">→</a>
-						<a class="btn" href="?page=<?= $totalPages ?>">»</a>
+				<?php if ( $totalPages > 1 ) : ?>
+					<div class="paginator">
+						<div>
+							<a class="btn" href="?page=1">«</a>
+							<a class="btn" href="?page=<?= $currentPage == 1 ? $currentPage : $currentPage - 1 ?>">←</a>
+						</div>
+						<div>
+							<?php foreach ( getPaginatorPages( $currentPage, $totalPages ) as $page ) : ?>
+								<a href="?page=<?= escape( $page ) ?>" class="btn <?= $page == $currentPage ? 'selected' : '' ?>">
+									<?= escape( $page ) ?>
+								</a>
+							<?php endforeach; ?>
+						</div>
+						<div>
+							<a class="btn" href="?page=<?= $currentPage == $totalPages ? $totalPages : $currentPage + 1 ?>">→</a>
+							<a class="btn" href="?page=<?= $totalPages ?>">»</a>
+						</div>
 					</div>
 				</div>
-			</div>
+			<?php endif ?>
 		</article>
 	</main>
 
