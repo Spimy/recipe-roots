@@ -94,7 +94,7 @@
 					<button type="button" popovertarget="delete-account" class="btn btn--error">Delete Account</button>
 
 					<div class="admin__editor__actions">
-						<a href="<?= ROOT ?>/admin" class="btn btn--invert">Profiles</a>
+						<a href="<?= ROOT ?>/admin/edit/profiles/<?= escape( $user['id'] ) ?>" class="btn btn--invert">Profiles</a>
 						<a href="<?= ROOT ?>/admin" class="btn btn--invert">Cancel</a>
 					</div>
 				</form>

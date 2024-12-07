@@ -25,7 +25,7 @@ class Admin {
 		$this->view( 'admin/users', [ 'users' => $users, 'currentPage' => $currentPage, 'totalPages' => $totalPages ] );
 	}
 
-	public function edit( int $id = null, string $type = null ) {
+	public function edit( $type = null, $id = null ) {
 		if ( ! $id || ! is_numeric( $id ) ) {
 			redirect( 'admin' );
 		}

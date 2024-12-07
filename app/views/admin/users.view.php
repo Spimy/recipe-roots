@@ -52,7 +52,7 @@
 							Created: <?= escape( date( 'd M Y - H:i:s', strtotime( $user['createdAt'] ) ) ) ?>
 						</p>
 						<div>
-							<a href="<?= ROOT ?>/admin/edit/<?= escape( $user['id'] ) ?>/account" class="btn btn--invert">Edit</a>
+							<a href="<?= ROOT ?>/admin/edit/account/<?= escape( $user['id'] ) ?>" class="btn btn--invert">Edit</a>
 							<button type="button" class="btn btn--error">Delete</button>
 						</div>
 					</div>
