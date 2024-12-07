@@ -42,7 +42,7 @@ class Admin {
 				return $this->editUser( $user );
 			}
 			case 'profiles': {
-
+				return $this->editProfile( $user );
 			}
 			default: {
 				return redirect( 'admin' );
@@ -123,7 +123,7 @@ class Admin {
 					'admin/edit-user',
 					[ 
 						'user' => $user,
-						'errors' => [ 'Something went wrong and could not update your information' ]
+						'errors' => [ 'Something went wrong and could not update the account' ]
 					]
 				);
 			}
@@ -139,5 +139,98 @@ class Admin {
 		}
 
 		$this->view( 'admin/edit-user', [ 'user' => $user, 'message' => $message ?? null ] );
+	}
+
+	private function editProfile( $user ) {
+		$profileModel = new Profile();
+		$profiles = $profileModel->findAll( [ 'userId' => $user['id'] ] );
+
+		if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
+			$errors = [];
+
+			$currentPassword = $_POST['currentPassword'] ?? null;
+			if ( ! $currentPassword ) {
+				http_response_code( 400 );
+				$errors['currentPassword'] = 'Current password is required';
+
+				return $this->view(
+					'admin/edit-profile',
+					[ 
+						'profiles' => $profiles,
+						'errors' => $errors
+					]
+				);
+			}
+
+			$userModel = new User();
+			$admin = $userModel->findById( $this->profile['userId'] );
+			if ( ! password_verify( $currentPassword, $admin['password'] ) ) {
+				http_response_code( 403 );
+				$errors['currentPassword'] = 'The password you provided is incorrect';
+				return $this->view(
+					'admin/edit-profile',
+					[ 
+						'profiles' => $profiles,
+						'errors' => $errors
+					]
+				);
+			}
+
+			$errors = array_merge( $errors, $profileModel->validate( array_merge( $_POST, $_FILES ) ) );
+
+			if ( empty( $_POST['profileId'] ) ) {
+				$errors['profileId'] = 'No profile id has been provided';
+			}
+
+			if ( ! is_numeric( $_POST['profileId'] ) ) {
+				$errors['profileId'] = 'Invalid or non-exising profile id provided';
+			}
+
+			$profileId = $_POST['profileId'];
+			$profile = current( array_filter( $profiles, fn( $p ) => $p['id'] == $profileId ) ) ?? null;
+			if ( ! $profile ) {
+				$errors['profileId'] = 'Invalid or non-exising profile id provided';
+			}
+
+			if ( isset( $errors['usernameTaken'] ) ) {
+				if ( $profileId == $profile['id'] ) {
+					unset( $errors['usernameTaken'] );
+				}
+			}
+
+			if ( count( $errors ) > 0 ) {
+				http_response_code( 400 );
+				return $this->view( 'settings/profile', [ 'profiles' => $profiles, 'errors' => $errors ] );
+			}
+
+			$profileDetails = [ 'username' => $_POST['username'] ];
+			if ( $_FILES['avatar']['error'] == UPLOAD_ERR_OK ) {
+				$tmp_name = $_FILES['avatar']['tmp_name'];
+				$name = basename( $_FILES['avatar']['name'] );
+				$profileDetails['avatar'] = uploadFile( 'avatars', $tmp_name, $name );
+			}
+
+			$success = $profileModel->update( $profileId, $profileDetails );
+			if ( ! $success ) {
+				http_response_code( 500 );
+				return $this->view(
+					'admin/edit-profile',
+					[ 
+						'profiles' => $profiles,
+						'errors' => [ 'Something went wrong and could not update the profile' ]
+					]
+				);
+			}
+
+			// Update the session if the profile updated is the current active profile
+			if ( $this->profile['id'] === $profileId ) {
+				$_SESSION['profile'] = $profileModel->findById( $profileId, join: true );
+			}
+
+			$profiles = $profileModel->findAll( [ 'userId' => $user['id'] ] );
+			$message = 'Updated profile successfully';
+		}
+
+		$this->view( 'admin/edit-profile', [ 'profiles' => $profiles, 'userId' => $user['id'], 'message' => $message ?? null ] );
 	}
 }
