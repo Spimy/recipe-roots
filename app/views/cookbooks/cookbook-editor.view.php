@@ -28,6 +28,10 @@
 		<form class="editor" method="post" enctype="multipart/form-data">
 			<?php injectCsrfToken(); ?>
 
+			<?php if ( isset( $_GET['from'] ) ) : ?>
+				<input type="hidden" name="from" value="<?= escape( $_GET['from'] ) ?>">
+			<?php endif ?>
+
 			<div class="editor__input">
 				<label for="title">Title</label>
 				<input type="text" name="title" id="title" value="<?= escape( $data['title'] ?? '' ) ?? null ?>" required>
