@@ -11,7 +11,7 @@ class Cookbooks {
 		}
 		$this->profile = $_SESSION['profile'];
 
-		if ( $this->profile['type'] !== PROFILE_TYPES['user'] ) {
+		if ( $this->profile['type'] !== PROFILE_TYPES['user'] && ! $this->profile['user']['isAdmin'] ) {
 			http_response_code( 403 );
 			redirect( "settings/profiles?next=" . $_GET['url'] );
 		}
@@ -19,7 +19,57 @@ class Cookbooks {
 		handleInvalidCsrfToken( $this );
 	}
 
-	public function index() {
+	public function index( string $id = '' ) {
+		if ( $id !== '' ) {
+			if ( ! is_numeric( $id ) ) {
+				http_response_code( 404 );
+				return $this->view( '404' );
+			}
+
+			$cookbookModel = new Cookbook();
+			$cookbook = $cookbookModel->findById( $id, join: true );
+
+			if ( ! $cookbook ) {
+				http_response_code( 404 );
+				return $this->view( '404' );
+			}
+
+			if ( ! $cookbook['public'] && $cookbook['profileId'] !== $this->profile['id'] && ! $this->profile['user']['isAdmin'] ) {
+				http_response_code( 403 );
+				return $this->view( '403', [ 'message' => 'This cookbook is private and cannot be accessed' ] );
+			}
+
+			[ $currentPage, $totalPages, $joins ] = getPaginationData(
+				new CookbookJoin,
+				6,
+				[ 'cookbookId' => $cookbook['id'] ]
+			);
+
+			$commentModel = new Comment();
+			$recipes = array_reduce(
+				$joins,
+				function ($c, $j) use ($commentModel) {
+					$comments = $commentModel->findAll( [ 'recipeId' => $j['recipe']['id'] ] );
+					$numComments = count( $comments ) > 0 ? count( $comments ) : 1;
+					$averageRating = array_reduce( $comments, fn( $carry, $comment ) => $carry + $comment['rating'], 0 ) / $numComments;
+
+					$c[] = [ ...$j['recipe'], "rating" => round( $averageRating, 0 ) ];
+					return $c;
+				},
+				[]
+			);
+
+			return $this->view(
+				'cookbooks/cookbook-detail',
+				[ 
+					'cookbook' => $cookbook,
+					'recipes' => $recipes,
+					'currentPage' => $currentPage,
+					'totalPages' => $totalPages,
+				]
+			);
+		}
+
 		$cookbookParams = [];
 		if ( isset( $_GET['filter'] ) && $_GET['filter'] !== '' ) {
 			$cookbookParams = [ 
