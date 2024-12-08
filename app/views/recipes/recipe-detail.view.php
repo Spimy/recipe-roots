@@ -58,7 +58,7 @@
 										<li>
 											<label for="cookbook-<?= escape( $cookbook['id'] ) ?>">
 												<input type="checkbox" name="cookbooks[]" id="cookbook-<?= escape( $cookbook['id'] ) ?>"
-													value="<?= escape( $cookbook['id'] ) ?>">
+													value="<?= escape( $cookbook['id'] ) ?>" <?= in_array( $cookbook['id'], $savedCookbooks ) ? 'checked' : '' ?>>
 												<?= escape( $cookbook['title'] ) ?>
 											</label>
 										</li>

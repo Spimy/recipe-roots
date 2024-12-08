@@ -98,12 +98,17 @@ class Recipes {
 		$cookbookModel = new Cookbook();
 		$cookbooks = $cookbookModel->findAll( $this->profile['user']['isAdmin'] ? [] : [ 'profileId' => $this->profile['id'] ] );
 
+		$cookbookJoinModel = new CookbookJoin();
+		$join = $cookbookJoinModel->findAll( [ 'recipeId' => $recipe['id'] ] );
+		$savedCookbooks = array_unique( array_map( fn( $j ) => $j['cookbookId'], $join ) );
+
 		$this->view(
 			'recipes/recipe-detail',
 			[ 
 				'recipe' => $recipe,
 				'comments' => $comments,
 				'cookbooks' => $cookbooks,
+				'savedCookbooks' => $savedCookbooks,
 				'commentErrors' => $_SESSION['commentErrors'] ?? [],
 				'recipeErrors' => $_SESSION['recipeErrors'] ?? [],
 				'saveToCookbook' => $_SESSION['saveToCookbook'] ?? [],
