@@ -18,17 +18,19 @@
 			<div class="heading">
 				<h1><?= escape( $recipe['title'] ) ?></h1>
 
-				<?php if ( $recipe['profileId'] === $profile['id'] || $profile['user']['isAdmin'] ) : ?>
-					<div class="heading__dropdown">
-						<label for="more"><img src="<?= ROOT ?>/assets/icons/more.svg" alt="more"></label>
-						<input type="checkbox" name="more" id="more">
+				<div class="heading__dropdown">
+					<label for="more"><img src="<?= ROOT ?>/assets/icons/more.svg" alt="more"></label>
+					<input type="checkbox" name="more" id="more">
 
-						<menu class="heading__dropdown__menu">
+					<menu class="heading__dropdown__menu">
+						<?php if ( $recipe['profileId'] === $profile['id'] || $profile['user']['isAdmin'] ) : ?>
 							<a href="<?= ROOT ?>/recipes/edit/<?= escape( $recipe['id'] ) ?>">Edit</a>
 							<button popovertarget="delete-confirm">Delete</button>
-							<button popovertarget="select-cookbook">Save to Cookbook</button>
-						</menu>
+						<?php endif ?>
+						<button popovertarget="select-cookbook">Save to Cookbook</button>
+					</menu>
 
+					<?php if ( $recipe['profileId'] === $profile['id'] || $profile['user']['isAdmin'] ) : ?>
 						<!-- Pop up for confirm delete -->
 						<form popover role="dialog" id="delete-confirm" class="modal" method="post"
 							action="<?= ROOT ?>/recipes/delete">
@@ -45,39 +47,39 @@
 								<button class="btn btn--error">Delete</button>
 							</div>
 						</form>
+					<?php endif ?>
 
-						<form popover role="dialog" id="select-cookbook" class="modal" method="post"
-							action="<?= ROOT ?>/recipes/updateCookbooks">
-							<?php injectCsrfToken() ?>
-							<input type="hidden" name="recipeId" value="<?= escape( $recipe['id'] ) ?>">
+					<form popover role="dialog" id="select-cookbook" class="modal" method="post"
+						action="<?= ROOT ?>/recipes/updateCookbooks">
+						<?php injectCsrfToken() ?>
+						<input type="hidden" name="recipeId" value="<?= escape( $recipe['id'] ) ?>">
 
-							<div>
-								<h3>Add to Cookbook</h3>
-								<ul role="list">
-									<?php foreach ( $cookbooks as $cookbook ) : ?>
-										<li>
-											<label for="cookbook-<?= escape( $cookbook['id'] ) ?>">
-												<input type="checkbox" name="cookbooks[]" id="cookbook-<?= escape( $cookbook['id'] ) ?>"
-													value="<?= escape( $cookbook['id'] ) ?>" <?= in_array( $cookbook['id'], $savedCookbooks ) ? 'checked' : '' ?>>
-												<?= escape( $cookbook['title'] ) ?>
-											</label>
-										</li>
-									<?php endforeach ?>
+						<div>
+							<h3>Add to Cookbook</h3>
+							<ul role="list">
+								<?php foreach ( $cookbooks as $cookbook ) : ?>
 									<li>
-										<a href="<?= ROOT ?>/cookbooks/create?from=<?= escape( $_GET['url'] ) ?>" class="btn btn--add">
-											Create Cookbook
-										</a>
+										<label for="cookbook-<?= escape( $cookbook['id'] ) ?>">
+											<input type="checkbox" name="cookbooks[]" id="cookbook-<?= escape( $cookbook['id'] ) ?>"
+												value="<?= escape( $cookbook['id'] ) ?>" <?= in_array( $cookbook['id'], $savedCookbooks ) ? 'checked' : '' ?>>
+											<?= escape( $cookbook['title'] ) ?>
+										</label>
 									</li>
-								</ul>
-							</div>
+								<?php endforeach ?>
+								<li>
+									<a href="<?= ROOT ?>/cookbooks/create?from=<?= escape( $_GET['url'] ) ?>" class="btn btn--add">
+										Create Cookbook
+									</a>
+								</li>
+							</ul>
+						</div>
 
-							<div>
-								<button type="button" class="btn btn--invert" popovertarget="select-cookbook">Cancel</button>
-								<button class="btn">Save</button>
-							</div>
-						</form>
-					</div>
-				<?php endif ?>
+						<div>
+							<button type="button" class="btn btn--invert" popovertarget="select-cookbook">Cancel</button>
+							<button class="btn">Save</button>
+						</div>
+					</form>
+				</div>
 			</div>
 
 			<?php if ( ! empty( $recipeErrors ) ) : ?>
