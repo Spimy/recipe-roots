@@ -18,7 +18,7 @@
 			<div class="heading">
 				<h1><?= escape( $recipe['title'] ) ?></h1>
 
-				<?php if ( $recipe['profileId'] === $profile['user'] || $profile['user']['isAdmin'] ) : ?>
+				<?php if ( $recipe['profileId'] === $profile['id'] || $profile['user']['isAdmin'] ) : ?>
 					<div class="heading__dropdown">
 						<label for="more"><img src="<?= ROOT ?>/assets/icons/more.svg" alt="more"></label>
 						<input type="checkbox" name="more" id="more">
@@ -165,9 +165,10 @@
 						<article class="details__comments__comment" id="comment-<?= escape( $comment['id'] ) ?>">
 							<div class="details__comments__comment__header">
 								<div>
-									<img class="avatar" src="<?= escape( $comment['profile']['avatar'] ) ?>"
-										alt="<?= extractTitleLetters( escape( $comment['profile']['username'] ) ) ?>">
-
+									<object class="avatar" role="img" aria-label="avatar"
+										data="<?= escape( $comment['profile']['avatar'] ?? '' ) ?>">
+										<?= extractTitleLetters( escape( $comment['profile']['username'] ) ) ?>
+									</object>
 									<div>
 										<p><?= escape( $comment['profile']['username'] ) ?></p>
 										<p class="rating">
