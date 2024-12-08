@@ -148,6 +148,71 @@ class Cookbooks {
 		$this->view( 'cookbooks/cookbook-editor', [ 'action' => 'Create' ] );
 	}
 
+	public function edit( $id = null ) {
+		if ( ! $id ) {
+			redirect( 'cookbooks' );
+		}
+
+		if ( ! is_numeric( $id ) ) {
+			http_response_code( 404 );
+			return $this->view( '404' );
+		}
+
+		$cookbookModel = new Cookbook();
+		$cookbook = $cookbookModel->findById( $id, join: true );
+
+		if ( ! $cookbook ) {
+			http_response_code( 404 );
+			return $this->view( '404' );
+		}
+
+		if ( ! $cookbook['public'] && $cookbook['profileId'] !== $this->profile['id'] && ! $this->profile['user']['isAdmin'] ) {
+			http_response_code( 403 );
+			return $this->view( '403', [ 'message' => 'You do not have permissions to edit this cookbook' ] );
+		}
+
+		if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
+			$errors = $cookbookModel->validate( array_merge( $_POST, $_FILES ) );
+			$this->handleErrors( $errors, 'Edit', $id );
+
+			$cookbookData = [ 
+				'title' => $_POST['title'],
+				'description' => $_POST['description'],
+				'public' => $_POST['public'] == 'yes' ? 1 : 0
+			];
+
+			if ( $_FILES['thumbnail']['error'] == UPLOAD_ERR_OK ) {
+				$tmp_name = $_FILES['thumbnail']['tmp_name'];
+				$name = basename( $_FILES['thumbnail']['name'] );
+				$cookbookData['thumbnail'] = uploadFile( 'thumbnails', $tmp_name, $name );
+			}
+
+			$success = $cookbookModel->update( $id, $cookbookData );
+			if ( ! $success ) {
+				http_response_code( 500 );
+				$this->view(
+					'cookbooks/cookbook-editor',
+					[ 
+						'action' => 'Edit',
+						'errors' => [ 'Something went wrong updating the cookbook and could not be saved' ],
+						'data' => $_POST
+					] );
+			}
+
+			redirect( "cookbooks/$id" );
+
+		}
+
+		$cookbook['public'] = $cookbook['public'] ? 'yes' : 'no';
+		$this->view(
+			'cookbooks/cookbook-editor',
+			[ 
+				'action' => 'Edit',
+				'data' => $cookbook
+			]
+		);
+	}
+
 	private function handleErrors( $errors, $action, $id = null ) {
 		if ( count( $errors ) > 0 ) {
 			if ( $id ) {
