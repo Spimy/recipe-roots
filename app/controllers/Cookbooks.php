@@ -142,7 +142,7 @@ class Cookbooks {
 			}
 
 			$cookbook = $cookbookModel->create( $newCookbook );
-			redirect( 'cookbooks/' . $cookbook['id'] );
+			redirect( $_POST['from'] ?? 'cookbooks/' . $cookbook['id'] );
 		}
 
 		$this->view( 'cookbooks/cookbook-editor', [ 'action' => 'Create' ] );
@@ -248,7 +248,7 @@ class Cookbooks {
 				$totalRating += array_reduce( $comments, fn( $ca, $c ) => $ca + $c['rating'], 0 );
 			}
 
-			$cookbooks[ $index ]['rating'] = $totalRating / ( $numRatings > 0 ? $numRatings : 1 );
+			$cookbooks[ $index ]['rating'] = round( $totalRating / ( $numRatings > 0 ? $numRatings : 1 ) );
 		}
 
 		return $cookbooks;
