@@ -55,7 +55,7 @@
 						<input type="hidden" name="recipeId" value="<?= escape( $recipe['id'] ) ?>">
 
 						<div>
-							<h3>Add to Cookbook</h3>
+							<h3>Save Recipe to Cookbook</h3>
 							<ul role="list">
 								<?php foreach ( $cookbooks as $cookbook ) : ?>
 									<li>
