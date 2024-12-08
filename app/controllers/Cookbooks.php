@@ -20,10 +20,19 @@ class Cookbooks {
 	}
 
 	public function index() {
+		$cookbookParams = [];
+		if ( isset( $_GET['filter'] ) && $_GET['filter'] !== '' ) {
+			$cookbookParams = [ 
+				"title" => "%" . $_GET['filter'] . "%",
+				"description" => "%" . $_GET['filter'] . "%"
+			];
+		}
+
 		[ $currentPage, $totalPages, $cookbooks ] = getPaginationData(
 			new Cookbook,
 			6,
-			[ 'profileId' => $this->profile['id'] ]
+			[ 'profileId' => $this->profile['id'] ],
+			$cookbookParams
 		);
 		$this->view(
 			'cookbooks/cookbooks',
@@ -37,10 +46,19 @@ class Cookbooks {
 	}
 
 	public function browse() {
+		$cookbookParams = [];
+		if ( isset( $_GET['filter'] ) && $_GET['filter'] !== '' ) {
+			$cookbookParams = [ 
+				"title" => "%" . $_GET['filter'] . "%",
+				"description" => "%" . $_GET['filter'] . "%"
+			];
+		}
+
 		[ $currentPage, $totalPages, $cookbooks ] = getPaginationData(
 			new Cookbook,
 			6,
-			$this->profile['user']['isAdmin'] ? [] : [ 'public' => 1 ]
+			$this->profile['user']['isAdmin'] ? [] : [ 'public' => 1 ],
+			$cookbookParams
 		);
 		$this->view(
 			'cookbooks/cookbooks',
