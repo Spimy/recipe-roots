@@ -39,7 +39,7 @@ class Cookbooks {
 			[ 
 				'currentPage' => $currentPage,
 				'totalPages' => $totalPages,
-				'cookbooks' => $cookbooks,
+				'cookbooks' => $this->getRating( $cookbooks ),
 				'browse' => false
 			]
 		);
@@ -65,7 +65,7 @@ class Cookbooks {
 			[ 
 				'currentPage' => $currentPage,
 				'totalPages' => $totalPages,
-				'cookbooks' => $cookbooks,
+				'cookbooks' => $this->getRating( $cookbooks ),
 				'browse' => true
 			]
 		);
@@ -113,5 +113,28 @@ class Cookbooks {
 				] );
 			die;
 		}
+	}
+
+	private function getRating( array $cookbooks ) {
+		$cookbookJoinModel = new CookbookJoin();
+		$commentModel = new Comment();
+
+		foreach ( $cookbooks as $index => $cookbook ) {
+			$cookbooks[ $index ]['rating'] = 0;
+			$numRatings = 0;
+			$totalRating = 0;
+
+			$joins = $cookbookJoinModel->findAll( [ 'cookbookId' => $cookbook['id'] ] );
+
+			foreach ( $joins as $join ) {
+				$comments = $commentModel->findAll( [ 'recipeId' => $join['recipeId'] ] );
+				$numRatings += count( $comments );
+				$totalRating += array_reduce( $comments, fn( $ca, $c ) => $ca + $c['rating'], 0 );
+			}
+
+			$cookbooks[ $index ]['rating'] = $totalRating / ( $numRatings > 0 ? $numRatings : 1 );
+		}
+
+		return $cookbooks;
 	}
 }
