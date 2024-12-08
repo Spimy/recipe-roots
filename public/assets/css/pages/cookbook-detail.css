@@ -13,7 +13,6 @@ article {
 }
 
 .cookbook {
-	display: grid;
 	border-radius: 0.5rem;
 	flex: 1;
 	text-align: justify;
@@ -21,10 +20,14 @@ article {
 
 .cookbook__thumbnail {
 	width: 100%;
-	height: auto;
+	height: 10rem;
 	object-fit: cover;
 	border-top-left-radius: 0.5rem;
 	border-top-right-radius: 0.5rem;
+	display: grid;
+	place-items: center;
+	background-color: var(--primary-clr);
+	font-weight: bold;
 }
 
 .cookbook__info {
