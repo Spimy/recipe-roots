@@ -206,6 +206,8 @@ abstract class Model {
 			$query .= ')';
 		}
 
+		$query .= " ORDER BY createdAt DESC";
+
 		if ( $limit ) {
 			$query .= " LIMIT $limit OFFSET $offset";
 		}
