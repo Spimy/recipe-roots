@@ -297,7 +297,14 @@ class Recipes {
 			$success = $recipeModel->update( $id, $recipeData );
 			if ( ! $success ) {
 				http_response_code( 500 );
-				$_SESSION['recipeErrors'] = [ 'Something went wrong updating the recipe and could not be saved' ];
+				$this->view(
+					'recipes/recipe-editor',
+					[ 
+						'action' => 'Edit',
+						'data' => $recipe,
+						'errors' => [ 'Something went wrong updating the recipe and could not be saved' ]
+					]
+				);
 			}
 
 			redirect( "recipes/$id" );
