@@ -69,18 +69,6 @@
 				</div>
 			</div>
 
-			<?php if ( $action === 'Edit' ) : ?>
-				<div class="editor__recipes">
-					<h2>Recipes</h2>
-
-					<noscript>
-						<p class="errors" style="margin-top: 0.5rem">
-							Enable JavaScript for the best experience.
-						</p>
-					</noscript>
-				</div>
-			<?php endif ?>
-
 			<button type="submit" class="btn">
 				<img src="<?= ROOT ?>/assets/icons/save.svg" alt="save icon">
 				Save
