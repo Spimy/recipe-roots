@@ -58,6 +58,7 @@ h1 {
 	position: absolute;
 	right: 0;
 	top: 50%;
+	width: max-content;
 }
 
 .heading__dropdown input:checked + .heading__dropdown__menu {
@@ -80,7 +81,7 @@ h1 {
 	content: '';
 	display: inline-block;
 	background-color: currentColor;
-	mask-image: url(../../icons/edit.svg);
+	mask-image: url(../../icons/add.svg);
 	mask-repeat: no-repeat;
 	mask-position: center;
 	mask-size: cover;
@@ -90,6 +91,10 @@ h1 {
 
 .heading__dropdown__menu *:nth-child(1):before {
 	mask-image: url(../../icons/edit.svg);
+}
+
+.heading__dropdown__menu *:nth-child(1):not(:has(+ *)):before {
+	mask-image: url(../../icons/add.svg);
 }
 
 .heading__dropdown__menu *:nth-child(2):before {
