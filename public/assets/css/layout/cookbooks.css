@@ -27,6 +27,7 @@
 .cookbook__details {
 	padding: 1rem;
 	min-width: 0;
+	min-height: 12rem;
 	display: grid;
 	gap: 0.5rem;
 	flex: 1;
