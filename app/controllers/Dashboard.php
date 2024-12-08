@@ -186,7 +186,7 @@ class Dashboard {
 
 		if ( $ingredient['farmerId'] != $this->profile['id'] && ! $this->profile['user']['isAdmin'] ) {
 			http_response_code( 403 );
-			return $this->view( '403', [ 'message' => 'You do not have permissions to delete this produce', 'data' => $ingredient ] );
+			return $this->view( '403', [ 'message' => 'You do not have permissions to delete this produce' ] );
 		}
 
 		$ingredientModel->update( $ingredientId, [ 'unlisted' => 1 ] );
