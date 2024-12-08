@@ -18,7 +18,9 @@
 		<header>
 			<div class="heading">
 				<h1><?= escape( $cookbook['title'] ) ?></h1>
-				<a href="<?= ROOT ?>/cookbooks/edit/<?= escape( $cookbook['id'] ) ?>" class="btn">Edit</a>
+				<?php if ( $cookbook['profileId'] === $profile['id'] || $profile['user']['isAdmin'] ) : ?>
+					<a href="<?= ROOT ?>/cookbooks/edit/<?= escape( $cookbook['id'] ) ?>" class="btn">Edit</a>
+				<?php endif ?>
 			</div>
 		</header>
 

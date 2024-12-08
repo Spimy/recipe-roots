@@ -66,6 +66,7 @@ class Cookbooks {
 					'recipes' => $recipes,
 					'currentPage' => $currentPage,
 					'totalPages' => $totalPages,
+					'profile' => $this->profile
 				]
 			);
 		}
