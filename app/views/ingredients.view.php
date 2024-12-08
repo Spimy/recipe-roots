@@ -45,8 +45,10 @@
 			<input type="hidden" name="from" value="ingredients">
 			<?php foreach ( $ingredients as $ingredient ) : ?>
 				<article class="card">
-					<img class="card__thumbnail" src="<?= escape( $ingredient['thumbnail'] ?? '' ) ?>"
-						alt="<?= extractTitleLetters( escape( $ingredient['ingredient'] ) ) ?>">
+					<object class="card__thumbnail" role="img" aria-label="thumbnail"
+						data="<?= escape( $ingredient['thumbnail'] ?? '' ) ?>">
+						<?= extractTitleLetters( escape( $ingredient['ingredient'] ) ) ?>
+					</object>
 					<div>
 						<div class="card__head">
 							<div class="card__head__title">

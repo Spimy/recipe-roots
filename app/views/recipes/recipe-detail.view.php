@@ -153,7 +153,9 @@
 
 		<article class="details">
 			<section class="details__thumbnail">
-				<img src="<?= $recipe['thumbnail'] ?>" alt="<?= extractTitleLetters( escape( $recipe['title'] ) ) ?>">
+				<object role="img" aria-label="thumbnail" data="<?= escape( $recipe['thumbnail'] ?? '' ) ?>">
+					<?= extractTitleLetters( escape( $recipe['title'] ) ) ?>
+				</object>
 			</section>
 
 			<section class="details__ingredients">

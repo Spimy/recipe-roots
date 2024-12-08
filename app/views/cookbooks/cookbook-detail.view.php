@@ -44,8 +44,10 @@
 				<section class="grid">
 					<?php foreach ( $recipes as $recipe ) : ?>
 						<div class="card">
-							<img class="card__thumbnail" src="<?= escape( $recipe['thumbnail'] ) ?>"
-								alt="<?= extractTitleLetters( escape( $recipe['title'] ) ) ?>">
+							<object class="card__thumbnail" role="img" aria-label="thumbnail"
+								data="<?= escape( $recipe['thumbnail'] ?? '' ) ?>">
+								<?= extractTitleLetters( escape( $recipe['title'] ) ) ?>
+							</object>
 							<div>
 								<div class="card__head">
 									<div class="card__head__title">
