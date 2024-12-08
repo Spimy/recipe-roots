@@ -297,6 +297,7 @@ class Recipes {
 			$success = $recipeModel->update( $id, $recipeData );
 			if ( ! $success ) {
 				http_response_code( 500 );
+				$recipe['ingredients'] = json_decode( $recipe['ingredients'], true );
 				$this->view(
 					'recipes/recipe-editor',
 					[ 
