@@ -2,6 +2,10 @@
 	--_grid-column-count: 2;
 }
 
+.success {
+	margin-block-start: 1rem;
+}
+
 .cookbook {
 	border-radius: 0.5rem;
 	background-color: var(--silver);

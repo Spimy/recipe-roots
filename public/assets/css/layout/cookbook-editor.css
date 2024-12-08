@@ -60,3 +60,7 @@ textarea {
 	resize: none;
 	min-height: 100%;
 }
+
+.btn img {
+	filter: brightness(0) invert(1);
+}

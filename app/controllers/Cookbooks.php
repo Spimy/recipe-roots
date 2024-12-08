@@ -91,9 +91,11 @@ class Cookbooks {
 				'currentPage' => $currentPage,
 				'totalPages' => $totalPages,
 				'cookbooks' => $this->getRating( $cookbooks ),
-				'browse' => false
+				'browse' => false,
+				'message' => $_SESSION['cookbookDeleteMessage'] ?? null
 			]
 		);
+		unset( $_SESSION['cookbookDeleteMessage'] );
 	}
 
 	public function browse() {
@@ -211,6 +213,35 @@ class Cookbooks {
 				'data' => $cookbook
 			]
 		);
+	}
+
+	public function delete() {
+		if ( $_SERVER['REQUEST_METHOD'] !== 'POST' ) {
+			redirect( 'cookbooks' );
+		}
+
+		$cookbookId = $_POST['cookbookId'] ?? null;
+		if ( ! $cookbookId || ! is_numeric( $cookbookId ) ) {
+			http_response_code( 400 );
+			redirect( 'cookbooks' );
+		}
+
+		$cookbookModel = new Cookbook();
+		$cookbook = $cookbookModel->findById( $cookbookId, true );
+
+		if ( ! $cookbook ) {
+			http_response_code( 404 );
+			return $this->view( '404' );
+		}
+
+		if ( $cookbook['profileId'] != $this->profile['id'] && ! $this->profile['user']['isAdmin'] ) {
+			http_response_code( 403 );
+			return $this->view( '403', [ 'message' => 'You do not have permissions to delete this cookbook' ] );
+		}
+
+		$cookbookModel->delete( $cookbookId );
+		$_SESSION['cookbookDeleteMessage'] = 'Successfully deleted cookbook';
+		redirect( 'cookbooks' );
 	}
 
 	private function handleErrors( $errors, $action, $id = null ) {

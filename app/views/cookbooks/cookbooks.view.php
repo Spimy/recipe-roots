@@ -36,11 +36,17 @@
 			</form>
 		</header>
 
+		<?php if ( ! empty( $message ) ) : ?>
+			<p class="success"><?= escape( $message ) ?></p>
+		<?php endif; ?>
+
 		<section class="grid">
 			<?php foreach ( $cookbooks as $cookbook ) : ?>
 				<article class="cookbook">
-					<img class="cookbook__thumbnail" src="<?= escape( $cookbook['thumbnail'] ) ?>"
-						alt="<?= extractTitleLetters( escape( $cookbook['title'] ) ) ?>">
+					<object class="cookbook__thumbnail" role="img" aria-label="thumbnail"
+						data="<?= escape( $cookbook['thumbnail'] ?? '' ) ?>">
+						<?= extractTitleLetters( escape( $cookbook['title'] ) ) ?>
+					</object>
 					<div class="cookbook__details">
 						<h2><?= escape( $cookbook['title'] ) ?></h2>
 						<p><?= escape( $cookbook['description'] ) ?></p>
