@@ -19,6 +19,7 @@
 	background-color: var(--primary-clr);
 	border-radius: 0.5rem;
 	height: 100%;
+	width: 10rem;
 	object-fit: cover;
 	flex: 1;
 }
