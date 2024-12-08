@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="<?= ROOT ?>/favicon.ico" type="image/x-icon">
 	<link rel="stylesheet" href="<?= ROOT ?>/assets/css/styles.css">
 	<link rel="stylesheet" href="<?= ROOT ?>/assets/css/layout/produce-editor.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
