@@ -93,20 +93,26 @@ class Recipes {
 		}
 
 		$commentModel = new Comment();
-
 		$comments = $commentModel->findAll( [ 'recipeId' => $recipe['id'] ], join: true );
+
+		$cookbookModel = new Cookbook();
+		$cookbooks = $cookbookModel->findAll( $this->profile['user']['isAdmin'] ? [] : [ 'profileId' => $this->profile['id'] ] );
+
 		$this->view(
 			'recipes/recipe-detail',
 			[ 
 				'recipe' => $recipe,
 				'comments' => $comments,
+				'cookbooks' => $cookbooks,
 				'commentErrors' => $_SESSION['commentErrors'] ?? [],
 				'recipeErrors' => $_SESSION['recipeErrors'] ?? [],
+				'saveToCookbook' => $_SESSION['saveToCookbook'] ?? [],
 				'profile' => $this->profile
 			]
 		);
 		unset( $_SESSION['commentErrors'] );
 		unset( $_SESSION['recipeErrors'] );
+		unset( $_SESSION['saveToCookbook'] );
 	}
 
 	public function browse() {
@@ -469,5 +475,57 @@ class Recipes {
 				redirect( 'recipes' );
 			}
 		}
+	}
+
+	// Update cookbooks
+	public function updateCookbooks() {
+		if ( $_SERVER['REQUEST_METHOD'] !== 'POST' ) {
+			redirect( 'recipes' );
+		}
+
+		if ( empty( $_POST['recipeId'] ) || ! is_numeric( $_POST['recipeId'] ) ) {
+			http_response_code( 400 );
+			redirect( 'recipes' );
+		}
+
+		$recipeModel = new Recipe();
+		$recipeId = $_POST['recipeId'];
+
+		$recipe = $recipeModel->findById( $recipeId );
+		if ( ! $recipe ) {
+			http_response_code( 404 );
+			redirect( '404' );
+		}
+
+		$cookbookModel = new Cookbook();
+		$cookbooks = array_map(
+			fn( $c ) => $cookbookModel->findOne(
+				$this->profile['user']['isAdmin'] ? [ 'id' => $c ] : [ 'id' => $c, 'profileId' => $this->profile['id'] ]
+			),
+			$_POST['cookbooks'] ?? []
+		);
+
+		$cookbookJoinModel = new CookbookJoin();
+		$joins = $cookbookJoinModel->findAll( [ 'recipeId' => $recipeId ] );
+
+		$removeFromIds = array_diff(
+			array_map( fn( $j ) => $j['cookbookId'], $joins ),
+			array_map( fn( $c ) => $c['id'], $cookbooks )
+		);
+
+		foreach ( $removeFromIds as $cookbookId ) {
+			$join = $cookbookJoinModel->findOne( [ 'cookbookId' => $cookbookId, 'recipeId' => $recipe['id'] ] );
+			$cookbookJoinModel->delete( $join['id'] );
+		}
+
+		foreach ( $cookbooks as $cookbook ) {
+			$join = $cookbookJoinModel->findOne( [ 'cookbookId' => $cookbook['id'], 'recipeId' => $recipe['id'] ] );
+			if ( ! $join ) {
+				$cookbookJoinModel->create( [ 'cookbookId' => $cookbook['id'], 'recipeId' => $recipe['id'] ] );
+			}
+		}
+
+		$_SESSION['saveToCookbook'] = 'Successfully updated cookbook(s)';
+		redirect( 'recipes/' . $recipe['id'] );
 	}
 }

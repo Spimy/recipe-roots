@@ -26,6 +26,7 @@
 						<menu class="heading__dropdown__menu">
 							<a href="<?= ROOT ?>/recipes/edit/<?= escape( $recipe['id'] ) ?>">Edit</a>
 							<button popovertarget="delete-confirm">Delete</button>
+							<button popovertarget="select-cookbook">Save to Cookbook</button>
 						</menu>
 
 						<!-- Pop up for confirm delete -->
@@ -44,6 +45,37 @@
 								<button class="btn btn--error">Delete</button>
 							</div>
 						</form>
+
+						<form popover role="dialog" id="select-cookbook" class="modal" method="post"
+							action="<?= ROOT ?>/recipes/updateCookbooks">
+							<?php injectCsrfToken() ?>
+							<input type="hidden" name="recipeId" value="<?= escape( $recipe['id'] ) ?>">
+
+							<div>
+								<h3>Add to Cookbook</h3>
+								<ul role="list">
+									<?php foreach ( $cookbooks as $cookbook ) : ?>
+										<li>
+											<label for="cookbook-<?= escape( $cookbook['id'] ) ?>">
+												<input type="checkbox" name="cookbooks[]" id="cookbook-<?= escape( $cookbook['id'] ) ?>"
+													value="<?= escape( $cookbook['id'] ) ?>">
+												<?= escape( $cookbook['title'] ) ?>
+											</label>
+										</li>
+									<?php endforeach ?>
+									<li>
+										<a href="<?= ROOT ?>/cookbooks/create?from=<?= escape( $_GET['url'] ) ?>" class="btn btn--add">
+											Create Cookbook
+										</a>
+									</li>
+								</ul>
+							</div>
+
+							<div>
+								<button type="button" class="btn btn--invert" popovertarget="select-cookbook">Cancel</button>
+								<button class="btn">Save</button>
+							</div>
+						</form>
 					</div>
 				<?php endif ?>
 			</div>
@@ -54,6 +86,10 @@
 						<li class="errors__message"><?= escape( $error ) ?></li>
 					<?php endforeach ?>
 				</ul>
+			<?php endif ?>
+
+			<?php if ( ! empty( $saveToCookbook ) ) : ?>
+				<p class="success"><?= escape( $saveToCookbook ) ?></p>
 			<?php endif ?>
 
 			<div class="metadata">
