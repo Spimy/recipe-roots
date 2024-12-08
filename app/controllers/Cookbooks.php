@@ -70,4 +70,48 @@ class Cookbooks {
 			]
 		);
 	}
+
+	public function create() {
+		if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
+			$cookbookModel = new Cookbook();
+			$errors = $cookbookModel->validate( array_merge( $_POST, $_FILES ) );
+			$this->handleErrors( $errors, 'Create' );
+
+			$newCookbook = [ 
+				'profileId' => $this->profile['id'],
+				'title' => $_POST['title'],
+				'description' => $_POST['description'],
+				'public' => $_POST['public'] == 'yes' ? 1 : 0
+			];
+
+			if ( $_FILES['thumbnail']['error'] == UPLOAD_ERR_OK ) {
+				$tmp_name = $_FILES['thumbnail']['tmp_name'];
+				$name = basename( $_FILES['thumbnail']['name'] );
+				$newCookbook['thumbnail'] = uploadFile( 'thumbnails', $tmp_name, $name );
+			}
+
+			$cookbook = $cookbookModel->create( $newCookbook );
+			redirect( 'cookbooks/' . $cookbook['id'] );
+		}
+
+		$this->view( 'cookbooks/cookbook-editor', [ 'action' => 'Create' ] );
+	}
+
+	private function handleErrors( $errors, $action, $id = null ) {
+		if ( count( $errors ) > 0 ) {
+			if ( $id ) {
+				$_POST['id'] = $id;
+			}
+
+			http_response_code( 400 );
+			$this->view(
+				'cookbooks/cookbook-editor',
+				[ 
+					'action' => $action,
+					'errors' => $errors,
+					'data' => $_POST
+				] );
+			die;
+		}
+	}
 }
