@@ -44,6 +44,7 @@
 	margin: 0;
 	position: absolute;
 	inset: unset;
+	height: unset;
 	top: var(--navbar-height);
 
 	z-index: -1;
