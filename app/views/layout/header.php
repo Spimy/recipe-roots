@@ -30,9 +30,9 @@
 							<button popovertarget="cookbooks">&times;</button>
 						</menu>
 					</li>
-
 				<?php endif ?>
 
+				<li><a href="<?= ROOT ?>/settings">Settings</a></li>
 				<li><a href="<?= ROOT ?>/signout">Sign Out</a></li>
 			<?php else : ?>
 				<li><a href="<?= ROOT ?>/signin">Sign In</a></li>
