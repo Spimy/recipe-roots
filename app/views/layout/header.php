@@ -37,6 +37,8 @@
 							<img src="<?= ROOT ?>/assets/icons/shopping-cart.svg" alt="cart">
 						</a>
 					</li>
+				<?php else : ?>
+					<li><a href="<?= ROOT ?>/dashboard">Dashboard</a></li>
 				<?php endif ?>
 
 				<li>
