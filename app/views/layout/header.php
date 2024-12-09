@@ -50,6 +50,8 @@
 					</button>
 
 					<menu class="nav-menu" popover id="avatar">
+						<a href="<?= ROOT ?>/settings/profiles/switch?next=/">Switch Profile</a>
+
 						<?php if ( $_SESSION['profile']['type'] == PROFILE_TYPES['user'] ) : ?>
 							<a href="<?= ROOT ?>/ingredients/invoices">Invoices</a>
 						<?php endif ?>
