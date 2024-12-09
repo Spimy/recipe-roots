@@ -22,6 +22,7 @@
 							<button popovertarget="recipes">&times;</button>
 						</menu>
 					</li>
+
 					<li>
 						<button id="cookbooks-toggle" popovertarget="cookbooks">Cookbooks</button>
 						<menu class="nav-menu" popover id="cookbooks" anchor="cookbooks-toggle">
@@ -30,14 +31,15 @@
 							<button popovertarget="cookbooks">&times;</button>
 						</menu>
 					</li>
-					<li><a href="<?= ROOT ?>/ingredients">Ingredients</a></li>
-				<?php endif ?>
 
-				<li>
-					<a class="cart-link" href="<?= ROOT ?>/ingredients/cart">
-						<img src="<?= ROOT ?>/assets/icons/shopping-cart.svg" alt="cart">
-					</a>
-				</li>
+					<li><a href="<?= ROOT ?>/ingredients">Ingredients</a></li>
+
+					<li>
+						<a class="cart-link" href="<?= ROOT ?>/ingredients/cart">
+							<img src="<?= ROOT ?>/assets/icons/shopping-cart.svg" alt="cart">
+						</a>
+					</li>
+				<?php endif ?>
 
 				<li>
 					<button id="avatar-toggle" popovertarget="avatar">
