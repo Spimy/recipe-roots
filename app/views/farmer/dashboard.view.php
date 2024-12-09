@@ -25,7 +25,7 @@
 				<div id="chartContainer" class="chart"></div>
 
 				<!-- Display a table instead of a chart if there is no JavaScript -->
-				<noscript class="chart-table">
+				<noscript class="chart--table">
 					<table role="table" class="editor__ingredients__list">
 						<thead role="rowgroup">
 							<tr role="row">
