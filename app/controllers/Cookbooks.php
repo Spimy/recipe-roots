@@ -71,6 +71,11 @@ class Cookbooks {
 			);
 		}
 
+		if ( $this->profile['user']['isAdmin'] && $this->profile['type'] !== PROFILE_TYPES['user'] ) {
+			http_response_code( 403 );
+			return $this->view( '403', [ 'message' => 'You can only browse your own cookbooks and create them on a user profile' ] );
+		}
+
 		$cookbookParams = [];
 		if ( isset( $_GET['filter'] ) && $_GET['filter'] !== '' ) {
 			$cookbookParams = [ 
