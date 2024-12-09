@@ -33,6 +33,11 @@
 				<?php endif ?>
 
 				<li><a href="<?= ROOT ?>/settings">Settings</a></li>
+
+				<?php if ( $_SESSION['profile']['user']['isAdmin'] ) : ?>
+					<li><a href="<?= ROOT ?>/admin">Admin</a></li>
+				<?php endif ?>
+
 				<li><a href="<?= ROOT ?>/signout">Sign Out</a></li>
 			<?php else : ?>
 				<li><a href="<?= ROOT ?>/signin">Sign In</a></li>
