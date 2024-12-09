@@ -23,7 +23,7 @@
 }
 
 .navbar__menu__items a:hover,
-.navbar__menu__items button:not(:has(.avatar)):hover {
+.navbar__menu__items > button:not(:has(.avatar)):hover {
 	text-decoration: underline;
 }
 
@@ -38,8 +38,31 @@
 	color: var(--secondary-clr);
 }
 
+#recipes-toggle {
+	anchor-name: --recipes-toggle;
+}
+
+#recipes-toggle + menu {
+	position-anchor: --recipes-toggle;
+}
+
+#cookbooks-toggle {
+	anchor-name: --cookbooks-toggle;
+}
+
+#cookbooks-toggle + menu {
+	position-anchor: --cookbooks-toggle;
+}
+
+#avatar-toggle {
+	anchor-name: --avatar-toggle;
+}
+
+#avatar-toggle + menu {
+	position-anchor: --avatar-toggle;
+}
+
 .nav-menu {
-	display: grid;
 	gap: 0.5rem;
 
 	padding-block-end: 1rem;
@@ -57,21 +80,30 @@
 	position: absolute;
 	inset: unset;
 	height: unset;
+	width: max-content;
 	top: var(--navbar-height);
+	left: anchor(left);
+	translate: -25% 0;
 
 	z-index: -1;
 
 	opacity: 0;
 	transform: translateY(-1em);
-	transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out,
-		overlay 0.3s ease-in-out allow-discrete,
-		display 0.3s ease-in-out allow-discrete;
+	transition: display 0.3s ease-in-out, opacity 0.3s ease-in-out,
+		transform 0.3s ease-in-out, z-index 0.3s step-end;
+	transition-behavior: allow-discrete;
 }
 
 .nav-menu:popover-open {
+	display: grid;
 	opacity: 1;
 	transform: translateY(0);
-	z-index: unset;
+	z-index: 1;
+
+	@starting-style {
+		transform: translateY(-1em);
+		opacity: 0;
+	}
 }
 
 .navbar__menu__toggle {
@@ -105,15 +137,6 @@
 	text-decoration: none;
 }
 
-@supports (left: anchor(center)) {
-	.nav-menu {
-		bottom: anchor(bottom);
-		left: anchor(center);
-		translate: -50% 0;
-		height: max-content;
-	}
-}
-
 .nav-menu::backdrop {
 	inset: unset;
 	display: none;
@@ -136,15 +159,21 @@
 		z-index: 999;
 		opacity: 0;
 		transform: translate(100%, 0);
-		transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out,
-			overlay 0.3s ease-in-out allow-discrete,
-			display 0.3s ease-in-out allow-discrete;
+
+		transition: display 0.3s ease-in-out, opacity 0.3s ease-in-out,
+			transform 0.3s ease-in-out, z-index 0.3s 1s;
+		transition-behavior: allow-discrete;
 	}
 
 	.navbar__menu__toggle:has(input:checked) + .navbar__menu__items {
 		opacity: 1;
 		transform: translate(0, 0);
 		display: flex;
+
+		@starting-style {
+			opacity: 0;
+			transform: translate(100%, 0);
+		}
 	}
 
 	.nav-menu {
@@ -155,7 +184,6 @@
 		position: fixed;
 		inset: 0;
 
-		display: flex;
 		flex-direction: column;
 		align-items: center;
 		gap: 5rem;
@@ -163,6 +191,20 @@
 
 		opacity: 0;
 		transform: translate(100%, 0);
+
+		transition: display 0.3s ease-in-out, opacity 0.3s ease-in-out,
+			transform 0.3s ease-in-out, z-index 0.3s step-end;
+		transition-behavior: allow-discrete;
+	}
+
+	.nav-menu:popover-open {
+		display: flex;
+		transform: translate(25%, 0);
+
+		@starting-style {
+			opacity: 0;
+			transform: translate(100%, 0);
+		}
 	}
 
 	.nav-menu button,

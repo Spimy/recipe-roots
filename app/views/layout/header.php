@@ -14,7 +14,7 @@
 				<?php if ( $_SESSION['profile']['type'] == PROFILE_TYPES['user'] ) : ?>
 					<li>
 						<button id="recipes-toggle" popovertarget="recipes">Recipes</button>
-						<menu class="nav-menu" popover id="recipes" anchor="recipes-toggle">
+						<menu class="nav-menu" popover id="recipes">
 							<a href="<?= ROOT ?>/recipes">Your Recipes</a>
 							<a href="<?= ROOT ?>/recipes/browse">Browse Recipes</a>
 							<button popovertarget="recipes">&times;</button>
@@ -23,7 +23,7 @@
 
 					<li>
 						<button id="cookbooks-toggle" popovertarget="cookbooks">Cookbooks</button>
-						<menu class="nav-menu" popover id="cookbooks" anchor="cookbooks-toggle">
+						<menu class="nav-menu" popover id="cookbooks">
 							<a href="<?= ROOT ?>/cookbooks">Your Cookbooks</a>
 							<a href="<?= ROOT ?>/cookbooks/browse">Browse Cookbooks</a>
 							<button popovertarget="cookbooks">&times;</button>
@@ -43,12 +43,13 @@
 
 				<li>
 					<button id="avatar-toggle" popovertarget="avatar">
-						<object class="avatar" role="img" aria-label="avatar"
+						<object popovertarget="avatar" class="avatar" role="img" aria-label="avatar"
 							data="<?= escape( $_SESSION['profile']['avatar'] ?? '' ) ?>">
 							<?= extractTitleLetters( escape( $_SESSION['profile']['username'] ) ) ?>
 						</object>
 					</button>
-					<menu class="nav-menu" popover id="avatar" anchor="avatar-toggle">
+
+					<menu class="nav-menu" popover id="avatar">
 						<?php if ( $_SESSION['profile']['type'] == PROFILE_TYPES['user'] ) : ?>
 							<a href="<?= ROOT ?>/ingredients/invoices">Invoices</a>
 						<?php endif ?>
