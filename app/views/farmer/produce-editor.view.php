@@ -127,8 +127,4 @@
 	</main>
 
 	<?php include '../app/views/layout/footer.php' ?>
-
-	<script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
-	<script src="<?= ROOT ?>/assets/js/recipe-editor.js"></script>
-	<script src="<?= ROOT ?>/assets/js/drag-drop-touch.js"></script>
 </body>
