@@ -107,7 +107,7 @@
 	display: none;
 }
 
-@media screen and (max-width: 55em) {
+@media screen and (max-width: 70em) {
 	.navbar__menu__toggle {
 		display: block;
 	}

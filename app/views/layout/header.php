@@ -30,6 +30,7 @@
 							<button popovertarget="cookbooks">&times;</button>
 						</menu>
 					</li>
+					<li><a href="<?= ROOT ?>/ingredients">Ingredients</a></li>
 				<?php endif ?>
 
 				<li><a href="<?= ROOT ?>/settings">Settings</a></li>
