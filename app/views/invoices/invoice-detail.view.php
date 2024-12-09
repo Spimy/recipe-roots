@@ -24,8 +24,10 @@
 		<section class="invoice">
 			<?php foreach ( $invoice['purchases'] as $purchase ) : ?>
 				<div class="invoice__purchase">
-					<img src="<?= $purchase['ingredient']['thumbnail'] ?>"
-						alt="<?= extractTitleLetters( escape( $purchase['ingredient']['ingredient'] ) ) ?>">
+					<object class="card__thumbnail" role="img" aria-label="thumbnail"
+						data="<?= escape( $purchase['ingredient']['thumbnail'] ?? '' ) ?>">
+						<?= extractTitleLetters( escape( $purchase['ingredient']['ingredient'] ) ) ?>
+					</object>
 					<div>
 						<strong>
 							<?= escape( $purchase['ingredient']['ingredient'] ) ?>
