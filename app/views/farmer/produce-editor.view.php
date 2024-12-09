@@ -98,8 +98,7 @@
 							Cancel
 						</a>
 					<?php else : ?>
-						<a class="btn btn--error"
-							href="<?= ROOT ?>/dashboard/<?= $action == 'Edit' ? escape( $data['id'] ?? '' ) : '' ?>">
+						<a class="btn btn--error" href="<?= ROOT ?>/dashboard">
 							Cancel
 						</a>
 					<?php endif ?>
