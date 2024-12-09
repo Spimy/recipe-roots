@@ -115,10 +115,15 @@
 				const label = avatarInput.parentElement.getElementsByTagName('label')[0];
 				if (!label) return;
 
-				const avatarPreview = document.createElement('img');
-				avatarPreview.classList.add('input__file--preview');
-				avatarPreview.src = URL.createObjectURL(avatar);
-				label.append(avatarPreview);
+				let avatarPreview = label.getElementsByClassName('input__file--preview')[0];
+				if (avatarPreview) {
+					avatarPreview.src = URL.createObjectURL(avatar);
+				} else {
+					avatarPreview = document.createElement('img');
+					avatarPreview.classList.add('input__file--preview');
+					avatarPreview.src = URL.createObjectURL(avatar);
+					label.append(avatarPreview);
+				}
 			});
 		});
 	</script>

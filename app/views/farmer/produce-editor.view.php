@@ -127,4 +127,27 @@
 	</main>
 
 	<?php include '../app/views/layout/footer.php' ?>
+	<script>
+		const thumbnailInput = document.getElementById('thumbnail');
+
+		thumbnailInput.addEventListener('change', (event) => {
+			const thumbnail = event.target.files[0];
+			if (!thumbnail) return;
+
+			const label = thumbnailInput.parentElement.getElementsByTagName('label')[0];
+			if (!label) return;
+
+			let thumbnailPreview = label.getElementsByClassName(
+				'input__file--preview'
+			)[0];
+			if (thumbnailPreview) {
+				thumbnailPreview.src = URL.createObjectURL(thumbnail);
+			} else {
+				thumbnailPreview = document.createElement('img');
+				thumbnailPreview.classList.add('input__file--preview');
+				thumbnailPreview.src = URL.createObjectURL(thumbnail);
+				label.append(thumbnailPreview);
+			}
+		});
+	</script>
 </body>

@@ -8,10 +8,17 @@ thumbnailInput.addEventListener('change', (event) => {
 	const label = thumbnailInput.parentElement.getElementsByTagName('label')[0];
 	if (!label) return;
 
-	const thumbnailPreview = document.createElement('img');
-	thumbnailPreview.classList.add('input__file--preview');
-	thumbnailPreview.src = URL.createObjectURL(thumbnail);
-	label.append(thumbnailPreview);
+	let thumbnailPreview = label.getElementsByClassName(
+		'input__file--preview'
+	)[0];
+	if (thumbnailPreview) {
+		thumbnailPreview.src = URL.createObjectURL(thumbnail);
+	} else {
+		thumbnailPreview = document.createElement('img');
+		thumbnailPreview.classList.add('input__file--preview');
+		thumbnailPreview.src = URL.createObjectURL(thumbnail);
+		label.append(thumbnailPreview);
+	}
 });
 
 const easyMDE = new EasyMDE();
