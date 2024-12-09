@@ -11,6 +11,7 @@
 	display: flex;
 	cursor: pointer;
 	gap: 2rem;
+	align-items: center;
 }
 
 .navbar__menu__items button {
@@ -22,8 +23,19 @@
 }
 
 .navbar__menu__items a:hover,
-.navbar__menu__items button:hover {
+.navbar__menu__items button:not(:has(.avatar)):hover {
 	text-decoration: underline;
+}
+
+.navbar__menu__items .avatar {
+	display: grid;
+	place-items: center;
+	border-radius: 100%;
+	background-color: var(--silver);
+	width: 2rem;
+	height: 2rem;
+	object-fit: cover;
+	color: var(--secondary-clr);
 }
 
 .nav-menu {
@@ -113,7 +125,9 @@
 	}
 
 	.navbar__menu__items {
-		place-items: center;
+		flex-direction: column;
+		justify-content: space-evenly;
+		align-items: center;
 		position: fixed;
 		inset: 0;
 		height: 100%;
@@ -130,7 +144,7 @@
 	.navbar__menu__toggle:has(input:checked) + .navbar__menu__items {
 		opacity: 1;
 		transform: translate(0, 0);
-		display: grid;
+		display: flex;
 	}
 
 	.nav-menu {
@@ -157,5 +171,14 @@
 		position: absolute;
 		top: 1rem;
 		right: var(--content-padding);
+	}
+
+	.navbar__menu__items > li:nth-last-child(2) {
+		order: -1;
+	}
+
+	.navbar__menu__items > li:nth-last-child(2) .avatar {
+		width: 4rem;
+		height: 4rem;
 	}
 }

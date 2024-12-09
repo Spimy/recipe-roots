@@ -33,13 +33,24 @@
 					<li><a href="<?= ROOT ?>/ingredients">Ingredients</a></li>
 				<?php endif ?>
 
-				<li><a href="<?= ROOT ?>/settings">Settings</a></li>
+				<li>
+					<button id="avatar-toggle" popovertarget="avatar">
+						<object class="avatar" role="img" aria-label="avatar"
+							data="<?= escape( $_SESSION['profile']['avatar'] ?? '' ) ?>">
+							<?= extractTitleLetters( escape( $_SESSION['profile']['username'] ) ) ?>
+						</object>
+					</button>
+					<menu class="nav-menu" popover id="avatar" anchor="avatar-toggle">
+						<a href="<?= ROOT ?>/settings">Settings</a>
 
-				<?php if ( $_SESSION['profile']['user']['isAdmin'] ) : ?>
-					<li><a href="<?= ROOT ?>/admin">Admin</a></li>
-				<?php endif ?>
+						<?php if ( $_SESSION['profile']['user']['isAdmin'] ) : ?>
+							<a href="<?= ROOT ?>/admin">Admin</a>
+						<?php endif ?>
 
-				<li><a href="<?= ROOT ?>/signout">Sign Out</a></li>
+						<a href="<?= ROOT ?>/signout">Sign Out</a>
+						<button popovertarget="avatar">&times;</button>
+					</menu>
+				</li>
 			<?php else : ?>
 				<li><a href="<?= ROOT ?>/signin">Sign In</a></li>
 			<?php endif; ?>
