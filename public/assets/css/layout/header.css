@@ -107,7 +107,7 @@
 	display: none;
 }
 
-@media screen and (max-width: 40em) {
+@media screen and (max-width: 55em) {
 	.navbar__menu__toggle {
 		display: block;
 	}
@@ -155,7 +155,7 @@
 	.navbar__menu__items .close-nav {
 		display: block;
 		position: absolute;
-		top: var(--content-padding);
+		top: 1rem;
 		right: var(--content-padding);
 	}
 }
