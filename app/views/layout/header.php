@@ -49,6 +49,10 @@
 						</object>
 					</button>
 					<menu class="nav-menu" popover id="avatar" anchor="avatar-toggle">
+						<?php if ( $_SESSION['profile']['type'] == PROFILE_TYPES['user'] ) : ?>
+							<a href="<?= ROOT ?>/ingredients/invoices">Invoices</a>
+						<?php endif ?>
+
 						<a href="<?= ROOT ?>/settings">Settings</a>
 
 						<?php if ( $_SESSION['profile']['user']['isAdmin'] ) : ?>
