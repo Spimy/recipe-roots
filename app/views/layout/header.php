@@ -13,7 +13,7 @@
 			<li><a href="<?= ROOT ?>/">Home</a></li>
 
 			<?php if ( isset( $_SESSION['profile'] ) ) : ?>
-				<?php if ( $_SESSION['profile']['id'] ) : ?>
+				<?php if ( $_SESSION['profile']['type'] == PROFILE_TYPES['user'] ) : ?>
 					<li>
 						<button id="recipes-toggle" popovertarget="recipes">Recipes</button>
 						<menu class="nav-menu" popover id="recipes" anchor="recipes-toggle">
