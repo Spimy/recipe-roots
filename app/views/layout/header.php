@@ -10,8 +10,6 @@
 		</div>
 
 		<ul role="list" class="navbar__menu__items">
-			<li><a href="<?= ROOT ?>/">Home</a></li>
-
 			<?php if ( isset( $_SESSION['profile'] ) ) : ?>
 				<?php if ( $_SESSION['profile']['type'] == PROFILE_TYPES['user'] ) : ?>
 					<li>
@@ -64,6 +62,7 @@
 					</menu>
 				</li>
 			<?php else : ?>
+				<li><a href="<?= ROOT ?>/">Home</a></li>
 				<li><a href="<?= ROOT ?>/signin">Sign In</a></li>
 			<?php endif; ?>
 
