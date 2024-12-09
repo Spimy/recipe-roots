@@ -23,6 +23,27 @@
 		<div class="dashboard">
 			<?php if ( count( $dataPoints ) > 0 ) : ?>
 				<div id="chartContainer" class="chart"></div>
+
+				<!-- Display a table instead of a chart if there is no JavaScript -->
+				<noscript class="chart-table">
+					<table role="table" class="editor__ingredients__list">
+						<thead role="rowgroup">
+							<tr role="row">
+								<th role="columnheader">Date</th>
+								<th role="columnheader">Revenue</th>
+							</tr>
+						</thead>
+
+						<tbody role="rowgroup">
+							<?php foreach ( $dataPoints as $dataPoint ) : ?>
+								<tr role="row">
+									<td role="cell"><?= escape( $dataPoint['label'] ) ?></td>
+									<td role="cell"><?= escape( $dataPoint['y'] ) ?></td>
+								</tr>
+							<?php endforeach ?>
+						</tbody>
+					</table>
+				</noscript>
 			<?php endif ?>
 
 			<article class="dashboard__produce">
