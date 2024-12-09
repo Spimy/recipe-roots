@@ -43,10 +43,12 @@
 
 				<li>
 					<button id="avatar-toggle" popovertarget="avatar">
-						<object popovertarget="avatar" class="avatar" role="img" aria-label="avatar"
-							data="<?= escape( $_SESSION['profile']['avatar'] ?? '' ) ?>">
-							<?= extractTitleLetters( escape( $_SESSION['profile']['username'] ) ) ?>
-						</object>
+						<?php if ( isset( $_SESSION['profile']['avatar'] ) ) : ?>
+							<img class="avatar" src="<?= escape( $_SESSION['profile']['avatar'] ?? '' ) ?>"
+								alt="<?= extractTitleLetters( escape( $_SESSION['profile']['username'] ) ) ?>">
+						<?php else : ?>
+							<div class="avatar"><?= extractTitleLetters( escape( $_SESSION['profile']['username'] ) ) ?></div>
+						<?php endif ?>
 					</button>
 
 					<menu class="nav-menu" popover id="avatar">
