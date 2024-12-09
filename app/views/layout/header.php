@@ -34,6 +34,12 @@
 				<?php endif ?>
 
 				<li>
+					<a class="cart-link" href="<?= ROOT ?>/ingredients/cart">
+						<img src="<?= ROOT ?>/assets/icons/shopping-cart.svg" alt="cart">
+					</a>
+				</li>
+
+				<li>
 					<button id="avatar-toggle" popovertarget="avatar">
 						<object class="avatar" role="img" aria-label="avatar"
 							data="<?= escape( $_SESSION['profile']['avatar'] ?? '' ) ?>">

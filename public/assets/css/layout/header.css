@@ -181,4 +181,13 @@
 		width: 4rem;
 		height: 4rem;
 	}
+
+	.cart-link img {
+		display: inline;
+	}
+
+	.cart-link::after {
+		content: 'Your Cart';
+		margin-left: 0.5rem;
+	}
 }
