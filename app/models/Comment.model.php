@@ -63,4 +63,22 @@ class Comment extends Model {
 
 		return $errors;
 	}
+
+	// Apparently PHP cannot do method overloading...
+	public function createComment( array $data, $commenter, $recipe ) {
+		$comment = parent::create( $data );
+
+		// Only create a notification if someone else commented
+		if ( $commenter['id'] != $recipe['profile']['id'] ) {
+			$notificationModel = new Notification();
+			$notificationModel->create( [ 
+				'senderId' => $commenter['id'],
+				'receiverId' => $recipe['profile']['id'],
+				'message' => "{bold}" . $commenter['username'] . '{/bold} left a comment and a rating on your recipe {bold}{link}' . $recipe['title'] . '{/link}{/bold}',
+				'link' => ROOT . '/recipes/' . $recipe['id'] . '#comment-' . $comment['id']
+			] );
+		}
+
+		return $comment;
+	}
 }

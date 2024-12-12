@@ -398,7 +398,11 @@ class Recipes {
 					redirect( '404' );
 				}
 
-				$newComment = $commentModel->create( [ ...$_POST, 'recipeId' => $recipe['id'], 'profileId' => $this->profile['id'] ] );
+				$newComment = $commentModel->createComment(
+					[ ...$_POST, 'recipeId' => $recipe['id'], 'profileId' => $this->profile['id'] ],
+					$this->profile,
+					$recipe
+				);
 				redirect( "recipes/$recipeId#comment-" . $newComment['id'] );
 				break;
 			}
