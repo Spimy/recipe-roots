@@ -33,9 +33,22 @@
 					<li><a href="<?= ROOT ?>/ingredients">Ingredients</a></li>
 
 					<li>
-						<a class="cart-link" href="<?= ROOT ?>/ingredients/cart">
-							<img src="<?= ROOT ?>/assets/icons/shopping-cart.svg" alt="cart">
-						</a>
+						<div class="icon-nav">
+							<a class="notification-link" href="<?= ROOT ?>/notifications">
+								<img src="<?= ROOT ?>/assets/icons/bell.svg" alt="bell">
+								<?php
+								$notificationModel = new Notification();
+								$numNoti = count( $notificationModel->findAll( [ 'receiverId' => $_SESSION['profile']['id'], 'isRead' => 0 ] ) );
+
+								if ( $numNoti > 0 ) :
+									?>
+									<p><?= $numNoti > 9 ? '9+' : $numNoti; ?></p>
+								<?php endif ?>
+							</a>
+							<a class="cart-link" href="<?= ROOT ?>/ingredients/cart">
+								<img src="<?= ROOT ?>/assets/icons/shopping-cart.svg" alt="cart">
+							</a>
+						</div>
 					</li>
 				<?php else : ?>
 					<li><a href="<?= ROOT ?>/dashboard">Dashboard</a></li>
