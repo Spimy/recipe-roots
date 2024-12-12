@@ -37,6 +37,8 @@
 						</a>
 					</li>
 					<li><a class="admin__nav__links__link" href="<?= ROOT ?>/admin/ingredients">Ingredients</a></li>
+					<li><a class="admin__nav__links__link" href="<?= ROOT ?>/recipes/browse">Recipes</a></li>
+					<li><a class="admin__nav__links__link" href="<?= ROOT ?>/cookbooks/browse">Cookbooks</a></li>
 				</ul>
 
 				<div class="admin__nav__btns">
