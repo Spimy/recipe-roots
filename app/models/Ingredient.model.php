@@ -12,7 +12,7 @@ class Ingredient extends Model {
 		$this->farmerId = $this->foreignKey( new Profile, true );
 		$this->ingredient = $this->charField( 40 );
 		$this->price = $this->decimalField( 5, 2 );
-		$this->unit = $this->charField( 4 );
+		$this->unit = $this->charField( 6 );
 		$this->thumbnail = $this->charField( 255, true );
 		$this->unlisted = $this->booleanField();
 		parent::__construct();
