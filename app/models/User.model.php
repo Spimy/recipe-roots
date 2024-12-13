@@ -34,7 +34,12 @@ class User extends Model {
 
 		if ( empty( $data['password'] ) ) {
 			$errors['password'] = "Password is required";
+		} else {
+			if ( ! preg_match( '/^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[@!#$%&? "]).*$/', $data['password'] ) ) {
+				$errors['password'] = 'Password must contain at least one letter, one digit and one character (@!#$%&?) and be at least 8 characters long';
+			}
 		}
+
 
 		if ( $data['password'] != $data['confirmPassword'] ) {
 			$errors['password'] = 'Passwords do not match';
