@@ -14,7 +14,7 @@
 				<li><a href="<?= ROOT ?>">Home</a></li>
 				<li><a href="<?= ROOT ?>/sitemap.xml">Sitemap</a></li>
 				<li>
-					<a href="mailto:contact@reciperoots.com">contact@reciperoots.com</a>
+					<a target="_blank" href="mailto:contact@reciperoots.com">contact@reciperoots.com</a>
 				</li>
 			</ul>
 		</div>
