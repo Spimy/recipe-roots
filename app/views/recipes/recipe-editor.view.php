@@ -140,7 +140,7 @@
 						</tr>
 					</thead>
 
-					<?php $units = [ "tbsp", "tsp", "oz", "fl. oz", "qt", "pt", "gal", "lb", "mL", "kg", "cups" ] ?>
+					<?php $units = [ "tbsp", "tsp", "oz", "fl. oz", "qt", "pt", "gal", "lb", "mL", "kg", "g", "cups", "pcs", "head", "cloves", "slices", "cans", "stalks" ] ?>
 					<tbody role="rowgroup">
 						<?php if ( isset( $data['ingredients'] ) ) : ?>
 							<?php foreach ( $data['ingredients'] as $ingredient ) : ?>
