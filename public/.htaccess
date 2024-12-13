@@ -1,3 +1,5 @@
+Options -Indexes
+
 RewriteEngine On
 
 #accept loading of actual files and directories
