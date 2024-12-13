@@ -18,6 +18,15 @@ h1 {
 	display: grid;
 }
 
+.auth__input small {
+	color: var(--error);
+	display: none;
+}
+
+.auth__input input:user-invalid + small {
+	display: block;
+}
+
 .auth__input--radio {
 	display: flex;
 	justify-content: space-between;
