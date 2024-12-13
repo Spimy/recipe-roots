@@ -30,7 +30,7 @@ class ForgotPassword {
 					'expiresAt' => date( 'Y-m-d H:i:s', time() + 1800 ) // expires after 30 minutes
 				] );
 
-				$link = ROOT . "/forgotpassword/reset?token={$token}";
+				$link = ROOT . "/forgotPassword/reset?token={$token}";
 				$subject = 'Recipe Roots - Password Reset';
 				$message = "
 				<p>
