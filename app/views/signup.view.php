@@ -44,7 +44,10 @@
 
 			<div class="auth__input">
 				<label for="email">Email</label>
-				<input type="email" name="email" id="email" value="<?= escape( $_POST['email'] ?? '' ) ?>" required>
+				<input type="email" name="email" id="email"
+					pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
+					value="<?= escape( $_POST['email'] ?? '' ) ?>" required>
+				<small>Invalid Email</small>
 			</div>
 
 			<div class="auth__input">
@@ -54,7 +57,12 @@
 
 			<div class="auth__input">
 				<label for="password">Password</label>
-				<input type="password" name="password" id="password" required>
+				<input type="password" name="password" id="password"
+					pattern='^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[@!#$%&? "]).*$' required>
+				<small>
+					Password must contain at least one letter, one digit and one character (@!#$%&?) and be at least 8 characters
+					long
+				</small>
 			</div>
 
 			<div class="auth__input">
