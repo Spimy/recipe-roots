@@ -206,7 +206,7 @@ abstract class Model {
 			$query .= ')';
 		}
 
-		$query .= " ORDER BY createdAt DESC";
+		$query .= " ORDER BY createdAt DESC, id ASC";
 
 		if ( $limit ) {
 			$query .= " LIMIT $limit OFFSET $offset";
