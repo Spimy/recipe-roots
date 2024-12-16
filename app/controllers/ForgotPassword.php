@@ -4,6 +4,9 @@ class ForgotPassword {
 	use Controller;
 
 	public function __construct() {
+		if ( isset( $_SESSION['profile'] ) ) {
+			redirect( '' );
+		}
 		handleInvalidCsrfToken( $this );
 	}
 

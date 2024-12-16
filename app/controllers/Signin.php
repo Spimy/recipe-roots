@@ -3,6 +3,12 @@
 class Signin {
 	use Controller;
 
+	public function __construct() {
+		if ( isset( $_SESSION['profile'] ) ) {
+			redirect( '' );
+		}
+	}
+
 	public function index() {
 		handleInvalidCsrfToken( $this );
 		$data = [];
