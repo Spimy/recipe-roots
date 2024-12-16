@@ -60,7 +60,13 @@
 
 					<div class="settings__editor__input">
 						<label for="newPassword">New Password</label>
-						<input type="password" name="newPassword" id="newPassword">
+						<input type="password" name="newPassword" id="newPassword"
+							pattern='^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[@!#$%&? "]).*$'>
+						<small>
+							Password must contain at least one letter, one digit and one character (@!#$%&?) and be at least 8
+							characters
+							long
+						</small>
 					</div>
 
 					<div class="settings__editor__input">

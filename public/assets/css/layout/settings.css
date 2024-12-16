@@ -124,6 +124,15 @@ hr {
 	display: grid;
 }
 
+.settings__editor__input small {
+	color: var(--error);
+	display: none;
+}
+
+.settings__editor__input input:user-invalid + small {
+	display: block;
+}
+
 .settings__editor__input--radio {
 	display: flex;
 	justify-content: space-between;
